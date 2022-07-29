@@ -11,14 +11,22 @@ const Navbar = () => {
         {/* logo and name */}
         <div className='flex items-center gap-2'>
         <img src={redditIcon} className='w-10'></img>
-        <h1 className='text-xl md:text-1xl text-gray-700'>!Reddit</h1>
+        <h1 className='hidden md:block md:text-1xl text-gray-700'>!Reddit</h1>
+        </div>
+        {/* search bar */}
+        <div className='flex mx-auto gap-1 bg-slate-50 px-2 py-2'>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input type='text' placeholder='Search !Reddit' className='bg-slate-50'>
+          </input>
         </div>
         {/* sign up and login buttons */}
-        <ul className='flex text-1xl ml-auto gap-6'>
+        <ul className='flex text-1xl gap-6'>
           <button class='hidden md:block w-32 py-1 border-blue-500 font-bold border rounded-full text-blue-500 hover:bg-slate-100 text-sm'>Log In</button>
-          <button class='hidden md:block w-32 py-1 bg-blue-500 font-bold border rounded-full text-white hover:bg-blue-400 text-sm'>Sign Up</button>
+          <button class='hidden md:block w-32 py-1 bg-blue-500 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Sign Up</button>
           {/* dropdown menu button */}
-          <button class='flex justify-center md:border-slate-200 w-20 py-1 border-slate-100 border' onClick={() => setMobileNavLinksVisible(!mobileNavLinksVisible)}>
+          <button class='flex justify-center w-20 py-1' onClick={() => setMobileNavLinksVisible(!mobileNavLinksVisible)}>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>

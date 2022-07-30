@@ -7,11 +7,11 @@ const Navbar = () => {
 
   return (
     <div className='font-poppins relative border-b border-slate-200'>
-      <header className='flex items-center px-4 py-1 mx-auto'>
+      <header className='flex items-center px-4 py-1'>
         {/* logo and name */}
         <div className='flex items-center gap-2'>
         <img src={redditIcon} className='w-10'></img>
-        <h1 className='hidden md:block md:text-1xl text-gray-700'>!Reddit</h1>
+        <h1 className='hidden md:block text-1xl font-semibold text-gray-700'>!Reddit</h1>
         </div>
         {/* search bar */}
         <div className='flex mx-auto gap-1 bg-slate-50 px-2 py-2 outline-blue-500 hover:outline outline-1 rounded-md md:w-4/12 w-48 focus-within:outline'>

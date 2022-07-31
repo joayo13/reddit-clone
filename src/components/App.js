@@ -1,6 +1,7 @@
 import { useState } from "react";
 import LogIn from "./LogIn";
 import Navbar from "./Navbar";
+import SignUp from "./SignUp";
 
 
 function App() {
@@ -8,8 +9,9 @@ function App() {
   const [signUpPopUp, setSignUpPopUp] = useState(false)
   return (
     <>
-    <Navbar/>
-    <LogIn/>
+    <Navbar setLogInPopUp={setLogInPopUp} setSignUpPopUp={setSignUpPopUp}/>
+    {logInPopUp ? <LogIn setLogInPopUp={setLogInPopUp} setSignUpPopUp={setSignUpPopUp}></LogIn> : null}
+    {signUpPopUp ? <SignUp setLogInPopUp={setLogInPopUp} setSignUpPopUp={setSignUpPopUp}></SignUp> : null}
     </>
   );
 }

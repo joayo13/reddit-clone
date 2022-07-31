@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import redditIcon from '../images/reddit-icon.png'
 
-const Navbar = () => {
+const Navbar = (props) => {
 
   const [mobileNavLinksVisible, setMobileNavLinksVisible] = useState(false)
 
@@ -23,8 +23,10 @@ const Navbar = () => {
         </div>
         {/* sign up and login buttons */}
         <ul className='flex text-1xl gap-2'>
-          <button class='hidden md:block w-32 py-1 border-blue-500 font-bold border rounded-full text-blue-500 hover:bg-slate-100 text-sm'>Log In</button>
-          <button class='hidden md:block w-32 py-1 bg-blue-500 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Sign Up</button>
+          <button class='hidden md:block w-32 py-1 border-blue-500 font-bold border rounded-full text-blue-500 hover:bg-slate-100 text-sm'
+          onClick={()=> props.setLogInPopUp(true)}>Log In</button>
+          <button class='hidden md:block w-32 py-1 bg-blue-500 font-bold rounded-full text-white hover:bg-blue-400 text-sm'
+          onClick={() => props.setSignUpPopUp(true)}>Sign Up</button>
           {/* dropdown menu button */}
           <button class='flex justify-center py-1 opacity-50' onClick={() => setMobileNavLinksVisible(!mobileNavLinksVisible)}>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -58,7 +60,7 @@ const Navbar = () => {
           {`Terms & Policies`}
         </li>
         <div className='w-auto h-px bg-slate-200'></div>
-        <li className='flex gap-2 items-center cursor-pointer px-2 py-4 hover:bg-slate-200'>
+        <li className='flex gap-2 items-center cursor-pointer px-2 py-4 hover:bg-slate-200' onClick={() => props.setLogInPopUp(true)}>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>

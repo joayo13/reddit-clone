@@ -8,8 +8,8 @@ function LogIn(props) {
       <div className='relative w-screen h-screen md:absolute md:w-[50rem] md:h-[40rem] bg-white rounded-md shadow-xl'>
         <img src={sideImage} className='hidden md:block absolute top-0 left-0 h-full' alt='planet'></img>
         <div className='relative md:left-28 md:w-[43rem] w-full h-full bg-white py-16 px-8'>
-        <svg onClick={()=> props.setLogInPopUp(false)} xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 absolute right-2 top-2 opacity-50" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+        <svg onClick={()=> props.setLogInPopUp(false)} xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 absolute right-2 top-2 opacity-50" viewBox="0 0 20 20" fill="currentColor">
+          <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
         </svg>
         <h1 className='font-medium text-lg'>Log In</h1>
         <p className='text-xs mt-2'>By continuing, you agree to our User Agreement and Privacy Policy.</p>

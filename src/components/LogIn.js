@@ -14,8 +14,9 @@ function LogIn(props) {
         <h1 className='font-medium text-lg'>Log In</h1>
         <p className='text-xs mt-2'>By continuing, you agree to our User Agreement and Privacy Policy.</p>
         <form className='mt-20 flex flex-col gap-6'>
-          <input placeholder='EMAIL' type='email' className=' bg-slate-100 py-4 indent-4 w-80 focus:outline-none hover:text-xs transition-all ease-in-out duration-300'></input>
-          <input placeholder='PASSWORD' type='password' className=' bg-slate-100 py-4 indent-4 w-80 focus:outline-none hover:text-xs transition-all ease-in-out duration-300'></input>
+          <input placeholder='EMAIL' type='email' className=' bg-slate-100 py-4 indent-4 w-80 focus:outline-none'></input>
+          <input placeholder='PASSWORD' type='password' className=' bg-slate-100 py-4 indent-4 w-80 focus:outline-none'></input>
+          <button type='submit' className=' bg-teal-700 py-2 rounded-full text-white w-80 font-semibold mx-auto md:mx-0'>Log In</button>
         </form>
         <h2 className='text-sm mt-10'>New to !Reddit? <button className='text-blue-500' onClick={() => {props.setLogInPopUp(false); props.setSignUpPopUp(true)}}>Sign Up</button></h2>
         </div>

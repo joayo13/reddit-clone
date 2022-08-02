@@ -6,7 +6,7 @@ function SignUp(props) {
   const emailRef = useRef()
   const passwordRef = useRef()
   const passwordConfirmRef = useRef()
-  const {signUp, currentUser} = useAuth()
+  const {signUp} = useAuth()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 

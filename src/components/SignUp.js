@@ -12,18 +12,6 @@ function SignUp(props) {
   const [createUser, setCreateUser] = useState(false)
 
 
-  async function handleSubmit (e) {
-    e.preventDefault()
-    try {
-      setError('')
-      setLoading(true)
-      await signUp(emailRef.current.value, passwordRef.current.value)
-    }
-    catch {
-      setError('Failed to create an account')
-    }
-    setLoading(false)
-  }
   return (
     <>
       {!createUser ? <div className='fixed flex w-screen h-screen justify-center items-center top-0 overflow-y-hidden'>
@@ -45,7 +33,7 @@ function SignUp(props) {
         <h2 className='text-sm mt-10'>Already a !Redditor? <button className='text-blue-500' onClick={() => {props.setSignUpPopUp(false); props.setLogInPopUp(true)}}>Log In</button></h2>
         </div>
       </div>
-    </div> : <CreateUser setSignUpPopUp = {props.setSignUpPopUp} setCreateUser={setCreateUser} emailRef={emailRef} passwordRef={passwordRef}/>}
+    </div> : <CreateUser setSignUpPopUp = {props.setSignUpPopUp} setCreateUser={setCreateUser} emailRef={emailRef.current?.value} passwordRef={passwordRef.current?.value} signUp={signUp}/>}
     </>
   )
 }

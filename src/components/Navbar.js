@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import redditIcon from '../images/reddit-icon.png'
+import { useAuth } from '../contexts/AuthContext'
 
 const Navbar = (props) => {
 
   const [mobileNavLinksVisible, setMobileNavLinksVisible] = useState(false)
+
+  const {currentUser} = useAuth()
+
+  
 
   return (
     <div className='font-poppins relative border-b border-slate-200'>

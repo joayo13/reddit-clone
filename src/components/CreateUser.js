@@ -1,18 +1,31 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import sideImage from '../images/login-signup-image.png'
 import images from '../images/profilePictures/allPictures'
+import { doc, setDoc } from "firebase/firestore"; 
+import { db } from '../firebase'
+
 
 function CreateUser(props) {
     const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
-
+    const [loading, setLoading] = useState(false)
+    const usernameRef = useRef()
+    const [profilePicture, setProfilePicture] = useState(null)
+    
   async function handleSubmit (e) {
     e.preventDefault()
-
     try {
       setError('')
       setLoading(true)
-      await props.signUp(props.emailRef.current.value, props.passwordRef.current.value)
+      await props.signUp(props.emailRef, props.passwordRef)
+      try {
+        await setDoc(doc(db, "users", props.emailRef), {
+            profilePicture: profilePicture,
+            username: usernameRef.current.value,
+        });
+      }
+      catch(e) {
+        setError(`${e}`)
+      }
     }
     catch {
       setError('Failed to create an account')
@@ -34,13 +47,13 @@ function CreateUser(props) {
         <h1 className='font-medium text-lg text-center md:text-start'>Create your profile</h1>
         <p className='text-xs mt-2 md:w-1/3 text-center md:text-start'>Select a profile picture:</p>
         <ul className='w-80 flex flex-wrap gap-3 mt-4 justify-center md:justify-start'>
-            {images.map((image) => <li><img className='w-12 rounded-full' src={image}></img></li>)}
+            {images.map((image) => <li><img className='w-12 rounded-full' src={image} onClick={(e) => {setProfilePicture(e.target.src); }}></img></li>)}
         </ul>
         {error && <div className='w-full bg-red-400'>{error}</div>}
         <form onSubmit={handleSubmit} className='mt-4 flex flex-col gap-6'>
         <p className='text-xs mt-2 md:w-1/3 text-center md:text-start'>Create a Username</p>
-        <input placeholder='USERNAME' type='text' className=' bg-slate-100 py-4 indent-4 w-80 focus:outline-none'></input>
-          <button disabled={props.loading} type='submit' className=' bg-blue-500 py-2 rounded-full text-white w-80 font-semibold mx-auto md:mx-0 hover:bg-blue-400'>Create Account</button>
+        <input placeholder='USERNAME' type='text' ref={usernameRef} className=' bg-slate-100 py-4 indent-4 w-80 focus:outline-none'></input>
+          <button disabled={loading} type='submit' className=' bg-blue-500 py-2 rounded-full text-white w-80 font-semibold mx-auto md:mx-0 hover:bg-blue-400'>Create Account</button>
         </form>
         </div>
       </div>

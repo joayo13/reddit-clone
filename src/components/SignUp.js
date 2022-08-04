@@ -7,9 +7,9 @@ function SignUp(props) {
   const emailRef = useRef()
   const passwordRef = useRef()
   const {signUp} = useAuth()
-  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [createUser, setCreateUser] = useState(false)
+  const [error, setError] = useState('')
 
 
   return (
@@ -24,7 +24,7 @@ function SignUp(props) {
         </svg>
         <h1 className='font-medium text-lg'>Sign Up</h1>
         <p className='text-xs mt-2 md:w-1/3'>By continuing, you are setting up a Reddit account and you agree to our User Agreement and Privacy Policy.</p>
-        {error && <div className='w-full bg-red-400'>{error}</div>}
+        {error && <div className='w-full bg-red-500 p-4 font-semibold rounded-md mt-4'>{error}</div>}
         <form onSubmit={() => setCreateUser(true)} className='mt-20 flex flex-col gap-6'>
           <input required placeholder='EMAIL' ref={emailRef} type='email' className=' bg-slate-100 py-4 indent-4 w-80 focus:outline-none'></input>
           <input required minLength={6} placeholder='PASSWORD' ref={passwordRef} type='password' className=' bg-slate-100 py-4 indent-4 w-80 focus:outline-none'></input>
@@ -33,7 +33,7 @@ function SignUp(props) {
         <h2 className='text-sm mt-10'>Already a !Redditor? <button className='text-blue-500' onClick={() => {props.setSignUpPopUp(false); props.setLogInPopUp(true)}}>Log In</button></h2>
         </div>
       </div>
-    </div> : <CreateUser setSignUpPopUp = {props.setSignUpPopUp} setCreateUser={setCreateUser} emailRef={emailRef.current?.value} passwordRef={passwordRef.current?.value} signUp={signUp}/>}
+    </div> : <CreateUser setSignUpPopUp = {props.setSignUpPopUp} setCreateUser={setCreateUser} emailRef={emailRef.current?.value} passwordRef={passwordRef.current?.value} signUp={signUp} setError={setError}/>}
     </>
   )
 }

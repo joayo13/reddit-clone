@@ -7,19 +7,20 @@ function Subreddit(props) {
     const {currentUser, logOut, setUserInfo, userInfo} = useAuth()
 
   return (
-    <div className='bg-slate-100'>
-        <section className='flex flex-col items-center md:flex-row md:justify-center mt-20 gap-4 bg-white'>
-            <img src={redditIcon} className='w-20 h-20 rounded-full border border-slate-200'></img>
+    <div className='bg-slate-100 dark:bg-black min-h-screen'>
+        <section className='flex flex-col items-center md:flex-row md:justify-center gap-4 bg-white dark:bg-slate-900 dark:text-white'>
+            <img src={redditIcon} className='w-20 h-20 rounded-full border border-slate-200 dark:border-slate-800'></img>
             <h1 className='font-bold text-3xl text-center'>Example Subreddit</h1>
-            <button className=' border border-slate-800 text-slate-800 w-24 py-1 rounded-full'>Join</button>
+            <button className=' border border-slate-800 text-slate-800 w-24 py-1 rounded-full dark:text-white dark:border-white'>Join</button>
         </section>
         <div className='flex flex-col-reverse md:flex-row justify-center mt-10 gap-4'>
             <ul className='flex flex-col gap-4 lg:w-[40rem] md:w-[30rem]'>
-                <li className='flex gap-2 px-4 py-4 bg-white border border-slate-200 rounded-md'>
+                {currentUser ? 
+                <li className='flex gap-2 px-4 py-4 bg-white dark:bg-slate-900 dark:border-slate-800 border border-slate-200 rounded-md'>
                     <img src={userInfo.profilePicture} className='w-10 rounded-full'></img>
-                    <input type='text' placeholder='Create Post' className='w-full outline-none bg-slate-100 indent-2 rounded-md'></input>
-                </li>
-                <li className='flex flex-col gap-2 px-4 py-4 bg-white border border-slate-200 rounded-md'>
+                    <input type='text' placeholder='Create Post' className='w-full outline-none bg-slate-100 dark:bg-slate-800 dark:text-white indent-2 rounded-md'></input>
+                </li> : null}
+                <li className='flex flex-col gap-2 px-4 py-4 bg-white border border-slate-200 rounded-md dark:bg-slate-900 dark:text-slate-300 dark:border-slate-700'>
                     <p className='text-xs text-slate-500'>Posted by u/Admin 1 day ago</p>
                     <h1>Which job is definitely overpayed?</h1>
                     <ul className='flex gap-2'>
@@ -42,12 +43,12 @@ function Subreddit(props) {
                 </li>
             </ul>
             <ul className='flex flex-col gap-4 lg:w-[20rem] md:w-[15rem]'>
-                <li className='flex flex-col px-4 py-4 bg-white border border-slate-200 gap-4 rounded-md'>
+                <li className='flex flex-col px-4 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 dark:text-slate-300 gap-4 rounded-md'>
                     <h2 className='text-xl font-semibold'>About Community</h2>
                     <p>r/Example is the place to do all your testing</p>
                     <p className='font-semibold'>0 members</p>
                 </li>
-                <li className='flex flex-col px-4 py-4 bg-white border border-slate-200 gap-4 rounded-md'>
+                <li className='flex flex-col px-4 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 dark:text-slate-300 gap-4 rounded-md'>
                     <h2 className='text-xl font-semibold'>Subreddit Rules</h2>
                     <ol className='flex flex-col px-4 gap-4 list-decimal'>
                     <li>No hacking me</li>

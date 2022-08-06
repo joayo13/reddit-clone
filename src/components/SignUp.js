@@ -14,7 +14,7 @@ function SignUp(props) {
 
   return (
     <>
-      {!createUser ? <div className='fixed flex w-screen h-screen justify-center items-center top-0 overflow-y-hidden'>
+      {!createUser ? <div className='fixed flex w-screen h-screen justify-center items-center top-0 overflow-y-hidden z-10'>
       <div className='fixed w-screen h-screen left-0 top-0 right-0 bottom-0 bg-black opacity-50'></div>
       <div className='relative w-screen h-screen md:absolute md:w-[50rem] md:h-[40rem] bg-white rounded-md shadow-xl overflow-hidden'>
         <img src={sideImage} className='hidden md:block absolute top-0 left-0 h-full' alt='planet'></img>
@@ -24,7 +24,7 @@ function SignUp(props) {
         </svg>
         <h1 className='font-medium text-lg'>Sign Up</h1>
         <p className='text-xs mt-2 md:w-1/3'>By continuing, you are setting up a Reddit account and you agree to our User Agreement and Privacy Policy.</p>
-        {error && <div className='w-full bg-red-500 p-4 font-semibold rounded-md mt-4'>{error}</div>}
+        {error && <div className='w-full bg-red-700 p-4 font-semibold rounded-md mt-4 text-white'>{error}</div>}
         <form onSubmit={() => setCreateUser(true)} className='mt-20 flex flex-col gap-6'>
           <input required placeholder='EMAIL' ref={emailRef} type='email' className=' bg-slate-100 py-4 indent-4 w-80 focus:outline-none'></input>
           <input required minLength={6} placeholder='PASSWORD' ref={passwordRef} type='password' className=' bg-slate-100 py-4 indent-4 w-80 focus:outline-none'></input>

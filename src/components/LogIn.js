@@ -23,7 +23,7 @@ function LogIn(props) {
     setLoading(false)
   }
   return (
-      <div className='fixed flex w-screen h-screen justify-center items-center top-0 overflow-y-hidden'>
+      <div className='fixed flex w-screen h-screen justify-center items-center top-0 overflow-y-hidden z-10'>
       <div className='fixed w-screen h-screen left-0 top-0 right-0 bottom-0 bg-black opacity-50'></div>
       <div className='relative w-screen h-screen md:absolute md:w-[50rem] md:h-[40rem] bg-white rounded-md shadow-xl overflow-hidden'>
         <img src={sideImage} className='hidden md:block absolute top-0 left-0 h-full' alt='planet'></img>

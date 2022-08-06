@@ -9,7 +9,6 @@ import SignUp from "./SignUp";
 function App() {
   const [logInPopUp, setLogInPopUp] = useState(false)
   const [signUpPopUp, setSignUpPopUp] = useState(false)
-  localStorage.theme = 'light'
   if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     document.documentElement.classList.add('dark')
   } else {

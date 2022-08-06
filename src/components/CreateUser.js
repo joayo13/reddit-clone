@@ -31,7 +31,7 @@ function CreateUser(props) {
     }
     catch(e) {
       props.setCreateUser(false)
-      props.setError(`${e}`)
+      props.setError(`${e.message}`)
     }
     setLoading(false)
   }

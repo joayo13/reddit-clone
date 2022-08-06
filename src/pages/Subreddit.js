@@ -8,7 +8,7 @@ function Subreddit(props) {
 
   return (
     <div className='bg-slate-100 dark:bg-black min-h-screen'>
-        <section className='flex flex-col items-center md:flex-row md:justify-center gap-4 bg-white dark:bg-slate-900 dark:text-white'>
+        <section className='flex flex-col items-center md:flex-row md:justify-center gap-4 bg-white dark:bg-slate-900 dark:text-white py-2'>
             <img src={redditIcon} className='w-20 h-20 rounded-full border border-slate-200 dark:border-slate-800'></img>
             <h1 className='font-bold text-3xl text-center'>Example Subreddit</h1>
             <button className=' border border-slate-800 text-slate-800 w-24 py-1 rounded-full dark:text-white dark:border-white'>Join</button>
@@ -42,6 +42,7 @@ function Subreddit(props) {
                     </ul>
                 </li>
             </ul>
+            <span className='flex md:hidden w-screen h-px bg-white items-center text-white justify-center'><p className='bg-black px-2'>Posts</p></span>
             <ul className='flex flex-col gap-4 lg:w-[20rem] md:w-[15rem]'>
                 <li className='flex flex-col px-4 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 dark:text-slate-300 gap-4 rounded-md'>
                     <h2 className='text-xl font-semibold'>About Community</h2>

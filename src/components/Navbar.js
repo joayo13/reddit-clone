@@ -1,41 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import redditIcon from '../images/reddit-icon.png'
 import { useAuth } from '../contexts/AuthContext'
-import { doc, getDoc } from "firebase/firestore";
-import { db } from '../firebase'
+
 
 const Navbar = (props) => {
 
   const [mobileNavLinksVisible, setMobileNavLinksVisible] = useState(false)
 
-  const [userInfo, setUserInfo] = useState({})
+  const {currentUser, logOut, setUserInfo, userInfo} = useAuth()
 
-  const {currentUser, logOut} = useAuth()
-
-  async function fetchUserData () {
-    const docRef = doc(db, "users", currentUser.email);
-
-    try {
-      const docSnap = await getDoc(docRef);
-      if(docSnap.exists()) {
-        setUserInfo({
-          profilePicture: docSnap.data().profilePicture,
-          username: docSnap.data().username
-        })
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-      }
-    }
-    catch(e) {
-      console.log(e)
-    }
-  }
-
-  useEffect(() => {
-    if (currentUser)
-    fetchUserData()
-  },[currentUser])
+  
 
   return (
     <div className='font-poppins relative border-b border-slate-200 dark:bg-slate-900'>

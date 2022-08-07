@@ -2,7 +2,8 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { db } from '../firebase'
 import { useParams, useNavigate} from 'react-router-dom'
-import { doc, getDoc, getDocs, setDoc, collection, serverTimestamp} from "firebase/firestore";
+import { doc, getDoc, getDocs, addDoc, setDoc, collection, serverTimestamp} from "firebase/firestore";
+import uniqid from 'uniqid'
 
 
 function SubmitPost() {
@@ -15,13 +16,15 @@ function SubmitPost() {
     const navigate = useNavigate()
 
     async function createPost() {
+        const uniqueId = uniqid()
         try {
-            await setDoc(doc(db, "subreddits", id, "posts", postTitleRef.current.value), {
+            await setDoc(doc(db, "subreddits", id, "posts", uniqueId), {
                 postTitle: postTitleRef.current.value,
                 author: userInfo.username,
                 timestamp: serverTimestamp(),
                 text: postTextRef.current.value,
                 upvotes: 0,
+                id: uniqueId
             })
             navigate(`/r/${id}`)
         }

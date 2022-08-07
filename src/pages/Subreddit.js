@@ -8,9 +8,7 @@ import { doc, getDoc, getDocs, setDoc, collection, Timestamp } from "firebase/fi
 
 function Subreddit(props) {
 
-    const postTitleRef = useRef()
-
-    const {currentUser, logOut, setUserInfo, userInfo} = useAuth()
+    const {currentUser, userInfo} = useAuth()
     const [subredditMetaData, setSubredditMetaData] = useState({})
     const [subredditPostsData, setSubredditPostsData] = useState([])
     const [loading, setLoading] = useState(true)
@@ -35,10 +33,11 @@ function Subreddit(props) {
         try {
             const querySnapshot = await getDocs(collection(db, 'subreddits', id, 'posts'))
             querySnapshot.forEach((doc) => {
-                data.push(doc.data())
+                data.push( doc.data())
             })
             setSubredditPostsData(data)
             setLoading(false)
+            console.log(data)
         }
         catch(e) {
             console.log(e)
@@ -65,7 +64,7 @@ function Subreddit(props) {
                         <input type='text' onClick={() => navigate(`/r/${id}/submit`)} placeholder='Create Post' className='w-full outline-none bg-slate-100 dark:bg-slate-800 dark:text-white indent-2 rounded-md'></input>
                     </li> : null}
                     {subredditPostsData.map((post, index) => 
-                        <li key={index} className='flex flex-col gap-2 px-4 py-4 bg-white border border-slate-200 rounded-md dark:bg-slate-900 dark:text-slate-300 dark:border-slate-700'>
+                        <li onClick={ () => navigate(`/r/${id}/comments/${post.id}`)} key={index} className='flex flex-col gap-2 px-4 py-4 bg-white border border-slate-200 rounded-md dark:bg-slate-900 dark:text-slate-300 dark:border-slate-700'>
                         <p className='text-xs text-slate-500'>Posted by u/{post.author} {getDatefromSeconds(post.timestamp?.seconds, Timestamp.now().seconds)}</p>
                         <h1>{post.postTitle}</h1>
                         <ul className='flex gap-2'>

@@ -11,6 +11,7 @@ import {
   Link
 } from "react-router-dom";
 import Home from "../pages/Home";
+import SubmitPost from "../pages/SubmitPost";
 
 function App() {
   const [logInPopUp, setLogInPopUp] = useState(false)
@@ -30,6 +31,7 @@ function App() {
     <Routes>
     <Route exact path='/' element={<Home/>}/>
     <Route exact path='/r/:id' element={<Subreddit/>}/>
+    <Route exact path ='/r/:id/submit' element={<SubmitPost/>}/>
     </Routes>
     </AuthProvider>
     </Router>

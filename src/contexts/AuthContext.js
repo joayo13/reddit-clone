@@ -38,6 +38,8 @@ export function AuthProvider({ children }) {
         fetchUserData()
       },[currentUser])
 
+      
+
     function signUp(email, password) {
        return auth.createUserWithEmailAndPassword(email, password)
     }

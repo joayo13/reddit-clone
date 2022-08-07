@@ -1,18 +1,34 @@
-import { React, useEffect, useState }from 'react'
+import { React, useEffect, useState, useRef }from 'react'
 import redditIcon from '../images/reddit-icon.png'
 import { useAuth } from '../contexts/AuthContext'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate} from 'react-router-dom'
 import { db } from '../firebase'
 import { doc, getDoc, getDocs, setDoc, collection } from "firebase/firestore";
 
 function Subreddit(props) {
 
+    const postTitleRef = useRef()
+
     const {currentUser, logOut, setUserInfo, userInfo} = useAuth()
     const [subredditMetaData, setSubredditMetaData] = useState({})
     const [subredditPostsData, setSubredditPostsData] = useState([])
     const [loading, setLoading] = useState(true)
+    const navigate = useNavigate()
  
     let { id } = useParams()
+
+    async function createPost() {
+        try {
+            await setDoc(doc(db, "subreddits", id, "posts", postTitleRef.current.value), {
+                postTitle: postTitleRef.current.value,
+                author: userInfo.username,
+                timestamp: 0
+            })
+        }
+        catch(e) {
+            console.log(e)
+        }
+    }
 
     async function fetchSubredditData() {
         try {
@@ -34,7 +50,6 @@ function Subreddit(props) {
                 data.push(doc.data())
             })
             setSubredditPostsData(data)
-            console.log(data)
             setLoading(false)
         }
         catch(e) {
@@ -54,15 +69,15 @@ function Subreddit(props) {
                 <h1 className='font-bold text-3xl text-center'>{subredditMetaData.title}</h1>
                 <button className=' border border-slate-800 text-slate-800 w-24 py-1 rounded-full dark:text-white dark:border-white'>Join</button>
             </section>
-            <div className='flex flex-col-reverse md:flex-row justify-center mt-10 gap-4'>
+            <div className='flex flex-col-reverse md:flex-row justify-center mt-4 gap-4'>
                 <ul className='flex flex-col gap-4 lg:w-[40rem] md:w-[30rem]'>
                     {currentUser ? 
                     <li className='flex gap-2 px-4 py-4 bg-white dark:bg-slate-900 dark:border-slate-800 border border-slate-200 rounded-md'>
                         <img src={userInfo.profilePicture} className='w-10 rounded-full'></img>
-                        <input type='text' placeholder='Create Post' className='w-full outline-none bg-slate-100 dark:bg-slate-800 dark:text-white indent-2 rounded-md'></input>
+                        <input type='text' onClick={() => navigate(`/r/${id}/submit`)} placeholder='Create Post' className='w-full outline-none bg-slate-100 dark:bg-slate-800 dark:text-white indent-2 rounded-md'></input>
                     </li> : null}
-                    {subredditPostsData.map((post) => 
-                        <li className='flex flex-col gap-2 px-4 py-4 bg-white border border-slate-200 rounded-md dark:bg-slate-900 dark:text-slate-300 dark:border-slate-700'>
+                    {subredditPostsData.map((post, index) => 
+                        <li key={index} className='flex flex-col gap-2 px-4 py-4 bg-white border border-slate-200 rounded-md dark:bg-slate-900 dark:text-slate-300 dark:border-slate-700'>
                         <p className='text-xs text-slate-500'>Posted by u/{post.author} {post.timestamp} days ago</p>
                         <h1>{post.postTitle}</h1>
                         <ul className='flex gap-2'>
@@ -85,8 +100,6 @@ function Subreddit(props) {
                     </li>
                     )}
                 </ul>
-                
-                <span className='flex md:hidden w-screen h-px bg-white items-center text-white justify-center'><p className='bg-black px-2'>Posts</p></span>
                 <ul className='flex flex-col gap-4 lg:w-[20rem] md:w-[15rem]'>
                     <li className='flex flex-col px-4 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 dark:text-slate-300 gap-4 rounded-md'>
                         <h2 className='text-xl font-semibold'>About Community</h2>
@@ -96,7 +109,7 @@ function Subreddit(props) {
                     <li className='flex flex-col px-4 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 dark:text-slate-300 gap-4 rounded-md'>
                         <h2 className='text-xl font-semibold'>Subreddit Rules</h2>
                         <ol className='flex flex-col px-4 gap-4 list-decimal'>
-                        {subredditMetaData.subredditRules.map((rule) => <li>{rule}</li>)}
+                        {subredditMetaData.subredditRules.map((rule, index) => <li key={index}>{rule}</li>)}
                         </ol>
                     </li>
                 </ul>

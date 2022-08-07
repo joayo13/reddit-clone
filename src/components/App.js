@@ -4,7 +4,13 @@ import Subreddit from "../pages/Subreddit";
 import LogIn from "./LogIn";
 import Navbar from "./Navbar";
 import SignUp from "./SignUp";
-
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
+import Home from "../pages/Home";
 
 function App() {
   const [logInPopUp, setLogInPopUp] = useState(false)
@@ -16,12 +22,17 @@ function App() {
   }
   return (
     <>
+    <Router>
     <AuthProvider>
     <Navbar setLogInPopUp={setLogInPopUp} setSignUpPopUp={setSignUpPopUp}/>
     {logInPopUp ? <LogIn setLogInPopUp={setLogInPopUp} setSignUpPopUp={setSignUpPopUp}></LogIn> : null}
     {signUpPopUp ? <SignUp setLogInPopUp={setLogInPopUp} setSignUpPopUp={setSignUpPopUp}></SignUp> : null}
-    <Subreddit/>
+    <Routes>
+    <Route exact path='/' element={<Home/>}/>
+    <Route exact path='/r/:id' element={<Subreddit/>}/>
+    </Routes>
     </AuthProvider>
+    </Router>
     </>
   );
 }

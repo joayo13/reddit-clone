@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { db } from '../firebase'
 import { useParams, useNavigate} from 'react-router-dom'
-import { doc, getDoc, getDocs, setDoc, collection } from "firebase/firestore";
+import { doc, getDoc, getDocs, setDoc, collection, serverTimestamp} from "firebase/firestore";
 
 
 function SubmitPost() {
@@ -19,8 +19,9 @@ function SubmitPost() {
             await setDoc(doc(db, "subreddits", id, "posts", postTitleRef.current.value), {
                 postTitle: postTitleRef.current.value,
                 author: userInfo.username,
-                timestamp: 0,
-                text: postTextRef.current.value
+                timestamp: serverTimestamp(),
+                text: postTextRef.current.value,
+                upvotes: 0,
             })
             navigate(`/r/${id}`)
         }
@@ -47,11 +48,10 @@ function SubmitPost() {
   return (
     <>{loading ? null :
         <div className='bg-slate-100 dark:bg-black min-h-screen'>
-            <section className='flex flex-col items-center md:flex-row md:justify-center gap-4 bg-white dark:bg-slate-900 dark:text-white py-2'>
-                <h1 className='font-bold text-3xl text-center'>Create a post in r/{id}</h1>
-            </section>
-                <div className='flex md:flex-row justify-center mt-4 gap-4'>
+                <div className='flex md:flex-row justify-center py-4 gap-4'>
                     <ul className='flex flex-col lg:w-[40rem] md:w-[30rem] w-full'>
+                    <h1 className='dark:text-white text-black mb-4'>Create a post</h1>
+                    <span className='w-full dark:bg-white bg-slate-200 h-px mb-4'></span>
                         <li className='flex px-4 py-4 bg-white dark:bg-slate-900  border-slate-200 rounded-t-md'>
                             <input type='text' ref={postTitleRef} placeholder='Title' maxLength={300} className='w-full outline-none bg-slate-100 dark:bg-slate-800 dark:text-white indent-2 rounded-md py-1'></input>
                         </li>

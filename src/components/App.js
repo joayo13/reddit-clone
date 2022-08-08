@@ -12,10 +12,12 @@ import {
 } from "react-router-dom";
 import Home from "../pages/Home";
 import SubmitPost from "../pages/SubmitPost";
+import CreateCommunity from "./CreateCommunity";
 
 function App() {
   const [logInPopUp, setLogInPopUp] = useState(false)
   const [signUpPopUp, setSignUpPopUp] = useState(false)
+  const [createCommunityPopUp, setCreateCommunityPopUp] = useState(false)
   if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     document.documentElement.classList.add('dark')
   } else {
@@ -25,9 +27,10 @@ function App() {
     <>
     <Router>
     <AuthProvider>
-    <Navbar setLogInPopUp={setLogInPopUp} setSignUpPopUp={setSignUpPopUp}/>
+    <Navbar setLogInPopUp={setLogInPopUp} setSignUpPopUp={setSignUpPopUp} setCreateCommunityPopUp={setCreateCommunityPopUp}/>
     {logInPopUp ? <LogIn setLogInPopUp={setLogInPopUp} setSignUpPopUp={setSignUpPopUp}></LogIn> : null}
     {signUpPopUp ? <SignUp setLogInPopUp={setLogInPopUp} setSignUpPopUp={setSignUpPopUp}></SignUp> : null}
+    {createCommunityPopUp ? <CreateCommunity setCreateCommunityPopUp={setCreateCommunityPopUp}></CreateCommunity> : null}
     <Routes>
     <Route exact path='/' element={<Home/>}/>
     <Route exact path='/r/:id' element={<Subreddit/>}/>

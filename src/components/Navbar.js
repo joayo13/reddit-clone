@@ -64,7 +64,9 @@ const Navbar = (props) => {
         </ul>
       </header>
       {/* dropdown menu contents */}
-      { mobileNavLinksVisible ? <MobileNavLinks currentUser={currentUser} userInfo={userInfo} setMobileNavLinksVisible={setMobileNavLinksVisible} setLogInPopUp={props.setLogInPopUp} logOut={logOut}/> : null}
+      { mobileNavLinksVisible ? <MobileNavLinks currentUser={currentUser} userInfo={userInfo} setMobileNavLinksVisible={setMobileNavLinksVisible}
+        setLogInPopUp={props.setLogInPopUp} logOut={logOut} setCreateCommunityPopUp={props.setCreateCommunityPopUp}
+      /> : null}
       {/* full screen button for disabling dropdown if clicking outside of it */}
       { mobileNavLinksVisible ? <button onClick={() => setMobileNavLinksVisible(!mobileNavLinksVisible)} className='fixed top-0 right-0 bottom-0 left-0 h-full w-full cursor-default'></button> : null}
     </div>

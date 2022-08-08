@@ -10,12 +10,12 @@ function MobileNavLinks(props) {
       {userInfo.username}
     </li> : null}
     { currentUser ? 
-      <li className='flex gap-2 items-center cursor-pointer px-2 py-4 hover:bg-slate-200 dark:hover:bg-slate-800'>
+      <button onClick={() => props.setCreateCommunityPopUp(true)} className='flex gap-2 items-center cursor-pointer px-2 py-4 hover:bg-slate-200 dark:hover:bg-slate-800'>
       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
       </svg>
       Create a Community
-    </li> : null}
+    </button> : null}
     <button className='flex gap-2 items-center cursor-pointer px-2 py-4 hover:bg-slate-200 dark:hover:bg-slate-800'
     onClick={() => {localStorage.theme !== 'dark' ? localStorage.theme = 'dark': localStorage.theme='light'; window.location.reload()}}>
       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">

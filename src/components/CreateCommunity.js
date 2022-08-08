@@ -8,14 +8,23 @@ function CreateCommunity(props) {
     const { userInfo } = useAuth()
     const nameRef = useRef()
     const aboutCommunityRef = useRef()
+    const ruleOneRef = useRef()
+    const ruleTwoRef = useRef()
+    const ruleThreeRef = useRef()
+    let navigate = useNavigate()
 
-    async function createCommunity() {
+
+    async function createCommunity(props) {
         try {
             await setDoc(doc(db, "subreddits", nameRef.current.value), {
                 title: nameRef.current.value,
-                subredditRules: [],
+                subredditRules: [ruleOneRef.current.value, ruleTwoRef.current.value, ruleThreeRef.current.value],
                 aboutCommunity: aboutCommunityRef.current.value,
                 admin: userInfo.username
+            })
+            .then(() => {
+                navigate(`/r/${nameRef.current.value}`)
+                props.setCreateCommunityPopUp(false)
             })
         }
         catch(e) {
@@ -26,7 +35,7 @@ function CreateCommunity(props) {
   return (
     <div className='fixed flex w-screen h-screen justify-center items-center top-0 overflow-y-hidden z-10'>
         <div className='fixed w-screen h-screen left-0 top-0 right-0 bottom-0 bg-black opacity-50'></div>
-        <div className='relative w-screen h-screen md:absolute md:w-[30rem] md:h-[30rem] bg-white rounded-md shadow-xl overflow-hidden dark:bg-slate-900 dark:text-white px-4 py-4'>
+        <div className='relative w-screen h-screen md:absolute md:w-[30rem] md:h-[40rem] bg-white rounded-md shadow-xl overflow-hidden dark:bg-slate-900 dark:text-white px-4 py-4'>
             <h1 className=''>Create a Community</h1>
             <div className='dark:bg-slate-700 bg-slate-300 w-full h-px my-4'></div>
             <svg onClick={()=> props.setCreateCommunityPopUp(false)} xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 absolute right-2 top-2 opacity-50 dark:text-white" viewBox="0 0 20 20" fill="currentColor">
@@ -36,13 +45,27 @@ function CreateCommunity(props) {
             <p className='opacity-50 text-sm'>Community names including capitalization cannot be changed.</p>
             <div className='flex items-center h-10 w-full border border-slate-300 dark:border-slate-700 my-4 rounded-md outline-blue-500 hover:outline outline-1 focus-within:outline'>
                 <label className='mx-2 text-lg opacity-50'>/r</label>
-                <input type='text' ref={nameRef} maxLength={20} className='bg-inherit outline-none'></input>
+                <input type='text' ref={nameRef} required maxLength={20} className='bg-inherit outline-none'></input>
             </div>
             <h1>About Community</h1>
             <p className='opacity-50 text-sm'>Give a brief description of your Community and it's intended purpose.</p>
-            <textarea ref={aboutCommunityRef} className='w-full border border-slate-300 dark:border-slate-700 h-20 my-4 indent-2 rounded-md outline-blue-500 hover:outline outline-1 focus-within:outline bg-inherit text-indent-2'></textarea>
+            <textarea ref={aboutCommunityRef} required className='w-full border border-slate-300 dark:border-slate-700 h-20 my-4 indent-2 rounded-md outline-blue-500 hover:outline outline-1 focus-within:outline bg-inherit text-indent-2'></textarea>
             <h1>Subreddit Rules</h1>
             <p className='opacity-50 text-sm'>Set the rules for your Subreddit.</p>
+            <ol type='decimal' className=''>
+            <li className='flex items-center h-10 w-full border border-slate-300 dark:border-slate-700 my-4 rounded-md outline-blue-500 hover:outline outline-1 focus-within:outline'>
+                <label className='mx-2 text-lg opacity-50'>1.</label>
+                <input type='text' ref={ruleOneRef} maxLength={20} className='bg-inherit outline-none'></input>
+            </li>
+            <li className='flex items-center h-10 w-full border border-slate-300 dark:border-slate-700 my-4 rounded-md outline-blue-500 hover:outline outline-1 focus-within:outline'>
+                <label className='mx-2 text-lg opacity-50'>2.</label>
+                <input type='text' ref={ruleTwoRef} maxLength={20} className='bg-inherit outline-none'></input>
+            </li>
+            <li className='flex items-center h-10 w-full border border-slate-300 dark:border-slate-700 my-4 rounded-md outline-blue-500 hover:outline outline-1 focus-within:outline'>
+                <label className='mx-2 text-lg opacity-50'>3.</label>
+                <input type='text' ref={ruleThreeRef} maxLength={20} className='bg-inherit outline-none'></input>
+            </li>
+            </ol>
             <button onClick={() => createCommunity()} className='rounded-full absolute py-2 px-4 bottom-2 right-2 dark:bg-slate-700 bg-blue-600 text-white font-semibold'>Create Community</button>
         </div>
     </div>

@@ -13,6 +13,7 @@ import {
 import Home from "../pages/Home";
 import SubmitPost from "../pages/SubmitPost";
 import CreateCommunity from "./CreateCommunity";
+import Comments from "../pages/Comments";
 
 function App() {
   const [logInPopUp, setLogInPopUp] = useState(false)
@@ -35,6 +36,7 @@ function App() {
     <Route exact path='/' element={<Home/>}/>
     <Route exact path='/r/:id' element={<Subreddit/>}/>
     <Route exact path ='/r/:id/submit' element={<SubmitPost/>}/>
+    <Route exact path ='/r/:id/comments/:post' element={<Comments/>}/>
     </Routes>
     </AuthProvider>
     </Router>

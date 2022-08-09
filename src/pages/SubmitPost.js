@@ -2,12 +2,12 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { db } from '../firebase'
 import { useParams, useNavigate} from 'react-router-dom'
-import { doc, getDoc, getDocs, addDoc, setDoc, collection, serverTimestamp} from "firebase/firestore";
+import { doc, getDoc, setDoc, serverTimestamp} from "firebase/firestore";
 import uniqid from 'uniqid'
 
 
 function SubmitPost() {
-    const {currentUser, logOut, setUserInfo, userInfo} = useAuth()
+    const { userInfo } = useAuth()
     const [subredditMetaData, setSubredditMetaData] = useState({})
     const [loading, setLoading] = useState(true)
     let { id } = useParams()

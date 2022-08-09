@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { getDatefromSeconds } from '../helpers/getDate'
 import { useParams, useNavigate} from 'react-router-dom'
 import { db } from '../firebase'
-import { doc, getDoc, getDocs, setDoc, collection, Timestamp } from "firebase/firestore";
+import { doc, getDoc, getDocs, collection, Timestamp } from "firebase/firestore";
 
 function Subreddit(props) {
 

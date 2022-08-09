@@ -21,10 +21,11 @@ function CreateCommunity(props) {
                 subredditRules: [ruleOneRef.current.value, ruleTwoRef.current.value, ruleThreeRef.current.value],
                 aboutCommunity: aboutCommunityRef.current.value,
                 admin: userInfo.username
+
             })
             .then(() => {
                 navigate(`/r/${nameRef.current.value}`)
-                props.setCreateCommunityPopUp(false)
+                window.location.reload()
             })
         }
         catch(e) {

@@ -54,7 +54,6 @@ function SubmitPost() {
                 <div className='flex md:flex-row justify-center py-4 gap-4'>
                     <ul className='flex flex-col lg:w-[40rem] md:w-[30rem] w-full'>
                     <h1 className='dark:text-white text-black mb-4'>Create a post</h1>
-                    <span className='w-full dark:bg-white bg-slate-200 h-px mb-4'></span>
                         <li className='flex px-4 py-4 bg-white dark:bg-slate-900  border-slate-200 rounded-t-md'>
                             <input type='text' ref={postTitleRef} placeholder='Title' maxLength={300} className='w-full outline-none bg-slate-100 dark:bg-slate-800 dark:text-white indent-2 rounded-md py-1'></input>
                         </li>

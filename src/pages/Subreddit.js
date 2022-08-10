@@ -1,5 +1,4 @@
 import { React, useEffect, useState, useRef }from 'react'
-import redditIcon from '../images/reddit-icon.png'
 import { useAuth } from '../contexts/AuthContext'
 import { getDatefromSeconds } from '../helpers/getDate'
 import { useParams, useNavigate} from 'react-router-dom'
@@ -52,7 +51,7 @@ function Subreddit(props) {
     <>{loading ? null :
         <div className='bg-gray-100 dark:bg-black min-h-screen'>
             <section className='flex flex-col items-center md:flex-row md:justify-center gap-4 bg-white dark:bg-gray-900 dark:text-white py-2'>
-                <img src={redditIcon} className='w-20 h-20 rounded-full border border-gray-200 dark:border-gray-800'></img>
+                <div className='w-20 h-20 rounded-full border border-gray-200 dark:border-gray-800'>r/</div>
                 <h1 className='font-bold text-3xl text-center'>{subredditMetaData.title}</h1>
                 <button className=' border border-gray-800 text-gray-800 w-24 py-1 rounded-full dark:text-white dark:border-white'>Join</button>
             </section>

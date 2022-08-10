@@ -20,7 +20,8 @@ function CreateCommunity(props) {
                 title: nameRef.current.value,
                 subredditRules: [ruleOneRef.current.value, ruleTwoRef.current.value, ruleThreeRef.current.value],
                 aboutCommunity: aboutCommunityRef.current.value,
-                admin: userInfo.username
+                admin: userInfo.username,
+                communityColor: 'red'
 
             })
             .then(() => {

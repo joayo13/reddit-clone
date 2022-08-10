@@ -17,4 +17,5 @@ export const getDatefromSeconds = (createdAt, currentTime) => {
         }
         return Math.round((currentTime - createdAt) / 60) + ` minutes ago`
     }
+    return 'Just now'
 }

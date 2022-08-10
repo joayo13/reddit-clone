@@ -38,7 +38,7 @@ function CreateUser(props) {
   return (
     <div className='fixed flex w-screen h-screen justify-center items-center top-0 overflow-y-hidden z-10'>
       <div className='fixed w-screen h-screen left-0 top-0 right-0 bottom-0 bg-black opacity-50'></div>
-      <div className='relative w-screen h-screen md:absolute md:w-[50rem] md:h-[40rem] bg-white rounded-md shadow-xl overflow-hidden'>
+      <div className='relative w-screen h-screen md:absolute md:w-[50rem] md:h-[40rem] bg-white dark:bg-gray-900 dark:text-white rounded-md shadow-xl overflow-hidden'>
         <img src={sideImage} className='hidden md:block absolute top-0 left-0 h-full' alt='planet'></img>
         <div className='relative md:left-28 md:w-[43rem] w-full h-full bg-white py-16 px-8 overflow-y-scroll'>
         <svg onClick={()=> props.setSignUpPopUp(false)} xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 absolute right-2 top-2 opacity-50" viewBox="0 0 20 20" fill="currentColor">

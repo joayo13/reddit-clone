@@ -50,22 +50,22 @@ function Subreddit(props) {
 
   return (
     <>{loading ? null :
-        <div className='bg-slate-100 dark:bg-black min-h-screen'>
-            <section className='flex flex-col items-center md:flex-row md:justify-center gap-4 bg-white dark:bg-slate-900 dark:text-white py-2'>
-                <img src={redditIcon} className='w-20 h-20 rounded-full border border-slate-200 dark:border-slate-800'></img>
+        <div className='bg-gray-100 dark:bg-black min-h-screen'>
+            <section className='flex flex-col items-center md:flex-row md:justify-center gap-4 bg-white dark:bg-gray-900 dark:text-white py-2'>
+                <img src={redditIcon} className='w-20 h-20 rounded-full border border-gray-200 dark:border-gray-800'></img>
                 <h1 className='font-bold text-3xl text-center'>{subredditMetaData.title}</h1>
-                <button className=' border border-slate-800 text-slate-800 w-24 py-1 rounded-full dark:text-white dark:border-white'>Join</button>
+                <button className=' border border-gray-800 text-gray-800 w-24 py-1 rounded-full dark:text-white dark:border-white'>Join</button>
             </section>
             <div className='flex flex-col-reverse md:flex-row justify-center mt-4 gap-4'>
                 <ul className='flex flex-col gap-4 lg:w-[40rem] md:w-[30rem]'>
                     {currentUser ? 
-                    <li className='flex gap-2 px-4 py-4 bg-white dark:bg-slate-900 dark:border-slate-800 border border-slate-200 rounded-md'>
+                    <li className='flex gap-2 px-4 py-4 bg-white dark:bg-gray-900 dark:border-gray-800 border border-gray-200 rounded-sm'>
                         <img src={userInfo.profilePicture} className='w-10 rounded-full'></img>
-                        <input type='text' onClick={() => navigate(`/r/${id}/submit`)} placeholder='Create Post' className='w-full outline-none bg-slate-100 dark:bg-slate-800 dark:text-white indent-2 rounded-md'></input>
+                        <input type='text' onClick={() => navigate(`/r/${id}/submit`)} placeholder='Create Post' className='w-full outline-none bg-gray-100 dark:bg-gray-800 dark:text-white indent-2 rounded-sm'></input>
                     </li> : null}
                     {subredditPostsData.map((post, index) => 
-                        <li onClick={ () => navigate(`/r/${id}/comments/${post.id}`)} key={index} className='flex flex-col gap-2 px-4 py-4 bg-white border border-slate-200 rounded-md dark:bg-slate-900 dark:text-slate-300 dark:border-slate-700'>
-                        <p className='text-xs text-slate-500'>Posted by u/{post.author} {getDatefromSeconds(post.timestamp?.seconds, Timestamp.now().seconds)}</p>
+                        <li onClick={ () => navigate(`/r/${id}/comments/${post.id}`)} key={index} className='flex flex-col gap-2 px-4 py-4 bg-white border border-gray-200 rounded-sm dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700'>
+                        <p className='text-xs text-gray-500'>Posted by u/{post.author} {getDatefromSeconds(post.timestamp?.seconds, Timestamp.now().seconds)}</p>
                         <h1>{post.postTitle}</h1>
                         <ul className='flex gap-2'>
                             <li className='flex gap-2 font-semibold'>
@@ -88,12 +88,12 @@ function Subreddit(props) {
                     )}
                 </ul>
                 <ul className='flex flex-col gap-4 lg:w-[20rem] md:w-[15rem]'>
-                    <li className='flex flex-col px-4 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 dark:text-slate-300 gap-4 rounded-md'>
+                    <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-sm'>
                         <h2 className='text-xl font-semibold'>About Community</h2>
                         <p>{subredditMetaData.aboutCommunity}</p>
                         <p className='font-semibold'>0 members</p>
                     </li>
-                    <li className='flex flex-col px-4 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 dark:text-slate-300 gap-4 rounded-md'>
+                    <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-sm'>
                         <h2 className='text-xl font-semibold'>Subreddit Rules</h2>
                         <ol className='flex flex-col px-4 gap-4 list-decimal'>
                         {subredditMetaData.subredditRules.map((rule, index) => <li key={index}>{rule}</li>)}

@@ -11,7 +11,7 @@ const Navbar = (props) => {
   const {currentUser, logOut, setUserInfo, userInfo} = useAuth()
 
   return (
-    <div className='font-poppins relative border-b border-slate-200 dark:bg-slate-900 dark:border-slate-800'>
+    <div className='font-poppins relative border-b border-gray-200 dark:bg-gray-900 dark:border-gray-800'>
       <header className='flex items-center px-4 py-1'>
         {/* logo and name */}
         <div className='flex items-center gap-2'>
@@ -19,11 +19,11 @@ const Navbar = (props) => {
         <h1 className='hidden md:block text-1xl font-semibold text-gray-700 dark:text-white'>!Reddit</h1>
         </div>
         {/* search bar */}
-        <div className='flex mx-auto gap-1 bg-slate-50 dark:bg-slate-800 px-2 py-2 outline-blue-500 hover:outline outline-1 rounded-md md:w-4/12 w-48 focus-within:outline'>
+        <div className='flex mx-auto gap-1 bg-gray-50 dark:bg-gray-800 px-2 py-2 outline-blue-500 hover:outline outline-1 rounded-md md:w-4/12 w-48 focus-within:outline'>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 dark:invert" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
-          <input type='text' placeholder='Search !Reddit' className='bg-slate-50 dark:bg-slate-800 dark:text-white focus:outline-none w-full'>
+          <input type='text' placeholder='Search !Reddit' className='bg-gray-50 dark:bg-gray-800 dark:text-white focus:outline-none w-full'>
           </input>
         </div>
         {/* sign up and login buttons */}
@@ -38,7 +38,7 @@ const Navbar = (props) => {
           </span> 
           : <>
           <button 
-            className='hidden md:block w-32 py-1 border-blue-500 font-bold border rounded-full text-blue-500 hover:bg-slate-100 dark:hover:bg-slate-700 text-sm'
+            className='hidden md:block w-32 py-1 border-blue-500 font-bold border rounded-full text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm'
             onClick={()=> props.setLogInPopUp(true)}>Log In</button>
           <button 
             className='hidden md:block w-32 py-1 bg-blue-500 font-bold rounded-full text-white hover:bg-blue-400 text-sm'

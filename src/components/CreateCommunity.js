@@ -11,6 +11,7 @@ function CreateCommunity(props) {
     const ruleOneRef = useRef()
     const ruleTwoRef = useRef()
     const ruleThreeRef = useRef()
+    const colorRef = useRef()
     let navigate = useNavigate()
 
 
@@ -21,7 +22,7 @@ function CreateCommunity(props) {
                 subredditRules: [ruleOneRef.current.value, ruleTwoRef.current.value, ruleThreeRef.current.value],
                 aboutCommunity: aboutCommunityRef.current.value,
                 admin: userInfo.username,
-                communityColor: 'red'
+                communityColor: colorRef.current.value,
 
             })
             .then(() => {
@@ -37,7 +38,7 @@ function CreateCommunity(props) {
   return (
     <div className='fixed flex w-screen h-screen justify-center items-center top-0 overflow-y-hidden z-10'>
         <div className='fixed w-screen h-screen left-0 top-0 right-0 bottom-0 bg-black opacity-50'></div>
-        <div className='relative w-screen h-screen md:absolute md:w-[30rem] md:h-[40rem] bg-white rounded-md shadow-xl overflow-hidden dark:bg-gray-900 dark:text-white px-4 py-4'>
+        <div className='relative w-screen h-screen md:absolute md:w-[30rem] md:h-[45rem] bg-white rounded-md shadow-xl overflow-hidden dark:bg-gray-900 dark:text-white px-4 py-4'>
             <h1 className=''>Create a Community</h1>
             <div className='dark:bg-gray-700 bg-gray-300 w-full h-px my-4'></div>
             <svg onClick={()=> props.setCreateCommunityPopUp(false)} xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 absolute right-2 top-2 opacity-50 dark:text-white" viewBox="0 0 20 20" fill="currentColor">
@@ -68,6 +69,11 @@ function CreateCommunity(props) {
                 <input type='text' ref={ruleThreeRef} maxLength={20} className='bg-inherit outline-none'></input>
             </li>
             </ol>
+            <span className='flex gap-2'>
+            <h1>Community Color</h1>
+            <input type='color' ref={colorRef}></input>
+            </span>
+            <p className='opacity-50 text-sm mt-1'>This will be the color of your Community's display picture.</p>
             <button onClick={() => createCommunity()} className='rounded-full absolute py-2 px-4 bottom-2 right-2 dark:bg-gray-700 bg-blue-600 text-white font-semibold'>Create Community</button>
         </div>
     </div>

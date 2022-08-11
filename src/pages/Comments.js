@@ -14,6 +14,7 @@ function Comments(props) {
     const [loading, setLoading] = useState(true)
     const [postMetaData, setPostMetaData] = useState({})
     const [commentMetaData, setCommentMetaData] = useState({})
+    const [replyToId, setReplyToId] = useState(null)
     const navigate = useNavigate()
     let { id, post } = useParams()
     const commentTextRef = useRef()
@@ -54,11 +55,27 @@ function Comments(props) {
                 text: commentTextRef.current.value,
                 upvotes: 0,
                 id: uniqueId,
-                replyTo: ''
             })
         }
-        catch {
-
+        catch(e) {
+            console.log(e)
+        }
+    }
+    async function postReply(parentCommentId) {
+        const uniqueId = uniqid()
+        try {
+            await setDoc(doc(db, 'subreddits', id, 'posts', post, 'comments', uniqueId), {
+                author: userInfo.username,
+                authorProfilePicture: userInfo.profilePicture,
+                timestamp: serverTimestamp(),
+                text: commentTextRef.current.value,
+                upvotes: 0,
+                id: uniqueId,
+                replyTo: parentCommentId,
+            })
+        }
+        catch(e) {
+            console.log(e)
         }
     }
     
@@ -111,16 +128,74 @@ function Comments(props) {
                     </div>
                 </section>
                 <section className='flex flex-col gap-4'>
-                    {commentMetaData.map((comment, index) => 
-                    <div className='dark:text-white'>
-                        <span className='items-center flex gap-2'>
+                    {commentMetaData.filter((comment) => !comment.replyTo).map((comment, index) => 
+                    <div key={index} className='dark:text-white'>
+                        <span className='flex items-center gap-2'>
                             <img src={comment.authorProfilePicture} className={'w-6 h-6 rounded-full'}></img>
                         <h1>{comment.author}</h1>
                         <p className='text-xs opacity-50'>{getDatefromSeconds(comment.timestamp?.seconds, Timestamp.now().seconds)}</p>
                         </span>
-                        <p className='text-sm opacity-90 mt-4 ml-8'>{comment.text}</p>
+                        <p className='text-sm opacity-90 mt-2 ml-8'>{comment.text}</p>
+                        <span className='flex px-8 gap-2 mt-2'>
+                            <div className='flex -ml-1 gap-1 text-sm items-center opacity-50'>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 " fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" />
+                                </svg>
+                                0
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 " fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
+                                </svg>
+                            </div>
+                            <button onClick={() => setReplyToId(comment.id)} className='flex gap-1 text-sm items-center opacity-50'>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                                </svg>
+                                Reply
+                            </button>
+                        </span>
+                        {replyToId === comment.id ? 
+                        <div className='ml-14'>
+                            <textarea ref={commentTextRef} placeholder='What are your thoughts?' className='w-full outline-none dark:bg-inherit border indent-2 rounded-sm py-1 h-28 mt-4'></textarea>
+                            <div className='w-full mt-4'>
+                                <button onClick={() => postReply(replyToId)} className='ml-auto block bg-blue-500 text-white rounded-full py-2 px-4'>Reply</button>
+                            </div>
+                        </div> : null}
+                        <div>
+                        {commentMetaData.filter((replyComment) => replyComment.replyTo === comment.id).map((comment, index) => 
+                    <div key={index} className='dark:text-white ml-6 mt-2'>
+                        <span className='flex items-center gap-2'>
+                            <img src={comment.authorProfilePicture} className={'w-6 h-6 rounded-full'}></img>
+                        <h1>{comment.author}</h1>
+                        <p className='text-xs opacity-50'>{getDatefromSeconds(comment.timestamp?.seconds, Timestamp.now().seconds)}</p>
+                        </span>
+                        <p className='text-sm opacity-90 mt-2 ml-8'>{comment.text}</p>
+                        <span className='flex px-8 gap-2 mt-2'>
+                            <div className='flex -ml-1 gap-1 text-sm items-center opacity-50'>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 " fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" />
+                                </svg>
+                                0
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 " fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
+                                </svg>
+                            </div>
+                            <button onClick={() => setReplyToId(comment.id)} className='flex gap-1 text-sm items-center opacity-50'>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                                </svg>
+                                Reply
+                            </button>
+                        </span>
+                        {replyToId === comment.id ? 
+                        <div className='ml-14'>
+                            <textarea ref={commentTextRef} placeholder='What are your thoughts?' className='w-full outline-none dark:bg-inherit border indent-2 rounded-sm py-1 h-28 mt-4'></textarea>
+                            <div className='w-full mt-4'>
+                                <button onClick={() => postReply(replyToId)} className='ml-auto block bg-blue-500 text-white rounded-full py-2 px-4'>Reply</button>
+                            </div>
+                        </div> : null}
                     </div>)}
-                    
+                    </div>
+                    </div>)}   
                 </section>
                 </ul>
                 <ul className='flex-col hidden md:flex gap-4 lg:w-[20rem] md:w-[15rem]'>

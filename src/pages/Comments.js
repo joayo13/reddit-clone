@@ -129,9 +129,10 @@ function Comments(props) {
                 </section>
                 <section className='flex flex-col gap-4'>
                     {commentMetaData.filter((comment) => !comment.replyTo).map((comment, index) => 
-                    <div key={index} className='dark:text-white'>
+                    <div key={index} className='dark:text-white relative'>
                         <span className='flex items-center gap-2'>
-                            <img src={comment.authorProfilePicture} className={'w-6 h-6 rounded-full'}></img>
+                            <img src={comment.authorProfilePicture} className={'w-6 h-6 rounded-full z-[1]'}></img>
+                            <div className='absolute h-full top-0  left-[0.55rem] w-1 bg-gray-400'></div>
                         <h1>{comment.author}</h1>
                         <p className='text-xs opacity-50'>{getDatefromSeconds(comment.timestamp?.seconds, Timestamp.now().seconds)}</p>
                         </span>
@@ -154,17 +155,19 @@ function Comments(props) {
                             </button>
                         </span>
                         {replyToId === comment.id ? 
-                        <div className='ml-14'>
-                            <textarea ref={commentTextRef} placeholder='What are your thoughts?' className='w-full outline-none dark:bg-inherit border indent-2 rounded-sm py-1 h-28 mt-4'></textarea>
+                        <div className='ml-8 relative mt-4'>
+                            
+                            <textarea ref={commentTextRef} placeholder='What are your thoughts?' className='w-full outline-none dark:bg-inherit border border-l-4 border-l-gray-400 indent-2 rounded-sm py-1 h-28'></textarea>
                             <div className='w-full mt-4'>
                                 <button onClick={() => postReply(replyToId)} className='ml-auto block bg-blue-500 text-white rounded-full py-2 px-4'>Reply</button>
                             </div>
                         </div> : null}
                         <div>
                         {commentMetaData.filter((replyComment) => replyComment.replyTo === comment.id).map((comment, index) => 
-                    <div key={index} className='dark:text-white ml-6 mt-2'>
+                    <div key={index} className='dark:text-white relative ml-6 mt-2'>
                         <span className='flex items-center gap-2'>
-                            <img src={comment.authorProfilePicture} className={'w-6 h-6 rounded-full'}></img>
+                            <img src={comment.authorProfilePicture} className={'w-6 h-6 rounded-full z-[1]'}></img>
+                            <div className='absolute h-full top-0 left-[0.55rem] w-1 bg-gray-400'></div>
                         <h1>{comment.author}</h1>
                         <p className='text-xs opacity-50'>{getDatefromSeconds(comment.timestamp?.seconds, Timestamp.now().seconds)}</p>
                         </span>
@@ -187,8 +190,8 @@ function Comments(props) {
                             </button>
                         </span>
                         {replyToId === comment.id ? 
-                        <div className='ml-14'>
-                            <textarea ref={commentTextRef} placeholder='What are your thoughts?' className='w-full outline-none dark:bg-inherit border indent-2 rounded-sm py-1 h-28 mt-4'></textarea>
+                        <div className='ml-8 mt-4 relative'>
+                            <textarea ref={commentTextRef} placeholder='What are your thoughts?' className='w-full outline-none dark:bg-inherit border indent-2 rounded-sm py-1 h-28 border-l-gray-400 border-l-4'></textarea>
                             <div className='w-full mt-4'>
                                 <button onClick={() => postReply(replyToId)} className='ml-auto block bg-blue-500 text-white rounded-full py-2 px-4'>Reply</button>
                             </div>

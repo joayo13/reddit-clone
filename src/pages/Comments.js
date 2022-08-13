@@ -122,7 +122,7 @@ function Comments(props) {
                         </svg>
                         246 Comments
                     </li>
-                    <textarea ref={commentTextRef} placeholder='What are your thoughts?' className='w-full outline-none dark:bg-inherit border indent-2 rounded-sm py-1 h-28 mt-4'></textarea>
+                    <textarea ref={commentTextRef} placeholder='What are your thoughts?' className='w-full outline-none dark:bg-inherit border dark:border-gray-700 indent-2 rounded-sm py-1 h-28 mt-4'></textarea>
                     <div className='w-full mt-4'>
                     <button onClick={() => postComment()} className='ml-auto block bg-blue-500 text-white rounded-full py-2 px-4'>Comment</button>
                     </div>
@@ -132,7 +132,7 @@ function Comments(props) {
                     <div key={index} className='dark:text-white relative'>
                         <span className='flex items-center gap-2'>
                             <img src={comment.authorProfilePicture} className={'w-6 h-6 rounded-full z-[1]'}></img>
-                            <div className='absolute h-full top-0  left-[0.55rem] w-1 bg-gray-400'></div>
+                            <div className='absolute h-full top-0  left-[0.55rem] w-1 dark:bg-gray-700 bg-gray-300'></div>
                         <h1>{comment.author}</h1>
                         <p className='text-xs opacity-50'>{getDatefromSeconds(comment.timestamp?.seconds, Timestamp.now().seconds)}</p>
                         </span>
@@ -157,7 +157,7 @@ function Comments(props) {
                         {replyToId === comment.id ? 
                         <div className='ml-8 relative mt-4'>
                             
-                            <textarea ref={commentTextRef} placeholder='What are your thoughts?' className='w-full outline-none dark:bg-inherit border border-l-4 border-l-gray-400 indent-2 rounded-sm py-1 h-28'></textarea>
+                            <textarea ref={commentTextRef} placeholder='What are your thoughts?' className='w-full outline-none dark:bg-inherit border border-l-4 dark:border-gray-700 border-gray-300 indent-2 rounded-sm py-1 h-28'></textarea>
                             <div className='w-full mt-4'>
                                 <button onClick={() => postReply(replyToId)} className='ml-auto block bg-blue-500 text-white rounded-full py-2 px-4'>Reply</button>
                             </div>
@@ -167,7 +167,7 @@ function Comments(props) {
                     <div key={index} className='dark:text-white relative ml-6 mt-2'>
                         <span className='flex items-center gap-2'>
                             <img src={comment.authorProfilePicture} className={'w-6 h-6 rounded-full z-[1]'}></img>
-                            <div className='absolute h-full top-0 left-[0.55rem] w-1 bg-gray-400'></div>
+                            <div className='absolute h-full top-0 left-[0.55rem] w-1 dark:bg-gray-700 bg-gray-300'></div>
                         <h1>{comment.author}</h1>
                         <p className='text-xs opacity-50'>{getDatefromSeconds(comment.timestamp?.seconds, Timestamp.now().seconds)}</p>
                         </span>
@@ -191,7 +191,7 @@ function Comments(props) {
                         </span>
                         {replyToId === comment.id ? 
                         <div className='ml-8 mt-4 relative'>
-                            <textarea ref={commentTextRef} placeholder='What are your thoughts?' className='w-full outline-none dark:bg-inherit border indent-2 rounded-sm py-1 h-28 border-l-gray-400 border-l-4'></textarea>
+                            <textarea ref={commentTextRef} placeholder='What are your thoughts?' className='w-full outline-none dark:bg-inherit border indent-2 dark:border-gray-700 border-gray-300 rounded-sm py-1 h-28 border-l-4'></textarea>
                             <div className='w-full mt-4'>
                                 <button onClick={() => postReply(replyToId)} className='ml-auto block bg-blue-500 text-white rounded-full py-2 px-4'>Reply</button>
                             </div>

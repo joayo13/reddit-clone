@@ -55,11 +55,11 @@ function SubmitPost() {
                     <ul className='flex flex-col lg:w-[40rem] md:w-[30rem] w-full'>
                     <h1 className='dark:text-white text-black mb-4'>Create a post</h1>
                         <li className='flex px-4 py-4 bg-white dark:bg-gray-900  border-gray-200 rounded-t-md'>
-                            <input type='text' ref={postTitleRef} placeholder='Title' maxLength={300} className='w-full outline-none border dark:bg-gray-800 dark:text-white indent-2 rounded-sm py-1'></input>
+                            <input type='text' ref={postTitleRef} placeholder='Title' maxLength={300} className='w-full outline-none border bg-inherit dark:text-white dark:border-gray-700 indent-2 rounded-sm py-1'></input>
                         </li>
                         <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border-gray-200 rounded-b-md'>
-                            <textarea ref={postTextRef} placeholder='Text(optional)' className='w-full outline-nonedark:bg-gray-800 dark:bg-gray-800 dark:text-white border indent-2 rounded-sm py-1 h-28'></textarea>
-                            <button onClick={() => createPost()} className='dark:bg-white bg-gray-800 dark:text-black text-white w-20 py-1 mt-4 rounded-full'>Post</button>
+                            <textarea ref={postTextRef} placeholder='Text(optional)' className='w-full outline-nonedark:bg-gray-800 bg-inherit dark:border-gray-700 dark:text-white border indent-2 rounded-sm py-1 h-28'></textarea>
+                            <button onClick={() => createPost()} className='bg-blue-500 text-white w-20 py-1 mt-4 rounded-full'>Post</button>
                         </li>
                     </ul>
                     <ul className='hidden md:flex flex-col gap-4 lg:w-[20rem] md:w-[15rem]'>

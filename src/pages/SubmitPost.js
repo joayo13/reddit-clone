@@ -23,7 +23,6 @@ function SubmitPost() {
                 author: userInfo.username,
                 timestamp: serverTimestamp(),
                 text: postTextRef.current.value,
-                upvotes: 0,
                 id: uniqueId
             })
             navigate(`/r/${id}`)

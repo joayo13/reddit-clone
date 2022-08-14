@@ -109,13 +109,13 @@ function Comments(props) {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
                     </svg>
                 </div>
-                <section className='dark:text-white px-8'>
+                <section className='dark:text-white px-6'>
                     <span className='flex gap-2 items-center'>
                         <p className='font-bold text-sm'>r/{props.subredditMetaData.title}</p>
                         <p className=' text-xs opacity-50'>u/{postMetaData.author} {getDatefromSeconds(postMetaData.timestamp?.seconds, Timestamp.now().seconds)}</p>
                     </span>
-                    <h1 className='mt-4 text-2xl'>{postMetaData.postTitle}</h1>
-                    <p className='mt-4 text-sm'>{postMetaData.text}</p>
+                    <h1 className='mt-4 text-2xl break-words'>{postMetaData.postTitle}</h1>
+                    <p className='mt-4 text-sm break-words'>{postMetaData.text}</p>
                     <li className='flex gap-2 opacity-50 mt-4'>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
@@ -136,8 +136,8 @@ function Comments(props) {
                         <h1>{comment.author}</h1>
                         <p className='text-xs opacity-50'>{getDatefromSeconds(comment.timestamp?.seconds, Timestamp.now().seconds)}</p>
                         </span>
-                        <p className='text-sm opacity-90 mt-2 ml-8'>{comment.text}</p>
-                        <span className='flex px-8 gap-2 mt-2'>
+                        <p className='text-sm opacity-90 mt-2 ml-8 break-words'>{comment.text}</p>
+                        <span className='flex px-6 gap-2 mt-2'>
                             <div className='flex -ml-1 gap-1 text-sm items-center opacity-50'>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 " fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" />
@@ -171,7 +171,7 @@ function Comments(props) {
                         <h1>{comment.author}</h1>
                         <p className='text-xs opacity-50'>{getDatefromSeconds(comment.timestamp?.seconds, Timestamp.now().seconds)}</p>
                         </span>
-                        <p className='text-sm opacity-90 mt-2 ml-8'>{comment.text}</p>
+                        <p className='text-sm opacity-90 mt-2 ml-8 break-words'>{comment.text}</p>
                         <span className='flex px-8 gap-2 mt-2'>
                             <div className='flex -ml-1 gap-1 text-sm items-center opacity-50'>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 " fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">

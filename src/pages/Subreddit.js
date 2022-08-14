@@ -64,7 +64,7 @@ function Subreddit(props) {
                     {subredditPostsData.map((post, index) => 
                         <li onClick={ () => navigate(`/r/${id}/comments/${post.id}`)} key={index} className='flex flex-col gap-2 px-4 py-4 bg-white border border-gray-200 rounded-sm dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700'>
                         <p className='text-xs text-gray-500'>Posted by u/{post.author} {getDatefromSeconds(post.timestamp?.seconds, Timestamp.now().seconds)}</p>
-                        <h1>{post.postTitle}</h1>
+                        <h1 className='break-words'>{post.postTitle}</h1>
                         <ul className='flex gap-2'>
                             <li className='flex gap-2 font-semibold'>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">

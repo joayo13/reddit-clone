@@ -55,7 +55,7 @@ function SubmitPost() {
                     <ul className='flex flex-col lg:w-[40rem] md:w-[30rem] w-full'>
                     <h1 className='dark:text-white text-black mb-4'>Create a post</h1>
                         <li className='flex px-4 py-4 bg-white dark:bg-gray-900  border-gray-200 rounded-t-md'>
-                            <input type='text' ref={postTitleRef} placeholder='Title' maxLength={300} className='w-full outline-none border bg-inherit dark:text-white dark:border-gray-700 indent-2 rounded-sm py-1'></input>
+                            <input type='text' ref={postTitleRef} placeholder='Title' maxLength={100} className='w-full outline-none border bg-inherit dark:text-white dark:border-gray-700 indent-2 rounded-sm py-1'></input>
                         </li>
                         <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border-gray-200 rounded-b-md'>
                             <textarea ref={postTextRef} placeholder='Text(optional)' className='w-full outline-nonedark:bg-gray-800 bg-inherit dark:border-gray-700 dark:text-white border indent-2 rounded-sm py-1 h-28'></textarea>

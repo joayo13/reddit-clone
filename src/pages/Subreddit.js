@@ -29,13 +29,13 @@ function Subreddit(props) {
     
     async function upvotePost (selectedId) {
         try {
-        await updateDoc (doc(db, "subreddits", id, "posts", selectedId, "feelings", "upvotes"), {
+        await updateDoc(doc(db, "subreddits", id, "posts", selectedId, "feelings", "upvotes"), {
             upvotes: arrayUnion(userInfo.username)
         })
         } catch(e) {
             try {
                 await setDoc(doc(db, "subreddits", id, "posts", selectedId, "feelings", "upvotes"), {
-                    upvotes: []
+                    upvotes: [userInfo.username]
                 })
             }
             catch(e) {

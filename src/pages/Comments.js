@@ -82,7 +82,7 @@ function Comments(props) {
         try {
             const docSnap = await getDoc(doc(db, 'subreddits', id, 'posts', post))
             const upvotes = await getDoc(doc(db, 'subreddits', id, 'posts', post, 'feelings', 'upvotes'))
-            setPostMetaData({...docSnap.data(), upvotes: upvotes.data().upvotes})
+            setPostMetaData({...docSnap.data(), upvotes: upvotes.data()?.upvotes})
         }
         catch(e) {
             console.log(e)

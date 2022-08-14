@@ -4,6 +4,7 @@ import { getDatefromSeconds } from '../helpers/getDate'
 import { useParams, useNavigate} from 'react-router-dom'
 import { db } from '../firebase'
 import { doc, getDoc, getDocs, setDoc, serverTimestamp, collection, increment, Timestamp, updateDoc, arrayUnion} from "firebase/firestore";
+import { queryByTestId } from '@testing-library/react'
 
 function Subreddit(props) {
 
@@ -48,16 +49,27 @@ function Subreddit(props) {
         let data = []
         try {
             const querySnapshot = await getDocs(collection(db, 'subreddits', id, 'posts'))
-            querySnapshot.forEach((doc) => {
-                data.push( doc.data())
-            })
-            setSubredditPostsData(data)
-            setLoading(false)
-            console.log(data)
+            querySnapshot.forEach( async (post) => {
+                    try {
+                        const docSnap = await getDoc(doc(db, 'subreddits', id, 'posts', post.id, 'feelings', 'upvotes'))
+                        data.push({...post.data(), upvotes: docSnap.data() ? docSnap.data().upvotes : []})
+                        if(querySnapshot.size === data.length) {
+                            setSubredditPostsData(data)
+                            console.log(data)
+                            setLoading(false)
+                            return
+                        }
+                    }
+                    catch(e) {
+                        console.log(e)
+                    }
+                })
+                
         }
         catch(e) {
             console.log(e)
         }
+        
     }
 
     useEffect(() => {
@@ -86,11 +98,11 @@ function Subreddit(props) {
                         <ul className='flex gap-2'>
                             <li className='flex gap-2 font-semibold'>
                                 <button onClick={() => upvotePost(post.id)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" onClick={() => upvotePost(post.id)} className="h-6 w-6 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                <svg xmlns="http://www.w3.org/2000/svg" onClick={() => upvotePost(post.id)} className="h-6 w-6 opacity-50" fill="none" viewBox="0 0 24 24" stroke={post.upvotes?.includes(userInfo.username) ? "#ff0000" : "currentColor"} strokeWidth="2">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" />
                                 </svg>
                                 </button>
-                                0
+                                {post.upvotes.length}
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
                                 </svg>

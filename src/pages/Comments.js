@@ -19,33 +19,8 @@ function Comments(props) {
     const navigate = useNavigate()
     let { id, post } = useParams()
     const commentTextRef = useRef()
+    const {setSubredditMetaData, subredditMetaData} = props
 
-    async function fetchSubredditData() {
-        try {
-            const docSnap = await getDoc(doc(db, 'subreddits', id))
-            if(docSnap.exists()) {
-                props.setSubredditMetaData(docSnap.data())
-            }
-        }
-        catch(e) {
-            console.log(e)
-        }
-    }
-    async function fetchSubredditPostCommentData() {
-        let data = []
-        try {
-            const querySnapshot = await getDocs(collection(db, 'subreddits', id, 'posts', post, 'comments'))
-            querySnapshot.forEach((doc) => {
-                data.push( doc.data())
-            })
-            setCommentMetaData(data)
-            setLoading(false)
-            console.log(data)
-        }
-        catch(e) {
-            console.log(e)
-        }
-    }
     async function postComment() {
         const uniqueId = uniqid()
         try {
@@ -78,22 +53,49 @@ function Comments(props) {
         }
     }
     
-    async function fetchSubredditPostMetaData() {
-        try {
-            const docSnap = await getDoc(doc(db, 'subreddits', id, 'posts', post))
-            const upvotes = await getDoc(doc(db, 'subreddits', id, 'posts', post, 'feelings', 'upvotes'))
-            setPostMetaData({...docSnap.data(), upvotes: upvotes.data()?.upvotes})
-        }
-        catch(e) {
-            console.log(e)
-        }
-    }
+    
 
     useEffect(() => {
+        async function fetchSubredditData() {
+            try {
+                const docSnap = await getDoc(doc(db, 'subreddits', id))
+                if(docSnap.exists()) {
+                    setSubredditMetaData(docSnap.data())
+                }
+            }
+            catch(e) {
+                console.log(e)
+            }
+        }
         fetchSubredditData()
+        async function fetchSubredditPostMetaData() {
+            try {
+                const docSnap = await getDoc(doc(db, 'subreddits', id, 'posts', post))
+                const upvotes = await getDoc(doc(db, 'subreddits', id, 'posts', post, 'feelings', 'upvotes'))
+                setPostMetaData({...docSnap.data(), upvotes: upvotes.data()?.upvotes, downvotes: upvotes.data()?.downvotes})
+            }
+            catch(e) {
+                console.log(e)
+            }
+        }
         fetchSubredditPostMetaData()
+
+        async function fetchSubredditPostCommentData() {
+            let data = []
+            try {
+                const querySnapshot = await getDocs(collection(db, 'subreddits', id, 'posts', post, 'comments'))
+                querySnapshot.forEach((doc) => {
+                    data.push( doc.data())
+                })
+                setCommentMetaData(data)
+                setLoading(false)
+            }
+            catch(e) {
+                console.log(e)
+            }
+        }
         fetchSubredditPostCommentData()
-    },[])
+    },[id, post, setSubredditMetaData])
 
   return (
     <>{loading ? null :
@@ -104,14 +106,14 @@ function Comments(props) {
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke={ postMetaData.upvotes?.includes(userInfo.username) ? "#ff4500" : "currentColor"} strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" />
                     </svg>
-                    {postMetaData.upvotes?.length}
+                    <p style={postMetaData.upvotes?.includes(userInfo.username) ? {color: "#ff4500"} : null}>{postMetaData.upvotes?.length - postMetaData.downvotes?.length}</p>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
                     </svg>
                 </div>
                 <section className='dark:text-white px-8'>
                     <span className='flex gap-2 items-center'>
-                        <p className='font-bold text-sm'>r/{props.subredditMetaData.title}</p>
+                        <p className='font-bold text-sm'>r/{subredditMetaData.title}</p>
                         <p className=' text-xs opacity-50'>u/{postMetaData.author} {getDatefromSeconds(postMetaData.timestamp?.seconds, Timestamp.now().seconds)}</p>
                     </span>
                     <h1 className='mt-4 text-2xl break-words'>{postMetaData.postTitle}</h1>
@@ -135,13 +137,13 @@ function Comments(props) {
                 <ul className='flex-col hidden md:flex gap-4 lg:w-[20rem] md:w-[15rem]'>
                     <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-sm'>
                         <h2 className='text-xl font-semibold'>About Community</h2>
-                        <p>{props.subredditMetaData.aboutCommunity}</p>
+                        <p>{subredditMetaData.aboutCommunity}</p>
                         <p className='font-semibold'>0 members</p>
                     </li>
                     <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-sm'>
                         <h2 className='text-xl font-semibold'>Subreddit Rules</h2>
                         <ol className='flex flex-col px-4 gap-4 list-decimal'>
-                        {props.subredditMetaData.subredditRules.map((rule, index) => <li key={index}>{rule}</li>)}
+                        {subredditMetaData.subredditRules.map((rule, index) => <li key={index}>{rule}</li>)}
                         </ol>
                     </li>
                 </ul>

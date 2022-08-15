@@ -87,7 +87,6 @@ function Subreddit(props) {
         })
             setUpvotedPosts(prev => prev.concat(selectedId))
             setDownvotedPosts(prev => prev.filter((id) => id !== selectedId))
-            console.log(downvotedPosts, upvotedPosts)
         } catch(e) {
             try {
                 await setDoc(doc(db, "subreddits", id, "posts", selectedId, "feelings", "upvotes"), {
@@ -155,7 +154,7 @@ function Subreddit(props) {
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" />
                                 </svg>
                                 </button>
-                                {(post.upvotes?.length - post.downvotes?.length)}
+                                <p style={upvotedPosts.includes(post.id) ? {color: "#ff4500"} : null}>{(post.upvotes?.length - post.downvotes?.length)}</p>
                                 <button onClick={() => downvotePost(post.id)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke={downvotedPosts.includes(post.id) ? "#7193ff" : "currentColor"} strokeWidth="2">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />

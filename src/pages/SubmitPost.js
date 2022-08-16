@@ -25,7 +25,7 @@ function SubmitPost() {
                 text: postTextRef.current.value,
                 id: uniqueId
             })
-            navigate(`/r/${id}`)
+            navigate(`/r/${id}/comments/${uniqueId}`)
         }
         catch(e) {
             console.log(e)

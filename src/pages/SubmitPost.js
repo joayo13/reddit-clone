@@ -25,6 +25,9 @@ function SubmitPost() {
                 text: postTextRef.current.value,
                 id: uniqueId
             })
+            await setDoc(doc(db, 'subreddits', id, "posts", uniqueId, 'feelings', 'upvotes'), {
+                upvotes: 0,
+            })
             navigate(`/r/${id}/comments/${uniqueId}`)
         }
         catch(e) {

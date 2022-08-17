@@ -11,11 +11,9 @@ function Subreddit(props) {
 
     const {currentUser, userInfo} = useAuth()
     const [subredditPostsData, setSubredditPostsData] = useState([])
+    const [subredditMetaData, setSubredditMetaData] = useState({})
     const [loading, setLoading] = useState(true)
-    const [upvotedPosts, setUpvotedPosts] = useState([])
-    const [downvotedPosts, setDownvotedPosts] = useState([])
     let { id } = useParams()
-    const {setSubredditMetaData, subredditMetaData} = props
 
     useEffect(() => {
         async function fetchSubredditData() {
@@ -50,7 +48,7 @@ function Subreddit(props) {
     },[userInfo.username, id])
 
     useEffect(() => {
-        if(subredditMetaData && subredditPostsData) setLoading(false)
+        if(subredditMetaData !== {} && subredditPostsData !== {}) setLoading(false)
 
     },[subredditMetaData, subredditPostsData])
 

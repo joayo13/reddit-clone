@@ -18,7 +18,6 @@ import Comments from "../pages/Comments";
 function App() {
   const [logInPopUp, setLogInPopUp] = useState(false)
   const [signUpPopUp, setSignUpPopUp] = useState(false)
-  const [subredditMetaData, setSubredditMetaData] = useState({})
   const [createCommunityPopUp, setCreateCommunityPopUp] = useState(false)
   if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     document.documentElement.classList.add('dark')
@@ -35,9 +34,9 @@ function App() {
     {createCommunityPopUp ? <CreateCommunity setCreateCommunityPopUp={setCreateCommunityPopUp}></CreateCommunity> : null}
     <Routes>
     <Route exact path='/' element={<Home/>}/>
-    <Route exact path='/r/:id' element={<Subreddit subredditMetaData={subredditMetaData} setSubredditMetaData={setSubredditMetaData}/>}/>
+    <Route exact path='/r/:id' element={<Subreddit/>}/>
     <Route exact path ='/r/:id/submit' element={<SubmitPost/>}/>
-    <Route exact path ='/r/:id/comments/:post' element={<Comments subredditMetaData={subredditMetaData} setSubredditMetaData={setSubredditMetaData}/>}/>
+    <Route exact path ='/r/:id/comments/:post' element={<Comments/>}/>
     </Routes>
     </AuthProvider>
     </Router>

@@ -15,13 +15,13 @@ export function AuthProvider({ children }) {
     const [userInfo, setUserInfo] = useState({})
     async function fetchUserData () {
         const docRef = doc(db, "users", currentUser.email);
-    
         try {
           const docSnap = await getDoc(docRef);
           if(docSnap.exists()) {
             setUserInfo({
               profilePicture: docSnap.data().profilePicture,
-              username: docSnap.data().username
+              username: docSnap.data().username,
+              email: currentUser.email,
             })
           } else {
             // doc.data() will be undefined in this case

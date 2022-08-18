@@ -22,6 +22,8 @@ function CreateUser(props) {
         await setDoc(doc(db, "users", props.emailRef), {
             profilePicture: profilePicture,
             username: usernameRef.current.value,
+            upvotedPosts: [],
+            downvotedPosts: [],
         });
        props.setSignUpPopUp(false)
       }

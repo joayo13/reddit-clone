@@ -8,12 +8,10 @@ import { useAuth } from '../contexts/AuthContext';
 function PostCard(props) {
     const navigate = useNavigate()
     const {post, index, id} = props
-    const {currentUser, userInfo} = useAuth()
+    const {currentUser} = useAuth()
     const [upvotes, setUpvotes] = useState(0)
     const [isUpvotedByUser, setIsUpvotedByUser] = useState(false)
     const [isDownvotedByUser, setIsDownvotedByUser] = useState(false)
-    const [userUpvotedPostIdsArray, setUserUpvotedPostIdsArray] = useState([])
-    const [userDownvotedPostIdsArray, setUserDownvotedPostIdsArray] = useState([])
     const [loading, setLoading] = useState(false)
     
 
@@ -69,6 +67,7 @@ function PostCard(props) {
     }
 
     useEffect(() => {
+        if(!currentUser) return 
         async function displayUpvotedOrDownvoted() {
             if(checkIfCurrentPostInUsersUpvotedPostIdsArray(await getUsersUpvotedPostIdsArray()) === true) { 
                 setIsUpvotedByUser(true)

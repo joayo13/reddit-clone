@@ -58,6 +58,16 @@ function PostCard(props) {
         getPostUpvotes()
     })
 
+    function determineUpvoteCountElementColor() {
+        if(isUpvotedByUser) {
+            return '#ff4500'
+        }
+        if(isDownvotedByUser) {
+            return '#7193ff'
+        }
+        return '#424444'
+    }
+
     useEffect(() => {
         async function displayUpvotedOrDownvoted() {
             if(checkIfCurrentPostInUsersUpvotedPostIdsArray(await getUsersUpvotedPostIdsArray()) === true) { 
@@ -181,7 +191,7 @@ function PostCard(props) {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" />
                 </svg>
                 </button>
-                <p>{upvotes}</p>
+                <p style={{color: determineUpvoteCountElementColor()}}>{upvotes}</p>
                 <button disabled={loading} onClick={() => downvotePost()}>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke={ isDownvotedByUser ? "#7193ff" : "#424444"} strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />

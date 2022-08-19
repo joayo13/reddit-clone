@@ -73,6 +73,7 @@ function Comments(props) {
                 const docSnap = await getDoc(doc(db, 'subreddits', id, 'posts', post))
                 const upvotes = await getDoc(doc(db, 'subreddits', id, 'posts', post, 'feelings', 'upvotes'))
                 setPostMetaData({...docSnap.data(), upvotes: upvotes.data().upvotes})
+                setLoading(false)
             }
             catch(e) {
                 console.log(e)
@@ -87,15 +88,17 @@ function Comments(props) {
                 querySnapshot.forEach((doc) => {
                     data.push( doc.data())
                 })
-                setCommentMetaData(data)
-                setLoading(false)
+                
+                if(querySnapshot.size === data.length) {
+                    setCommentMetaData(data)
+                }
             }
             catch(e) {
                 console.log(e)
             }
         }
         fetchSubredditPostCommentData()
-    },[id, post, setSubredditMetaData])
+    },[id, post])
 
   return (
     <>{loading ? null :

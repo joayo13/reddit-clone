@@ -28,9 +28,7 @@ function Subreddit(props) {
             }
         }
         fetchSubredditData()
-    },[setSubredditMetaData, id])
 
-    useEffect(() => {
         async function fetchSubredditPosts() {
             let data = []
             try {
@@ -38,25 +36,23 @@ function Subreddit(props) {
                 querySnapshot.forEach( async (post) => {
                     data.push({...post.data()})    
                 })   
+                if(data.length === querySnapshot.size) {
+                    setSubredditPostsData(data)
+                    setLoading(false)
+                }
             }    
             catch(e) {
                 console.log(e)
             }
-            setSubredditPostsData(data)
         }
         fetchSubredditPosts()
-    },[userInfo.username, id])
-
-    useEffect(() => {
-        if(subredditMetaData !== {} && subredditPostsData !== {}) setLoading(false)
-
-    },[subredditMetaData, subredditPostsData])
+    },[id])
 
   return (
     <>{loading ? null :
         <div className='bg-gray-100 dark:bg-black min-h-screen'>
             <section className='flex flex-col items-center md:flex-row md:justify-center gap-4 bg-white dark:bg-gray-900 dark:text-white py-2'>
-                <div style={subredditMetaData.communityColor ? {backgroundColor: subredditMetaData.communityColor} : {backgroundColor: 'gray'}} className='w-20 h-20 text-white rounded-full border border-gray-200 dark:border-gray-800 text-center text-7xl'>r/</div>
+                <div style={subredditMetaData.communityColor ? {backgroundColor: subredditMetaData.communityColor} : {backgroundColor: 'black'}} className='w-20 h-20 text-white rounded-full border border-gray-200 dark:border-gray-800 text-center text-7xl'>r/</div>
                 <h1 className='font-bold text-3xl text-center'>{subredditMetaData.title}</h1>
                 <button className=' border border-gray-800 text-gray-800 w-24 py-1 rounded-full dark:text-white dark:border-white'>Join</button>
             </section>

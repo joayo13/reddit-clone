@@ -55,6 +55,24 @@ function PostCard(props) {
         }
         getPostUpvotes()
     })
+    useEffect(() => {
+        if(!currentUser) return 
+        async function displayUpvotedOrDownvoted() {
+            if(checkIfCurrentPostInUsersUpvotedPostIdsArray(await getUsersUpvotedPostIdsArray(currentUser)) === true) { 
+                setIsUpvotedByUser(true)
+                setIsDownvotedByUser(false)
+                return
+            }
+            if(checkIfCurrentPostInUsersDownvotedPostIdsArray(await getUsersDownvotedPostIdsArray(currentUser)) === true) {
+                setIsDownvotedByUser(true)
+                setIsUpvotedByUser(false)
+                return
+            } 
+            setIsDownvotedByUser(false)
+            setIsUpvotedByUser(false)
+        }
+        displayUpvotedOrDownvoted()
+    })
 
     function determineUpvoteCountElementColor() {
         if(isUpvotedByUser) {
@@ -66,24 +84,6 @@ function PostCard(props) {
         return '#424444'
     }
 
-    useEffect(() => {
-        if(!currentUser) return 
-        async function displayUpvotedOrDownvoted() {
-            if(checkIfCurrentPostInUsersUpvotedPostIdsArray(await getUsersUpvotedPostIdsArray()) === true) { 
-                setIsUpvotedByUser(true)
-                setIsDownvotedByUser(false)
-                return
-            }
-            if(checkIfCurrentPostInUsersDownvotedPostIdsArray(await getUsersDownvotedPostIdsArray()) === true) {
-                setIsDownvotedByUser(true)
-                setIsUpvotedByUser(false)
-                return
-            } 
-            setIsDownvotedByUser(false)
-            setIsUpvotedByUser(false)
-        }
-        displayUpvotedOrDownvoted()
-    })
 
     //see if user has upvoted already
     

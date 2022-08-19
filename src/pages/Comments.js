@@ -4,15 +4,17 @@ import { useAuth } from '../contexts/AuthContext'
 import { getDatefromSeconds } from '../helpers/getDate'
 import { useParams, useNavigate} from 'react-router-dom'
 import { db } from '../firebase'
-import { doc, getDoc, getDocs, setDoc, collection, Timestamp, serverTimestamp } from "firebase/firestore";
+import { doc, getDoc, getDocs, setDoc, collection, Timestamp, serverTimestamp, updateDoc, increment, arrayRemove, arrayUnion } from "firebase/firestore";
 import uniqid from 'uniqid'
 import { comment } from 'postcss'
 import Thread from '../components/Thread'
+import { checkIfCurrentPostInUsersDownvotedPostIdsArray, checkIfCurrentPostInUsersUpvotedPostIdsArray, getUsersDownvotedPostIdsArray, getUsersUpvotedPostIdsArray } from '../helpers/upvoteFunctions'
 
 function Comments(props) {
 
     const {currentUser, userInfo} = useAuth()
     const [loading, setLoading] = useState(true)
+    const [buttonLoading, setButtonLoading] = useState(false)
     const [postMetaData, setPostMetaData] = useState({})
     const [commentMetaData, setCommentMetaData] = useState({})
     const [replyToId, setReplyToId] = useState(null)
@@ -20,7 +22,10 @@ function Comments(props) {
     let { id, post } = useParams()
     const commentTextRef = useRef()
     const [subredditMetaData, setSubredditMetaData] = useState({})
-
+    const [postUpvotes, setPostUpvotes] = useState(0)
+    const [isUpvotedByUser, setIsUpvotedByUser] = useState(false)
+    const [isDownvotedByUser, setIsDownvotedByUser] = useState(false)
+ 
     async function postComment() {
         const uniqueId = uniqid()
         try {
@@ -35,6 +40,82 @@ function Comments(props) {
         catch(e) {
             console.log(e)
         }
+    }
+    async function upvotePost () { 
+        setButtonLoading(true)
+        let voteAmount = 1 
+        if(await checkIfCurrentPostInUsersUpvotedPostIdsArray(post, await getUsersUpvotedPostIdsArray(currentUser)) === true) {
+            //handling unvoting without downvoting
+            try {
+                await updateDoc(doc(db, 'subreddits', id, 'posts', post, 'feelings', 'upvotes'), {
+                    upvotes: increment(-1)
+                })
+                await updateDoc(doc(db, 'users', currentUser.email,), {
+                    upvotedPosts: arrayRemove(post)
+                })
+                setButtonLoading(false)
+                return
+            }
+            catch(e) {
+                console.log(e)
+            }
+        }
+        if(await checkIfCurrentPostInUsersDownvotedPostIdsArray(post, await getUsersDownvotedPostIdsArray(currentUser)) === true) {
+            voteAmount = 2 // if user is currently downvoting the upvote is worth 2 since there has to be an unlike state in between
+        }
+        try {
+            await updateDoc(doc(db, 'subreddits', id, 'posts', post, 'feelings', 'upvotes'), {
+                upvotes: increment(voteAmount)
+            })
+            await updateDoc(doc(db, 'users', currentUser.email,), {
+                downvotedPosts: arrayRemove(post)
+            })
+            await updateDoc(doc(db, 'users', currentUser.email), {
+                upvotedPosts: arrayUnion(post)
+            })
+        }
+        catch(e) {
+            console.log(e)
+        }
+        setButtonLoading(false)
+    }
+    async function downvotePost () {
+        setButtonLoading(true)
+        let voteAmount = -1 // if user is currently upvoting the downvote is worth 2 since there has to be an unlike state in between
+        if(await checkIfCurrentPostInUsersDownvotedPostIdsArray(post, await getUsersDownvotedPostIdsArray(currentUser)) === true) {
+            //handling unvoting without upvoting
+            try {
+                await updateDoc(doc(db, 'subreddits', id, 'posts', post, 'feelings', 'upvotes'), {
+                    upvotes: increment(1)
+                })
+                await updateDoc(doc(db, 'users', currentUser.email,), {
+                    downvotedPosts: arrayRemove(post)
+                })
+                setButtonLoading(false)
+                return
+            }
+            catch(e) {
+                console.log(e)
+            }
+        }
+        if(await checkIfCurrentPostInUsersUpvotedPostIdsArray(post, await getUsersUpvotedPostIdsArray(currentUser)) === true) {
+            voteAmount = -2
+        }
+        try {
+            await updateDoc(doc(db, 'subreddits', id, 'posts', post, 'feelings', 'upvotes'), {
+                upvotes: increment(voteAmount)
+            })
+            await updateDoc(doc(db, 'users', currentUser.email,), {
+                upvotedPosts: arrayRemove(post)
+            })
+            await updateDoc(doc(db, 'users', currentUser.email), {
+                downvotedPosts: arrayUnion(post)
+            })
+        }
+        catch(e) {
+            console.log(e)
+        }
+        setButtonLoading(false)
     }
     async function postReply(parentCommentId) {
         const uniqueId = uniqid()
@@ -51,6 +132,15 @@ function Comments(props) {
         catch(e) {
             console.log(e)
         }
+    }
+    function determineUpvoteCountElementColor() {
+        if(isUpvotedByUser) {
+            return '#ff4500'
+        }
+        if(isDownvotedByUser) {
+            return '#7193ff'
+        }
+        return '#424444'
     }
     
     
@@ -72,7 +162,9 @@ function Comments(props) {
             try {
                 const docSnap = await getDoc(doc(db, 'subreddits', id, 'posts', post))
                 const upvotes = await getDoc(doc(db, 'subreddits', id, 'posts', post, 'feelings', 'upvotes'))
-                setPostMetaData({...docSnap.data(), upvotes: upvotes.data().upvotes})
+                
+                setPostMetaData({...docSnap.data()})
+                setPostUpvotes(upvotes.data().upvotes)
                 setLoading(false)
             }
             catch(e) {
@@ -98,7 +190,40 @@ function Comments(props) {
             }
         }
         fetchSubredditPostCommentData()
-    },[id, post])
+    },[id, post, currentUser.email])
+
+    useEffect(() => {
+        if(!currentUser) return 
+        async function displayUpvotedOrDownvoted() {
+            if(await checkIfCurrentPostInUsersUpvotedPostIdsArray(post, await getUsersUpvotedPostIdsArray(currentUser)) === true) { 
+                setIsUpvotedByUser(true)
+                setIsDownvotedByUser(false)
+                return
+            }
+            if(await checkIfCurrentPostInUsersDownvotedPostIdsArray(post, await getUsersDownvotedPostIdsArray(currentUser)) === true) {
+                setIsDownvotedByUser(true)
+                setIsUpvotedByUser(false)
+                return
+            } 
+            setIsDownvotedByUser(false)
+            setIsUpvotedByUser(false)
+        }
+        displayUpvotedOrDownvoted()
+    })
+    useEffect(() => {
+        async function getPostUpvotes() {
+            try {
+                const docSnap = await getDoc(doc(db, 'subreddits', id, 'posts', post, 'feelings', 'upvotes'))
+                if(docSnap.exists()) {
+                    setPostUpvotes(docSnap.data().upvotes)
+                }
+            }
+            catch(e) {
+                console.log(e)
+            }
+        }
+        getPostUpvotes()
+    })
 
   return (
     <>{loading ? null :
@@ -106,13 +231,17 @@ function Comments(props) {
             <div className='flex flex-col-reverse md:flex-row justify-center md:py-4 gap-4'>
                 <ul className='flex relative flex-col lg:w-[40rem] md:w-[30rem] dark:bg-gray-900 bg-white px-4 py-4'>
                 <div className='flex flex-col justify-evenly items-center h-20 absolute left-0 top-4 w-10 dark:text-white text-sm font-bold'>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <button disabled={buttonLoading} onClick={() => upvotePost()}>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke={ isUpvotedByUser ? "#ff4500" : "#424444"} strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" />
                     </svg>
-                    <p>{postMetaData.upvotes}</p>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    </button>
+                    <p style={{color: determineUpvoteCountElementColor()}}>{postUpvotes}</p>
+                    <button disabled={buttonLoading} onClick={() => downvotePost()}>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke={ isDownvotedByUser ? "#7193ff" : "#424444"} strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
                     </svg>
+                    </button>
                 </div>
                 <section className='dark:text-white px-8'>
                     <span className='flex gap-2 items-center'>

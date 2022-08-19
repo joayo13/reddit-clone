@@ -28,12 +28,12 @@ export async function getUsersDownvotedPostIdsArray(currentUser) {
     }
 }
 export async function checkIfCurrentPostInUsersUpvotedPostIdsArray(post, userUpvotedPostIdsArray) {
-    if(userUpvotedPostIdsArray.includes(post.id)) {
+    if(userUpvotedPostIdsArray.includes(post)) {
         return true
     }
 }
 export async function checkIfCurrentPostInUsersDownvotedPostIdsArray(post, userDownvotedPostIdsArray) {
-    if(userDownvotedPostIdsArray.includes(post.id)) {
+    if(userDownvotedPostIdsArray.includes(post)) {
         return true
     }
 }

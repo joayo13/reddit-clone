@@ -213,7 +213,7 @@ function Comments(props) {
             }
         }
         fetchSubredditPostCommentData()
-    },[id, post, currentUser.email])
+    },[id, post])
 
     useEffect(() => {
         if(!currentUser) return 

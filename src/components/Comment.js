@@ -92,7 +92,7 @@ function Comment(props) {
         setButtonLoading(false)
     }
     useEffect(() => {
-        if(!currentUser) return 
+        if(currentUser == null) return 
         async function displayUpvotedOrDownvoted() {
             if(await checkIfCurrentPostInUsersUpvotedPostIdsArray(comment.id, await getUsersUpvotedCommentIdsArray(currentUser)) === true) { 
                 setIsUpvotedByUser(true)

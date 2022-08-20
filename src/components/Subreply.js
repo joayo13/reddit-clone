@@ -5,7 +5,7 @@ import { getDatefromSeconds } from '../helpers/getDate'
 function Subreply(props) {
     const { comment, setReplyToId, replyToId, commentTextRef, postReply} = props
   return (
-    <div className='dark:text-white relative ml-12 mt-2'>
+    <div className='dark:text-white relative ml-6 mt-2'>
     <span className='flex items-center gap-2'>
         <img src={comment.authorProfilePicture} className={'w-6 h-6 rounded-full z-[1]'}></img>
         <div className='absolute h-full top-0 left-[0.55rem] w-1 dark:bg-gray-700 bg-gray-300'></div>

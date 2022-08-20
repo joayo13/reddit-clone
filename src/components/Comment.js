@@ -39,10 +39,10 @@ function Comment(props) {
                         <button onClick={() => postReply(replyToId)} className='ml-auto block bg-blue-500 text-white rounded-full py-2 px-4'>Reply</button>
                     </div>
                 </div> : null}
-                </div>
                 {commentMetaData.filter((replyComment) => replyComment.replyTo === comment.id).map((comment, index) => 
                     <Reply commentMetaData={commentMetaData} key={index} index={index} comment={comment} setReplyToId={setReplyToId} replyToId={replyToId} commentTextRef={commentTextRef} postReply={postReply}>
                     </Reply>)}
+                </div>
                 </>
   )
 }

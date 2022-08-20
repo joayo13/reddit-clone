@@ -27,6 +27,32 @@ export async function getUsersDownvotedPostIdsArray(currentUser) {
         console.log(e)
     }
 }
+export async function getUsersUpvotedCommentIdsArray(currentUser) {
+    let commentIdsArray = []
+    try {
+        const docSnap = await getDoc(doc(db, 'users', currentUser.email))
+        if(docSnap.exists()) {
+            commentIdsArray = docSnap.data().upvotedComments
+        }
+        return commentIdsArray
+    }
+    catch(e) {
+        console.log(e)
+    }
+}
+export async function getUsersDownvotedCommentIdsArray(currentUser) {
+    let commentIdsArray = []
+    try {
+        const docSnap = await getDoc(doc(db, 'users', currentUser.email))
+        if(docSnap.exists()) {
+            commentIdsArray = docSnap.data().downvotedComments
+        }
+        return commentIdsArray
+    }
+    catch(e) {
+        console.log(e)
+    }
+}
 export async function checkIfCurrentPostInUsersUpvotedPostIdsArray(post, userUpvotedPostIdsArray) {
     if(userUpvotedPostIdsArray.includes(post)) {
         return true

@@ -36,6 +36,17 @@ function Comments(props) {
                 text: commentTextRef.current.value,
                 id: uniqueId,
             })
+            await setDoc(doc(db, 'subreddits', id, 'posts', post, 'comments', uniqueId, 'feelings', 'upvotes'), {
+                upvotes: 0
+            })
+            setCommentMetaData(prev => prev.concat({
+                author: userInfo.username,
+                authorProfilePicture: userInfo.profilePicture,
+                timestamp: serverTimestamp(),
+                text: commentTextRef.current.value,
+                id: uniqueId,
+            }))
+            commentTextRef.current.value = ''
         }
         catch(e) {
             console.log(e)
@@ -128,6 +139,18 @@ function Comments(props) {
                 id: uniqueId,
                 replyTo: parentCommentId,
             })
+            await setDoc(doc(db, 'subreddits', id, 'posts', post, 'comments', uniqueId, 'feelings', 'upvotes'), {
+                upvotes: 0
+            })
+            setCommentMetaData(prev => prev.concat({
+                author: userInfo.username,
+                authorProfilePicture: userInfo.profilePicture,
+                timestamp: serverTimestamp(),
+                text: commentTextRef.current.value,
+                id: uniqueId,
+                replyTo: parentCommentId,
+            }))
+            setReplyToId(null)
         }
         catch(e) {
             console.log(e)

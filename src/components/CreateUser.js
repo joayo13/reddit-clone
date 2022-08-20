@@ -24,6 +24,8 @@ function CreateUser(props) {
             username: usernameRef.current.value,
             upvotedPosts: [],
             downvotedPosts: [],
+            upvotedComments: [],
+            downvotedComments: [],
         });
        props.setSignUpPopUp(false)
       }

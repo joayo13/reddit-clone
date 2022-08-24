@@ -1,9 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import { db } from '../firebase'
 import { useParams, useNavigate} from 'react-router-dom'
-import { doc, getDoc, setDoc, serverTimestamp} from "firebase/firestore";
-import uniqid from 'uniqid'
+import { createPost, fetchSubredditData } from '../helpers/getSubredditDataFunctions';
 
 
 function SubmitPost() {
@@ -14,54 +12,28 @@ function SubmitPost() {
     const postTitleRef = useRef()
     const postTextRef = useRef()
     const navigate = useNavigate()
-
-    async function createPost() {
-        const uniqueId = uniqid()
-        try {
-            await setDoc(doc(db, "subreddits", id, "posts", uniqueId), {
-                postTitle: postTitleRef.current.value,
-                author: userInfo.username,
-                timestamp: serverTimestamp(),
-                text: postTextRef.current.value,
-                id: uniqueId
-            })
-            await setDoc(doc(db, 'subreddits', id, "posts", uniqueId, 'feelings', 'upvotes'), {
-                upvotes: 0,
-            })
-            navigate(`/r/${id}/comments/${uniqueId}`)
-        }
-        catch(e) {
-            console.log(e)
-        }
-    }
-
-    async function fetchSubredditData() {
-        try {
-            const docSnap = await getDoc(doc(db, 'subreddits', id))
-            if(docSnap.exists()) {
-                setSubredditMetaData(docSnap.data())
-                setLoading(false)
-            }
-        }
-        catch(e) {
-            console.log(e)
-        }
-    }
     useEffect(() => {
-        fetchSubredditData()
-    },[])
+        fetchSubredditData(setSubredditMetaData, setLoading, id)
+    },[id])
   return (
     <>{loading ? null :
         <div className='bg-gray-100 dark:bg-black min-h-screen'>
                 <div className='flex md:flex-row justify-center py-4 gap-4'>
-                    <ul className='flex flex-col lg:w-[40rem] md:w-[30rem] w-full'>
+                    <ul className='flex flex-col lg:w-[40rem] md:w-[30rem] w-full px-4 py-4 bg-white dark:bg-gray-900  border-gray-200 rounded-t-md'>
                     <h1 className='dark:text-white text-black mb-4'>Create a post</h1>
-                        <li className='flex px-4 py-4 bg-white dark:bg-gray-900  border-gray-200 rounded-t-md'>
+                        <li className='px-4 py-4'>
                             <input type='text' ref={postTitleRef} placeholder='Title' maxLength={100} className='w-full outline-none border bg-inherit dark:text-white dark:border-gray-700 indent-2 rounded-sm py-1'></input>
                         </li>
-                        <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border-gray-200 rounded-b-md'>
-                            <textarea ref={postTextRef} placeholder='Text(optional)' className='w-full outline-nonedark:bg-gray-800 bg-inherit dark:border-gray-700 dark:text-white border indent-2 rounded-sm py-1 h-28'></textarea>
-                            <button onClick={() => createPost()} className='bg-blue-500 text-white w-20 py-1 mt-4 rounded-full'>Post</button>
+                        <li className= 'px-4 py-4'>
+                            <textarea ref={postTextRef} placeholder='Text(optional)' className='w-full outline-nonedark:bg-gray-800 bg-inherit dark:border-gray-700 dark:text-white border indent-2 rounded-sm py-1 h-28'>
+                            yoas
+                            </textarea>
+                            <ul className='flex'>
+                                <li><button className='dark:text-white italic w-8 h-8'> i </button></li>
+                                <li><button></button></li>
+                                <li><button></button></li>
+                            </ul>
+                            <button onClick={() => createPost( id, postTitleRef, userInfo, postTextRef, navigate)} className='bg-blue-500 text-white w-20 py-1 mt-4 rounded-full'>Post</button>
                         </li>
                     </ul>
                     <ul className='hidden md:flex flex-col gap-4 lg:w-[20rem] md:w-[15rem]'>

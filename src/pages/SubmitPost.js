@@ -26,13 +26,7 @@ function SubmitPost() {
                         </li>
                         <li className= 'px-4 py-4'>
                             <textarea ref={postTextRef} placeholder='Text(optional)' className='w-full outline-nonedark:bg-gray-800 bg-inherit dark:border-gray-700 dark:text-white border indent-2 rounded-sm py-1 h-28'>
-                            yoas
                             </textarea>
-                            <ul className='flex'>
-                                <li><button className='dark:text-white italic w-8 h-8'> i </button></li>
-                                <li><button></button></li>
-                                <li><button></button></li>
-                            </ul>
                             <button onClick={() => createPost( id, postTitleRef, userInfo, postTextRef, navigate)} className='bg-blue-500 text-white w-20 py-1 mt-4 rounded-full'>Post</button>
                         </li>
                     </ul>

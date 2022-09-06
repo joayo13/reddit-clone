@@ -26,6 +26,8 @@ function CreateUser(props) {
             downvotedPosts: [],
             upvotedComments: [],
             downvotedComments: [],
+            joinedSubreddits: [],
+            createdPosts: [],
         });
        props.setSignUpPopUp(false)
       }

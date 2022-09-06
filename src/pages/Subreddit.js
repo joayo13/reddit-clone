@@ -6,6 +6,7 @@ import { db } from '../firebase'
 import { doc, getDoc, getDocs, setDoc, collection, Timestamp, updateDoc, arrayUnion, arrayRemove} from "firebase/firestore";
 import ListPosts from '../components/ListPosts'
 import CreatePostCard from '../components/CreatePostCard'
+import { userJoinSubreddit } from '../helpers/userJoinSubreddit'
 
 function Subreddit(props) {
 
@@ -54,7 +55,7 @@ function Subreddit(props) {
             <section className='flex flex-col items-center md:flex-row md:justify-center gap-4 bg-white dark:bg-gray-900 dark:text-white py-2'>
                 <div style={subredditMetaData.communityColor ? {backgroundColor: subredditMetaData.communityColor} : {backgroundColor: 'black'}} className='w-20 h-20 text-white rounded-full border border-gray-200 dark:border-gray-800 text-center text-7xl'>r/</div>
                 <h1 className='font-bold text-3xl text-center'>{subredditMetaData.title}</h1>
-                <button className=' border border-gray-800 text-gray-800 w-24 py-1 rounded-full dark:text-white dark:border-white'>Join</button>
+                <button onClick={() =>  userJoinSubreddit(db, currentUser, subredditMetaData.title )} className='border border-gray-800 text-gray-800 w-24 py-1 rounded-full dark:text-white dark:border-white'>Join</button>
             </section>
             <div className='flex flex-col-reverse md:flex-row justify-center mt-4 gap-4'>
                 <ul className='flex flex-col gap-4 lg:w-[40rem] md:w-[30rem]'>

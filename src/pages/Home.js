@@ -21,11 +21,9 @@ function Home() {
           querySnapshot.forEach((post) => {
             subredditsPopularPostsData.push({...post.data(), subredditId: subreddit})
           })
-          setHomepagePostsData(subredditsPopularPostsData)
+          setHomepagePostsData(subredditsPopularPostsData.filter((item,index) => index < 5))
         })
-        
       }
-      
     }
     getUsersJoinedSubreddits()
     setLoading(false)

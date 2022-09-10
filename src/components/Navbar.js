@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react'
 import redditIcon from '../images/reddit-icon.png'
 import { useAuth } from '../contexts/AuthContext'
 import MobileNavLinks from './MobileNavLinks'
+import { useNavigate } from 'react-router-dom'
 
 
 const Navbar = (props) => {
+
+  const navigate = useNavigate()
 
   const [mobileNavLinksVisible, setMobileNavLinksVisible] = useState(false)
 
@@ -14,7 +17,7 @@ const Navbar = (props) => {
     <div className='font-poppins relative border-b border-gray-200 dark:bg-gray-900 dark:border-gray-800'>
       <header className='flex items-center px-4 py-1'>
         {/* logo and name */}
-        <div className='flex items-center gap-2'>
+        <div className='flex items-center gap-2' onClick={() => navigate('/')}>
         <img src={redditIcon} className='w-10'></img>
         <h1 className='hidden md:block text-1xl font-semibold text-gray-700 dark:text-white'>!Reddit</h1>
         </div>

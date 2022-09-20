@@ -1,12 +1,13 @@
-import { React, useEffect, useState, useRef }from 'react'
+import { React, useEffect, useState }from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import { getDatefromSeconds } from '../helpers/getDate'
+
 import { useParams} from 'react-router-dom'
 import { db } from '../firebase'
-import { doc, getDoc, getDocs, setDoc, collection, Timestamp, updateDoc, arrayUnion, arrayRemove} from "firebase/firestore";
 import ListPosts from '../components/ListPosts'
 import CreatePostCard from '../components/CreatePostCard'
 import { userJoinSubreddit } from '../helpers/userJoinSubreddit'
+import { fetchSubredditData, fetchSubredditPosts } from '../helpers/getSubredditDataFunctions'
+
 
 function Subreddit(props) {
 
@@ -17,36 +18,8 @@ function Subreddit(props) {
     let { id } = useParams()
 
     useEffect(() => {
-        async function fetchSubredditData() {
-            try {
-                const docSnap = await getDoc(doc(db, 'subreddits', id))
-                if(docSnap.exists()) {
-                    setSubredditMetaData(docSnap.data())
-                }
-            }
-            catch(e) {
-                console.log(e)
-            }
-        }
-        fetchSubredditData()
-
-        async function fetchSubredditPosts() {
-            let data = []
-            try {
-                const querySnapshot = await getDocs(collection(db, 'subreddits', id, 'posts'))
-                querySnapshot.forEach( async (post) => {
-                    data.push({...post.data()})    
-                })   
-                if(data.length === querySnapshot.size) {
-                    setSubredditPostsData(data)
-                    setLoading(false)
-                }
-            }    
-            catch(e) {
-                console.log(e)
-            }
-        }
-        fetchSubredditPosts()
+        fetchSubredditData(setSubredditMetaData, setLoading, id)
+        fetchSubredditPosts(setSubredditPostsData, setLoading, id)
     },[id])
 
   return (

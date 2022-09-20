@@ -1,4 +1,4 @@
-import { doc, getDoc, getDocs, setDoc, collection, Timestamp, updateDoc, arrayUnion, arrayRemove, increment} from "firebase/firestore";
+import { doc, getDoc} from "firebase/firestore";
 import { db } from '../firebase'
 
 export async function getUsersUpvotedPostIdsArray(currentUser) {
@@ -54,12 +54,12 @@ export async function getUsersDownvotedCommentIdsArray(currentUser) {
     }
 }
 export async function checkIfCurrentPostInUsersUpvotedPostIdsArray(post, userUpvotedPostIdsArray) {
-    if(userUpvotedPostIdsArray.includes(post)) {
+    if(userUpvotedPostIdsArray.includes(post.id)) {
         return true
     }
 }
 export async function checkIfCurrentPostInUsersDownvotedPostIdsArray(post, userDownvotedPostIdsArray) {
-    if(userDownvotedPostIdsArray.includes(post)) {
+    if(userDownvotedPostIdsArray.includes(post.id)) {
         return true
     }
 }

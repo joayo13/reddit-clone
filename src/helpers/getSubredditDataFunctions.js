@@ -1,4 +1,4 @@
-import { doc, getDoc, setDoc, serverTimestamp} from "firebase/firestore";
+import { doc, getDoc, getDocs, setDoc, serverTimestamp, collection} from "firebase/firestore";
 import uniqid from 'uniqid'
 import { db } from '../firebase'
 
@@ -30,6 +30,22 @@ export async function fetchSubredditData(setSubredditMetaData, setLoading, id) {
             setLoading(false)
         }
     }
+    catch(e) {
+        console.log(e)
+    }
+}
+export async function fetchSubredditPosts(setSubredditPostsData, setLoading, id) {
+    let data = []
+    try {
+        const querySnapshot = await getDocs(collection(db, 'subreddits', id, 'posts'))
+        querySnapshot.forEach( async (post) => {
+            data.push({...post.data()})    
+        })   
+        if(data.length === querySnapshot.size) {
+            setSubredditPostsData(data)
+            setLoading(false)
+        }
+    }    
     catch(e) {
         console.log(e)
     }

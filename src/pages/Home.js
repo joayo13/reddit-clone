@@ -41,10 +41,20 @@ function Home() {
               <ul className='flex flex-col gap-4 lg:w-[20rem] md:w-[15rem]'>
                   <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-sm'>
                       <h2 className='text-xl font-semibold'>Top Communities</h2>
+                      <p>r/Minions</p>
+                      <p>r/Minions</p>
+                      <p>r/Minions</p>
+                      <p>r/Minions</p>
+                      <p>r/Minions</p>
                   </li>
                   <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-sm'>
                       <h2 className='text-xl font-semibold'>Popular Communities</h2>
                       <ol className='flex flex-col px-4 gap-4 list-decimal'>
+                      <p>r/Minions</p>
+                      <p>r/Minions</p>
+                      <p>r/Minions</p>
+                      <p>r/Minions</p>
+                      <p>r/Minions</p>
                       </ol>
                   </li>
               </ul>

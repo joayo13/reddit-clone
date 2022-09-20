@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { getDatefromSeconds } from '../helpers/getDate'
-import { doc, getDoc, getDocs, setDoc, collection, Timestamp, updateDoc, arrayUnion, arrayRemove, increment} from "firebase/firestore";
+import { doc, getDoc, Timestamp, updateDoc, arrayUnion, arrayRemove, increment} from "firebase/firestore";
 import { db } from '../firebase'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext';
+import { checkIfCurrentPostInUsersDownvotedPostIdsArray, checkIfCurrentPostInUsersUpvotedPostIdsArray, getUsersDownvotedPostIdsArray, getUsersUpvotedPostIdsArray } from '../helpers/upvoteFunctions';
 
 function PostCard(props) {
     const navigate = useNavigate()
@@ -15,32 +16,7 @@ function PostCard(props) {
     const [loading, setLoading] = useState(false)
     
 
-    async function getUsersUpvotedPostIdsArray() {
-        let postIdsArray = []
-        try {
-            const docSnap = await getDoc(doc(db, 'users', currentUser.email))
-            if(docSnap.exists()) {
-                postIdsArray = docSnap.data().upvotedPosts
-            }
-            return postIdsArray
-        }
-        catch(e) {
-            console.log(e)
-        }
-    }
-    async function getUsersDownvotedPostIdsArray() {
-        let postIdsArray = []
-        try {
-            const docSnap = await getDoc(doc(db, 'users', currentUser.email))
-            if(docSnap.exists()) {
-                postIdsArray = docSnap.data().downvotedPosts
-            }
-            return postIdsArray
-        }
-        catch(e) {
-            console.log(e)
-        }
-    }
+    
     useEffect(() => {
         async function getPostUpvotes() {
             try {
@@ -58,12 +34,12 @@ function PostCard(props) {
     useEffect(() => {
         if(!currentUser) return 
         async function displayUpvotedOrDownvoted() {
-            if(checkIfCurrentPostInUsersUpvotedPostIdsArray(await getUsersUpvotedPostIdsArray(currentUser)) === true) { 
+            if(await checkIfCurrentPostInUsersUpvotedPostIdsArray(post, await getUsersUpvotedPostIdsArray(currentUser)) === true) { 
                 setIsUpvotedByUser(true)
                 setIsDownvotedByUser(false)
                 return
             }
-            if(checkIfCurrentPostInUsersDownvotedPostIdsArray(await getUsersDownvotedPostIdsArray(currentUser)) === true) {
+            if(await checkIfCurrentPostInUsersDownvotedPostIdsArray(post, await getUsersDownvotedPostIdsArray(currentUser)) === true) {
                 setIsDownvotedByUser(true)
                 setIsUpvotedByUser(false)
                 return
@@ -87,22 +63,12 @@ function PostCard(props) {
 
     //see if user has upvoted already
     
-    function checkIfCurrentPostInUsersUpvotedPostIdsArray(userUpvotedPostIdsArray) {
-        if(userUpvotedPostIdsArray.includes(post.id)) {
-            return true
-        }
-    }
-    function checkIfCurrentPostInUsersDownvotedPostIdsArray(userDownvotedPostIdsArray) {
-        if(userDownvotedPostIdsArray.includes(post.id)) {
-            return true
-        }
-    }
 
 
     async function upvotePost () { 
         setLoading(true)
         let voteAmount = 1 
-        if(checkIfCurrentPostInUsersUpvotedPostIdsArray(await getUsersUpvotedPostIdsArray()) === true) {
+        if(await checkIfCurrentPostInUsersUpvotedPostIdsArray(post, await getUsersUpvotedPostIdsArray(currentUser)) === true) {
             //handling unvoting without downvoting
             try {
                 await updateDoc(doc(db, 'subreddits', id, 'posts', post.id, 'feelings', 'upvotes'), {
@@ -118,7 +84,7 @@ function PostCard(props) {
                 console.log(e)
             }
         }
-        if(checkIfCurrentPostInUsersDownvotedPostIdsArray(await getUsersDownvotedPostIdsArray()) === true) {
+        if(await checkIfCurrentPostInUsersDownvotedPostIdsArray(post, await getUsersDownvotedPostIdsArray(currentUser)) === true) {
             voteAmount = 2 // if user is currently downvoting the upvote is worth 2 since there has to be an unlike state in between
         }
         try {
@@ -140,7 +106,7 @@ function PostCard(props) {
     async function downvotePost () {
         setLoading(true)
         let voteAmount = -1 // if user is currently upvoting the downvote is worth 2 since there has to be an unlike state in between
-        if(checkIfCurrentPostInUsersDownvotedPostIdsArray(await getUsersDownvotedPostIdsArray()) === true) {
+        if(await checkIfCurrentPostInUsersDownvotedPostIdsArray(post, await getUsersDownvotedPostIdsArray(currentUser)) === true) {
             //handling unvoting without upvoting
             try {
                 await updateDoc(doc(db, 'subreddits', id, 'posts', post.id, 'feelings', 'upvotes'), {
@@ -156,7 +122,7 @@ function PostCard(props) {
                 console.log(e)
             }
         }
-        if(checkIfCurrentPostInUsersUpvotedPostIdsArray( await getUsersUpvotedPostIdsArray()) === true) {
+        if(await checkIfCurrentPostInUsersUpvotedPostIdsArray(post, await getUsersUpvotedPostIdsArray(currentUser)) === true) {
             voteAmount = -2
         }
         try {

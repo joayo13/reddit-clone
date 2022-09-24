@@ -55,7 +55,7 @@ function Comments(props) {
     async function upvotePost () { 
         setButtonLoading(true)
         let voteAmount = 1 
-        if(await checkIfCurrentPostInUsersUpvotedPostIdsArray(post, await getUsersUpvotedPostIdsArray(currentUser)) === true) {
+        if(await checkIfCurrentPostInUsersUpvotedPostIdsArray(postMetaData, await getUsersUpvotedPostIdsArray(currentUser)) === true) {
             //handling unvoting without downvoting
             try {
                 await updateDoc(doc(db, 'subreddits', id, 'posts', post, 'feelings', 'upvotes'), {
@@ -71,7 +71,7 @@ function Comments(props) {
                 console.log(e)
             }
         }
-        if(await checkIfCurrentPostInUsersDownvotedPostIdsArray(post, await getUsersDownvotedPostIdsArray(currentUser)) === true) {
+        if(await checkIfCurrentPostInUsersDownvotedPostIdsArray(postMetaData, await getUsersDownvotedPostIdsArray(currentUser)) === true) {
             voteAmount = 2 // if user is currently downvoting the upvote is worth 2 since there has to be an unlike state in between
         }
         try {
@@ -93,7 +93,7 @@ function Comments(props) {
     async function downvotePost () {
         setButtonLoading(true)
         let voteAmount = -1 // if user is currently upvoting the downvote is worth 2 since there has to be an unlike state in between
-        if(await checkIfCurrentPostInUsersDownvotedPostIdsArray(post, await getUsersDownvotedPostIdsArray(currentUser)) === true) {
+        if(await checkIfCurrentPostInUsersDownvotedPostIdsArray(postMetaData, await getUsersDownvotedPostIdsArray(currentUser)) === true) {
             //handling unvoting without upvoting
             try {
                 await updateDoc(doc(db, 'subreddits', id, 'posts', post, 'feelings', 'upvotes'), {
@@ -109,7 +109,7 @@ function Comments(props) {
                 console.log(e)
             }
         }
-        if(await checkIfCurrentPostInUsersUpvotedPostIdsArray(post, await getUsersUpvotedPostIdsArray(currentUser)) === true) {
+        if(await checkIfCurrentPostInUsersUpvotedPostIdsArray(postMetaData, await getUsersUpvotedPostIdsArray(currentUser)) === true) {
             voteAmount = -2
         }
         try {
@@ -218,12 +218,12 @@ function Comments(props) {
     useEffect(() => {
         if(!currentUser) return 
         async function displayUpvotedOrDownvoted() {
-            if(await checkIfCurrentPostInUsersUpvotedPostIdsArray(post, await getUsersUpvotedPostIdsArray(currentUser)) === true) { 
+            if(await checkIfCurrentPostInUsersUpvotedPostIdsArray(postMetaData, await getUsersUpvotedPostIdsArray(currentUser)) === true) { 
                 setIsUpvotedByUser(true)
                 setIsDownvotedByUser(false)
                 return
             }
-            if(await checkIfCurrentPostInUsersDownvotedPostIdsArray(post, await getUsersDownvotedPostIdsArray(currentUser)) === true) {
+            if(await checkIfCurrentPostInUsersDownvotedPostIdsArray(postMetaData, await getUsersDownvotedPostIdsArray(currentUser)) === true) {
                 setIsDownvotedByUser(true)
                 setIsUpvotedByUser(false)
                 return

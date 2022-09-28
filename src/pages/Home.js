@@ -11,8 +11,25 @@ function Home() {
   const [homepagePostsData, setHomepagePostsData] = useState([])
   const [loading, setLoading] = useState(true)
 
+  useEffect(() => {
+      async function getUsersJoinedSubreddits() {
+        const docSnap = await getDoc(doc(db, 'users', currentUser.email))
+        if(docSnap.exists()) {
+          docSnap.data().joinedSubreddits.forEach( async (subreddit) => {
+            let subredditsPopularPostsData = []
+            const querySnapshot = await getDocs(collection(db, 'subreddits', subreddit, 'posts'))
+            querySnapshot.forEach( async (post) => {
+              const upvotes = await getDoc(doc(db, 'subreddits', subreddit, 'posts', post.id, 'feelings', 'upvotes'))
+              subredditsPopularPostsData.push({...post.data(), subredditId: subreddit, upvotes: upvotes.data().upvotes})
+            })  
+            setHomepagePostsData(prev => prev.concat(subredditsPopularPostsData))
+          }) 
+        }
+      }
+      getUsersJoinedSubreddits()
+  },[currentUser])
   return (
-    <>{loading ? null :
+    <>{homepagePostsData === [] ? null :
       <div className='bg-gray-100 dark:bg-black min-h-screen'>
           <div className='flex flex-col-reverse md:flex-row justify-center pt-4 gap-4'>
               <ul className='flex flex-col gap-4 lg:w-[40rem] md:w-[30rem]'>

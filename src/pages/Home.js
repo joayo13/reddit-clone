@@ -4,31 +4,13 @@ import HomePostCard from '../components/HomePostCard'
 import PostCard from '../components/PostCard'
 import { useAuth } from '../contexts/AuthContext'
 import { db } from '../firebase'
+import { getUsersJoinedSubreddits } from '../helpers/getSubredditDataFunctions'
 
 function Home() {
-  const {currentUser, userInfo} = useAuth()
+  const {currentUser} = useAuth()
   const [homepagePostsData, setHomepagePostsData] = useState([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    if (!currentUser) return 
-    
-    async function getUsersJoinedSubreddits() {
-      let subredditsPopularPostsData = []
-      const docSnap = await getDoc(doc(db, 'users', currentUser.email))
-      if(docSnap.exists()) {
-        docSnap.data().joinedSubreddits.forEach( async (subreddit) => {
-          const querySnapshot = await getDocs(collection(db, 'subreddits', subreddit, 'posts'))
-          querySnapshot.forEach((post) => {
-            subredditsPopularPostsData.push({...post.data(), subredditId: subreddit})
-          })
-          setHomepagePostsData(subredditsPopularPostsData.filter((item,index) => index < 20))
-        })
-      }
-    }
-    getUsersJoinedSubreddits()
-    setLoading(false)
-  },[currentUser])
   return (
     <>{loading ? null :
       <div className='bg-gray-100 dark:bg-black min-h-screen'>

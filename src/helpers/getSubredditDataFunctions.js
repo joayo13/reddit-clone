@@ -50,3 +50,17 @@ export async function fetchSubredditPosts(setSubredditPostsData, setLoading, id)
         console.log(e)
     }
 }
+export async function getUsersJoinedSubreddits(currentUser) {
+    const docSnap = await getDoc(doc(db, 'users', currentUser.email))
+    let subredditsPopularPostsData = []
+    if(docSnap.exists()) {
+      docSnap.data().joinedSubreddits.forEach( async (subreddit) => {
+        const querySnapshot = await getDocs(collection(db, 'subreddits', subreddit, 'posts'))
+        querySnapshot.forEach( async (post) => {
+          const upvotes = await getDoc(doc(db, 'subreddits', subreddit, 'posts', post.id, 'feelings', 'upvotes'))
+          subredditsPopularPostsData.push({...post.data(), subredditId: subreddit, upvotes: upvotes.data().upvotes})
+        })
+      }) 
+      return subredditsPopularPostsData
+    }
+  }

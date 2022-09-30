@@ -4,7 +4,7 @@ import HomePostCard from '../components/HomePostCard'
 import PostCard from '../components/PostCard'
 import { useAuth } from '../contexts/AuthContext'
 import { db } from '../firebase'
-import { getUsersJoinedSubreddits } from '../helpers/getSubredditDataFunctions'
+import { getHomePagePosts} from '../helpers/getSubredditDataFunctions'
 
 function Home() {
   const {currentUser} = useAuth()
@@ -12,26 +12,8 @@ function Home() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-      async function getUsersJoinedSubreddits() {
-        let subredditsPopularPostsData = []
-        const docSnap = await getDoc(doc(db, 'users', currentUser.email))
-        if(docSnap.exists()) {
-          docSnap.data().joinedSubreddits.forEach( async (subreddit) => {
-            const querySnapshot = await getDocs(collection(db, 'subreddits', subreddit, 'posts'))
-            querySnapshot.forEach( async (post) => {
-              const upvotes = await getDoc(doc(db, 'subreddits', subreddit, 'posts', post.id, 'feelings', 'upvotes'))
-              subredditsPopularPostsData.push({...post.data(), subredditId: subreddit, upvotes: upvotes.data().upvotes})
-            })  
-          }) 
-        }
-        setHomepagePostsData(subredditsPopularPostsData)
-      }
-      getUsersJoinedSubreddits()
+    getHomePagePosts(currentUser)
   },[])
-  useEffect(() => {
-    console.log(homepagePostsData)
-    if(homepagePostsData.length > 0) setLoading(false)
-  },[homepagePostsData])
   return (
     <>{loading ? null :
       <div className='bg-gray-100 dark:bg-black min-h-screen'>

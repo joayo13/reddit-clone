@@ -50,17 +50,69 @@ export async function fetchSubredditPosts(setSubredditPostsData, setLoading, id)
         console.log(e)
     }
 }
-export async function getUsersJoinedSubreddits(currentUser) {
-    const docSnap = await getDoc(doc(db, 'users', currentUser.email))
-    let subredditsPopularPostsData = []
-    if(docSnap.exists()) {
-      docSnap.data().joinedSubreddits.forEach( async (subreddit) => {
-        const querySnapshot = await getDocs(collection(db, 'subreddits', subreddit, 'posts'))
-        querySnapshot.forEach( async (post) => {
-          const upvotes = await getDoc(doc(db, 'subreddits', subreddit, 'posts', post.id, 'feelings', 'upvotes'))
-          subredditsPopularPostsData.push({...post.data(), subredditId: subreddit, upvotes: upvotes.data().upvotes})
-        })
-      }) 
-      return subredditsPopularPostsData
+
+export async function getHomePagePosts(currentUser) {
+    let joinedSubredditsArray = []
+    let allPopularPosts = []
+    let popularPosts = []
+    async function getUsersJoinedSubredditsArray(currentUser) {
+        try {
+            const docSnap = await getDoc(doc(db, 'users', currentUser.email))
+            joinedSubredditsArray = docSnap.data().joinedSubreddits
+        }
+        catch(e) {
+            throw(e)
+        }
     }
-  }
+    async function getPostsFromJoinedSubreddits(joinedSubredditsArray) {
+        try {
+            joinedSubredditsArray.forEach(async (subreddit) => {
+                try {
+                    const querySnapshot = await getDocs(collection(db, 'subreddits', subreddit, 'posts'))
+                    querySnapshot.forEach((post) => {
+                        popularPosts.push(post.data())
+                    })
+                }
+                catch(e) {
+                    console.log(e)
+                }
+                console.log(randomizePosts(popularPosts))
+            
+            })
+        }
+        catch(e) {
+            console.log(e)
+        } 
+    }
+    function randomizePosts(array) {
+                let currentIndex = array.length,  randomIndex;
+              
+                // While there remain elements to shuffle.
+                while (currentIndex !== 0) {
+              
+                  // Pick a remaining element.
+                  randomIndex = Math.floor(Math.random() * currentIndex);
+                  currentIndex--;
+              
+                  // And swap it with the current element.
+                  [array[currentIndex], array[randomIndex]] = [
+                    array[randomIndex], array[currentIndex]];
+                }
+                return array
+        }
+    
+    try {
+        await getUsersJoinedSubredditsArray(currentUser)
+        try {
+            await getPostsFromJoinedSubreddits(joinedSubredditsArray)
+        }
+        catch(e) {
+            console.log(e)
+        }
+        
+    }
+    catch(e) {
+        throw(e)
+    }
+    
+}

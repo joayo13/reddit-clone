@@ -42,6 +42,7 @@ function HomePostCard(props) {
         }
     }
     useEffect(() => {
+        console.log(post)
         async function getPostUpvotes() {
             try {
                 const docSnap = await getDoc(doc(db, 'subreddits', id, 'posts', post.id, 'feelings', 'upvotes'))
@@ -179,9 +180,9 @@ function HomePostCard(props) {
   return (
     <>
     <li key={index} className='flex flex-col gap-2 px-4 py-4 bg-white border border-gray-200 rounded-sm dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700'>
-        <div onClick={() => navigate(`/r/${id}/comments/${post.id}`)} className='flex flex-col gap-2'>
+        <div onClick={() => navigate(`/r/${post.subredditId}/comments/${post.id}`)} className='flex flex-col gap-2'>
         <span className='flex text-xs gap-2'>
-        <a className='font-bold' href={`/r/${id}`}>r/{id}</a>
+        <a className='font-bold' href={`/r/${post.subredditId}`}>r/{post.subredditId}</a>
         <p className='text-gray-500'>Posted by u/{post.author} {getDatefromSeconds(post.timestamp?.seconds, Timestamp.now().seconds)}</p>
         </span>
         <h1 className='break-words'>{post.postTitle}</h1>

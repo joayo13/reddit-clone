@@ -10,7 +10,8 @@ export async function createPost( id, postTitleRef, userInfo, postTextRef, navig
             author: userInfo.username,
             timestamp: serverTimestamp(),
             text: postTextRef.current.value,
-            id: uniqueId
+            id: uniqueId,
+            subredditId: id
         })
         await setDoc(doc(db, 'subreddits', id, "posts", uniqueId, 'feelings', 'upvotes'), {
             upvotes: 0,
@@ -51,9 +52,8 @@ export async function fetchSubredditPosts(setSubredditPostsData, setLoading, id)
     }
 }
 
-export async function getHomePagePosts(currentUser) {
+export async function getHomePagePosts(currentUser, setHomepagePostsData, setLoading) {
     let joinedSubredditsArray = []
-    let allPopularPosts = []
     let popularPosts = []
     async function getUsersJoinedSubredditsArray(currentUser) {
         try {
@@ -65,7 +65,6 @@ export async function getHomePagePosts(currentUser) {
         }
     }
     async function getPostsFromJoinedSubreddits(joinedSubredditsArray) {
-        try {
             joinedSubredditsArray.forEach(async (subreddit) => {
                 try {
                     const querySnapshot = await getDocs(collection(db, 'subreddits', subreddit, 'posts'))
@@ -76,14 +75,12 @@ export async function getHomePagePosts(currentUser) {
                 catch(e) {
                     console.log(e)
                 }
-                console.log(randomizePosts(popularPosts))
-            
             })
+            setHomepagePostsData(popularPosts)
+            setTimeout(() => {setLoading(false)}, 1000)
         }
-        catch(e) {
-            console.log(e)
-        } 
-    }
+        
+
     function randomizePosts(array) {
                 let currentIndex = array.length,  randomIndex;
               
@@ -109,10 +106,8 @@ export async function getHomePagePosts(currentUser) {
         catch(e) {
             console.log(e)
         }
-        
     }
     catch(e) {
         throw(e)
     }
-    
 }

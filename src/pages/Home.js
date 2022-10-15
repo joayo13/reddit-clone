@@ -12,15 +12,23 @@ function Home() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getHomePagePosts(currentUser)
-  },[])
+    async function getHomepage() {
+      try {
+        await getHomePagePosts(currentUser, setHomepagePostsData, setLoading)
+      }
+      catch (e) {
+        console.log(e)
+      }
+    }
+    getHomepage()
+  },[currentUser])
   return (
     <>{loading ? null :
       <div className='bg-gray-100 dark:bg-black min-h-screen'>
           <div className='flex flex-col-reverse md:flex-row justify-center pt-4 gap-4'>
               <ul className='flex flex-col gap-4 lg:w-[40rem] md:w-[30rem]'>
               <div className='flex flex-col gap-4'>{homepagePostsData.map((post, index) => 
-            <HomePostCard key={index} post={post} index={index} id={post.subredditId}/>
+            <HomePostCard key={index} post={post} index={index}/>
           )}</div>
               </ul>
               <ul className='flex flex-col gap-4 lg:w-[20rem] md:w-[15rem]'>

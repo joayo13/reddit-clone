@@ -75,9 +75,11 @@ export async function getHomePagePosts(currentUser, setHomepagePostsData, setLoa
                 catch(e) {
                     console.log(e)
                 }
+                finally {
+                    setHomepagePostsData(popularPosts)
+                }
             })
-            setHomepagePostsData(popularPosts)
-            setTimeout(() => {setLoading(false)}, 1000)
+            
         }
         
 

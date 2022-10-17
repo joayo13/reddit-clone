@@ -8,7 +8,7 @@ import { doc, getDoc, getDocs, setDoc, collection, Timestamp, serverTimestamp, u
 import uniqid from 'uniqid'
 import { comment } from 'postcss'
 import Thread from '../components/Thread'
-import { checkIfCurrentPostInUsersDownvotedPostIdsArray, checkIfCurrentPostInUsersUpvotedPostIdsArray, getUsersDownvotedPostIdsArray, getUsersUpvotedPostIdsArray } from '../helpers/upvoteFunctions'
+import { checkIfCurrentPostInUsersDownvotedPostIdsArray, checkIfCurrentPostInUsersUpvotedPostIdsArray, determineUpvoteCountElementColor, getUsersDownvotedPostIdsArray, getUsersUpvotedPostIdsArray } from '../helpers/upvoteFunctions'
 
 function Comments(props) {
 
@@ -156,15 +156,6 @@ function Comments(props) {
             console.log(e)
         }
     }
-    function determineUpvoteCountElementColor() {
-        if(isUpvotedByUser) {
-            return '#ff4500'
-        }
-        if(isDownvotedByUser) {
-            return '#7193ff'
-        }
-        return '#424444'
-    }
     
     
 
@@ -259,7 +250,7 @@ function Comments(props) {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" />
                     </svg>
                     </button>
-                    <p style={{color: determineUpvoteCountElementColor()}}>{postUpvotes}</p>
+                    <p style={{color: determineUpvoteCountElementColor(isUpvotedByUser, isDownvotedByUser)}}>{postUpvotes}</p>
                     <button disabled={buttonLoading} onClick={() => downvotePost()}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke={ isDownvotedByUser ? "#7193ff" : "#424444"} strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
@@ -277,7 +268,7 @@ function Comments(props) {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                         </svg>
-                        246 Comments
+                        {commentMetaData.length} Comments
                     </li>
                     <textarea ref={commentTextRef} placeholder='What are your thoughts?' className='w-full outline-none dark:bg-inherit border dark:border-gray-700 indent-2 rounded-sm py-1 h-28 mt-4'></textarea>
                     <div className='w-full mt-4'>

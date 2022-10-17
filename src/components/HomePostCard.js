@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { getDatefromSeconds } from '../helpers/getDate'
-import { doc, getDoc, getDocs, setDoc, collection, Timestamp, updateDoc, arrayUnion, arrayRemove, increment} from "firebase/firestore";
+import { doc, getDoc, Timestamp} from "firebase/firestore";
 import { db } from '../firebase'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext';
+import {checkIfCurrentPostInUsersDownvotedPostIdsArray, checkIfCurrentPostInUsersUpvotedPostIdsArray, determineUpvoteCountElementColor, downvotePost, getUsersDownvotedPostIdsArray, getUsersUpvotedPostIdsArray, upvotePost } from '../helpers/upvoteFunctions';
 
 function HomePostCard(props) {
     const navigate = useNavigate()
-    const {post, index, id} = props
+    const {post, index} = props
     const {currentUser} = useAuth()
     const [upvotes, setUpvotes] = useState(0)
     const [isUpvotedByUser, setIsUpvotedByUser] = useState(false)
@@ -15,37 +16,11 @@ function HomePostCard(props) {
     const [loading, setLoading] = useState(false)
     
 
-    async function getUsersUpvotedPostIdsArray() {
-        let postIdsArray = []
-        try {
-            const docSnap = await getDoc(doc(db, 'users', currentUser.email))
-            if(docSnap.exists()) {
-                postIdsArray = docSnap.data().upvotedPosts
-            }
-            return postIdsArray
-        }
-        catch(e) {
-            console.log(e)
-        }
-    }
-    async function getUsersDownvotedPostIdsArray() {
-        let postIdsArray = []
-        try {
-            const docSnap = await getDoc(doc(db, 'users', currentUser.email))
-            if(docSnap.exists()) {
-                postIdsArray = docSnap.data().downvotedPosts
-            }
-            return postIdsArray
-        }
-        catch(e) {
-            console.log(e)
-        }
-    }
+    
     useEffect(() => {
-        console.log(post)
         async function getPostUpvotes() {
             try {
-                const docSnap = await getDoc(doc(db, 'subreddits', id, 'posts', post.id, 'feelings', 'upvotes'))
+                const docSnap = await getDoc(doc(db, 'subreddits', post.subredditId, 'posts', post.id, 'feelings', 'upvotes'))
                 if(docSnap.exists()) {
                     setUpvotes(docSnap.data().upvotes)
                 }
@@ -59,12 +34,12 @@ function HomePostCard(props) {
     useEffect(() => {
         if(!currentUser) return 
         async function displayUpvotedOrDownvoted() {
-            if(checkIfCurrentPostInUsersUpvotedPostIdsArray(await getUsersUpvotedPostIdsArray(currentUser)) === true) { 
+            if(await checkIfCurrentPostInUsersUpvotedPostIdsArray(post, await getUsersUpvotedPostIdsArray(currentUser)) === true) { 
                 setIsUpvotedByUser(true)
                 setIsDownvotedByUser(false)
                 return
             }
-            if(checkIfCurrentPostInUsersDownvotedPostIdsArray(await getUsersDownvotedPostIdsArray(currentUser)) === true) {
+            if(await checkIfCurrentPostInUsersDownvotedPostIdsArray(post, await getUsersDownvotedPostIdsArray(currentUser)) === true) {
                 setIsDownvotedByUser(true)
                 setIsUpvotedByUser(false)
                 return
@@ -75,107 +50,10 @@ function HomePostCard(props) {
         displayUpvotedOrDownvoted()
     })
 
-    function determineUpvoteCountElementColor() {
-        if(isUpvotedByUser) {
-            return '#ff4500'
-        }
-        if(isDownvotedByUser) {
-            return '#7193ff'
-        }
-        return '#424444'
-    }
-
-
     //see if user has upvoted already
     
-    function checkIfCurrentPostInUsersUpvotedPostIdsArray(userUpvotedPostIdsArray) {
-        if(userUpvotedPostIdsArray.includes(post.id)) {
-            return true
-        }
-    }
-    function checkIfCurrentPostInUsersDownvotedPostIdsArray(userDownvotedPostIdsArray) {
-        if(userDownvotedPostIdsArray.includes(post.id)) {
-            return true
-        }
-    }
 
-
-    async function upvotePost () { 
-        setLoading(true)
-        let voteAmount = 1 
-        if(checkIfCurrentPostInUsersUpvotedPostIdsArray(await getUsersUpvotedPostIdsArray()) === true) {
-            //handling unvoting without downvoting
-            try {
-                await updateDoc(doc(db, 'subreddits', id, 'posts', post.id, 'feelings', 'upvotes'), {
-                    upvotes: increment(-1)
-                })
-                await updateDoc(doc(db, 'users', currentUser.email,), {
-                    upvotedPosts: arrayRemove(post.id)
-                })
-                setLoading(false)
-                return
-            }
-            catch(e) {
-                console.log(e)
-            }
-        }
-        if(checkIfCurrentPostInUsersDownvotedPostIdsArray(await getUsersDownvotedPostIdsArray()) === true) {
-            voteAmount = 2 // if user is currently downvoting the upvote is worth 2 since there has to be an unlike state in between
-        }
-        try {
-            await updateDoc(doc(db, 'subreddits', id, 'posts', post.id, 'feelings', 'upvotes'), {
-                upvotes: increment(voteAmount)
-            })
-            await updateDoc(doc(db, 'users', currentUser.email,), {
-                downvotedPosts: arrayRemove(post.id)
-            })
-            await updateDoc(doc(db, 'users', currentUser.email), {
-                upvotedPosts: arrayUnion(post.id)
-            })
-        }
-        catch(e) {
-            console.log(e)
-        }
-        setLoading(false)
-    }
-    async function downvotePost () {
-        setLoading(true)
-        let voteAmount = -1 // if user is currently upvoting the downvote is worth 2 since there has to be an unlike state in between
-        if(checkIfCurrentPostInUsersDownvotedPostIdsArray(await getUsersDownvotedPostIdsArray()) === true) {
-            //handling unvoting without upvoting
-            try {
-                await updateDoc(doc(db, 'subreddits', id, 'posts', post.id, 'feelings', 'upvotes'), {
-                    upvotes: increment(1)
-                })
-                await updateDoc(doc(db, 'users', currentUser.email,), {
-                    downvotedPosts: arrayRemove(post.id)
-                })
-                setLoading(false)
-                return
-            }
-            catch(e) {
-                console.log(e)
-            }
-        }
-        if(checkIfCurrentPostInUsersUpvotedPostIdsArray( await getUsersUpvotedPostIdsArray()) === true) {
-            voteAmount = -2
-        }
-        try {
-            await updateDoc(doc(db, 'subreddits', id, 'posts', post.id, 'feelings', 'upvotes'), {
-                upvotes: increment(voteAmount)
-            })
-            await updateDoc(doc(db, 'users', currentUser.email,), {
-                upvotedPosts: arrayRemove(post.id)
-            })
-            await updateDoc(doc(db, 'users', currentUser.email), {
-                downvotedPosts: arrayUnion(post.id)
-            })
-        }
-        catch(e) {
-            console.log(e)
-        }
-        setLoading(false)
-    }
+    
     
   return (
     <>
@@ -189,13 +67,13 @@ function HomePostCard(props) {
         </div>
         <ul className='flex gap-2'>
             <li className='flex gap-2 font-semibold'>
-                <button disabled={loading} onClick={() => upvotePost()}>
+                <button disabled={loading} onClick={() => upvotePost(setLoading, post, post.subredditId, currentUser)}>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke={ isUpvotedByUser ? "#ff4500" : "#424444"} strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" />
                 </svg>
                 </button>
-                <p style={{color: determineUpvoteCountElementColor()}}>{upvotes}</p>
-                <button disabled={loading} onClick={() => downvotePost()}>
+                <p style={{color: determineUpvoteCountElementColor(isUpvotedByUser, isDownvotedByUser)}}>{upvotes}</p>
+                <button disabled={loading} onClick={() => downvotePost(setLoading, post, post.subredditId, currentUser)}>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke={ isDownvotedByUser ? "#7193ff" : "#424444"} strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
                 </svg>

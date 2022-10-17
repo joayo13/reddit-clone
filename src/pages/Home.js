@@ -19,6 +19,9 @@ function Home() {
       catch (e) {
         console.log(e)
       }
+      finally {
+        setLoading(false)
+      }
     }
     getHomepage()
   },[currentUser])

@@ -1,4 +1,4 @@
-import { doc, getDoc} from "firebase/firestore";
+import { arrayRemove, arrayUnion, doc, getDoc, increment, updateDoc} from "firebase/firestore";
 import { db } from '../firebase'
 
 export async function getUsersUpvotedPostIdsArray(currentUser) {
@@ -61,5 +61,99 @@ export async function checkIfCurrentPostInUsersUpvotedPostIdsArray(post, userUpv
 export async function checkIfCurrentPostInUsersDownvotedPostIdsArray(post, userDownvotedPostIdsArray) {
     if(userDownvotedPostIdsArray.includes(post.id)) {
         return true
+    }
+}
+export function determineUpvoteCountElementColor(isUpvotedByUser, isDownvotedByUser) {
+    if(isUpvotedByUser) {
+        return '#ff4500'
+    }
+    if(isDownvotedByUser) {
+        return '#7193ff'
+    }
+    return '#424444'
+}
+export async function upvotePost (setLoading, post, id, currentUser) { 
+    setLoading(true)
+    let voteAmount = 1 
+    if(await checkIfCurrentPostInUsersUpvotedPostIdsArray(post, await getUsersUpvotedPostIdsArray(currentUser)) === true) {
+        //handling unvoting without downvoting
+        try {
+            await updateDoc(doc(db, 'subreddits', id, 'posts', post.id, 'feelings', 'upvotes'), {
+                upvotes: increment(-1)
+            })
+            await updateDoc(doc(db, 'users', currentUser.email,), {
+                upvotedPosts: arrayRemove(post.id)
+            })
+        }
+        catch(e) {
+            console.log(e)
+        }
+        finally {
+            setLoading(false)
+            return
+        }
+    }
+    if(await checkIfCurrentPostInUsersDownvotedPostIdsArray(post, await getUsersDownvotedPostIdsArray(currentUser)) === true) {
+        voteAmount = 2 // if user is currently downvoting the upvote is worth 2 since there has to be an unlike state in between
+    }
+    try {
+        await updateDoc(doc(db, 'subreddits', id, 'posts', post.id, 'feelings', 'upvotes'), {
+            upvotes: increment(voteAmount)
+        })
+        await updateDoc(doc(db, 'users', currentUser.email,), {
+            downvotedPosts: arrayRemove(post.id)
+        })
+        await updateDoc(doc(db, 'users', currentUser.email), {
+            upvotedPosts: arrayUnion(post.id)
+        })
+    }
+    catch(e) {
+        console.log(e)
+    }
+    finally {
+        setLoading(false)
+    }
+}
+export async function downvotePost (setLoading, post, id, currentUser) {
+    setLoading(true)
+    let voteAmount = -1 // if user is currently upvoting the downvote is worth 2 since there has to be an unlike state in between
+    if(await checkIfCurrentPostInUsersDownvotedPostIdsArray(post, await getUsersDownvotedPostIdsArray(currentUser)) === true) {
+        //handling unvoting without upvoting
+        try {
+            await updateDoc(doc(db, 'subreddits', id, 'posts', post.id, 'feelings', 'upvotes'), {
+                upvotes: increment(1)
+            })
+            await updateDoc(doc(db, 'users', currentUser.email,), {
+                downvotedPosts: arrayRemove(post.id)
+            })
+            
+        }
+        catch(e) {
+            console.log(e)
+        }
+        finally {
+            setLoading(false)
+            return
+        }
+    }
+    if(await checkIfCurrentPostInUsersUpvotedPostIdsArray(post, await getUsersUpvotedPostIdsArray(currentUser)) === true) {
+        voteAmount = -2
+    }
+    try {
+        await updateDoc(doc(db, 'subreddits', id, 'posts', post.id, 'feelings', 'upvotes'), {
+            upvotes: increment(voteAmount)
+        })
+        await updateDoc(doc(db, 'users', currentUser.email,), {
+            upvotedPosts: arrayRemove(post.id)
+        })
+        await updateDoc(doc(db, 'users', currentUser.email), {
+            downvotedPosts: arrayUnion(post.id)
+        })
+    }
+    catch(e) {
+        console.log(e)
+    }
+    finally {
+        setLoading(false)
     }
 }

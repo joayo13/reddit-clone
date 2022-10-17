@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { getDatefromSeconds } from '../helpers/getDate'
-import { doc, getDoc, Timestamp, updateDoc, arrayUnion, arrayRemove, increment} from "firebase/firestore";
-import { db } from '../firebase'
+import {Timestamp,} from "firebase/firestore";
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext';
-import { checkIfCurrentPostInUsersDownvotedPostIdsArray, checkIfCurrentPostInUsersUpvotedPostIdsArray, determineUpvoteCountElementColor, downvotePost, getUsersDownvotedPostIdsArray, getUsersUpvotedPostIdsArray, upvotePost } from '../helpers/upvoteFunctions';
+import { determineUpvoteCountElementColor, displayUpvotedOrDownvoted, downvotePost, getPostUpvotes, upvotePost } from '../helpers/upvoteFunctions';
 
 function PostCard(props) {
     const navigate = useNavigate()
@@ -18,41 +17,19 @@ function PostCard(props) {
 
     
     useEffect(() => {
-        async function getPostUpvotes() {
-            try {
-                const docSnap = await getDoc(doc(db, 'subreddits', id, 'posts', post.id, 'feelings', 'upvotes'))
-                if(docSnap.exists()) {
-                    setUpvotes(docSnap.data().upvotes)
-                }
-            }
-            catch(e) {
-                console.log(e)
-            }
-        }
-        getPostUpvotes()
-    })
-    useEffect(() => {
         if(!currentUser) return 
-        async function displayUpvotedOrDownvoted() {
-            if(await checkIfCurrentPostInUsersUpvotedPostIdsArray(post, await getUsersUpvotedPostIdsArray(currentUser)) === true) { 
-                setIsUpvotedByUser(true)
-                setIsDownvotedByUser(false)
-                return
-            }
-            if(await checkIfCurrentPostInUsersDownvotedPostIdsArray(post, await getUsersDownvotedPostIdsArray(currentUser)) === true) {
-                setIsDownvotedByUser(true)
-                setIsUpvotedByUser(false)
-                return
-            } 
-            setIsDownvotedByUser(false)
-            setIsUpvotedByUser(false)
+        async function displayVoteState() {
+            await displayUpvotedOrDownvoted(post, currentUser, setIsUpvotedByUser, setIsDownvotedByUser)
         }
-        displayUpvotedOrDownvoted()
+        displayVoteState()
     })
-
-    //see if user has upvoted already
-
     
+    useEffect(() => {
+        async function getPostUpvoteData() {
+            await getPostUpvotes(post, setUpvotes)
+        }
+        getPostUpvoteData()
+    })
     
   return (
     <>

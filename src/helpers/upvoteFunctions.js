@@ -157,3 +157,28 @@ export async function downvotePost (setLoading, post, id, currentUser) {
         setLoading(false)
     }
 }
+export async function getPostUpvotes(post, setUpvotes) {
+    try {
+        const docSnap = await getDoc(doc(db, 'subreddits', post.subredditId, 'posts', post.id, 'feelings', 'upvotes'))
+        if(docSnap.exists()) {
+            setUpvotes(docSnap.data().upvotes)
+        }
+    }
+    catch(e) {
+        console.log(e)
+    }
+}
+export async function displayUpvotedOrDownvoted(post, currentUser, setIsUpvotedByUser, setIsDownvotedByUser) {
+    if(await checkIfCurrentPostInUsersUpvotedPostIdsArray(post, await getUsersUpvotedPostIdsArray(currentUser)) === true) { 
+        setIsUpvotedByUser(true)
+        setIsDownvotedByUser(false)
+        return
+    }
+    if(await checkIfCurrentPostInUsersDownvotedPostIdsArray(post, await getUsersDownvotedPostIdsArray(currentUser)) === true) {
+        setIsDownvotedByUser(true)
+        setIsUpvotedByUser(false)
+        return
+    } 
+    setIsDownvotedByUser(false)
+    setIsUpvotedByUser(false)
+}

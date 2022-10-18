@@ -1,6 +1,7 @@
 import { getDoc, doc, getDocs, collection } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import HomePostCard from '../components/HomePostCard'
+import LoadingWheel from '../components/LoadingWheel'
 import PostCard from '../components/PostCard'
 import { useAuth } from '../contexts/AuthContext'
 import { db } from '../firebase'
@@ -26,7 +27,7 @@ function Home() {
     getHomepage()
   },[currentUser])
   return (
-    <>{loading ? null :
+    <>{loading ? <LoadingWheel/> :
       <div className='bg-gray-100 dark:bg-black min-h-screen'>
           <div className='flex flex-col-reverse md:flex-row justify-center pt-4 gap-4'>
               <ul className='flex flex-col gap-4 lg:w-[40rem] md:w-[30rem]'>

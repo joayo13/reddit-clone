@@ -7,6 +7,7 @@ import { doc, getDoc, getDocs, setDoc, collection, Timestamp, serverTimestamp} f
 import uniqid from 'uniqid'
 import Thread from '../components/Thread'
 import { determineUpvoteCountElementColor, displayUpvotedOrDownvoted, downvotePost, getPostUpvotes, upvotePost } from '../helpers/upvoteFunctions'
+import LoadingWheel from '../components/LoadingWheel'
 
 function Comments(props) {
 
@@ -145,7 +146,7 @@ function Comments(props) {
     })
 
   return (
-    <>{loading ? null :
+    <>{loading ? <LoadingWheel/> :
         <div className='bg-gray-100 dark:bg-black min-h-screen'>
             <div className='flex flex-col-reverse md:flex-row justify-center md:py-4 gap-4'>
                 <ul className='flex relative flex-col lg:w-[40rem] md:w-[30rem] dark:bg-gray-900 bg-white px-4 py-4'>

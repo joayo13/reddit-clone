@@ -21,12 +21,19 @@ function SubmitPost() {
                 <div className='flex md:flex-row justify-center py-4 gap-4'>
                     <ul className='flex flex-col lg:w-[40rem] md:w-[30rem] w-full px-4 py-4 bg-white dark:bg-gray-900  border-gray-200 rounded-t-md'>
                     <h1 className='dark:text-white text-black mb-4'>Create a post</h1>
-                        <li className='px-4 py-4'>
+                        <li className='px-4 py-2'>
                             <input type='text' ref={postTitleRef} placeholder='Title' maxLength={100} className='w-full outline-none border bg-inherit dark:text-white dark:border-gray-700 indent-2 rounded-sm py-1'></input>
                         </li>
-                        <li className= 'px-4 py-4'>
+                        <li className= 'px-4 py-2'>
                             <textarea ref={postTextRef} placeholder='Text(optional)' className='w-full outline-nonedark:bg-gray-800 bg-inherit dark:border-gray-700 dark:text-white border indent-2 rounded-sm py-1 h-28'>
                             </textarea>
+                            <label className='block dark:text-white opacity-50'>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                            </svg>
+
+                            <input type="file" className='hidden'></input>
+                            </label>
                             <button onClick={() => createPost( id, postTitleRef, userInfo, postTextRef, navigate)} className='bg-blue-500 text-white w-20 py-1 mt-4 rounded-full'>Post</button>
                         </li>
                     </ul>

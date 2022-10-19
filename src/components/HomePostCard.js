@@ -40,6 +40,7 @@ function HomePostCard(props) {
         <p className='text-gray-500'>Posted by u/{post.author} {getDatefromSeconds(post.timestamp?.seconds, Timestamp.now().seconds)}</p>
         </span>
         <h1 className='break-words'>{post.postTitle}</h1>
+        <img  src={post.imageURL}></img>
         </div>
         <ul className='flex gap-2'>
             <li className='flex gap-2 font-semibold'>

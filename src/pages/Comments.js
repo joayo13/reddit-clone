@@ -169,6 +169,7 @@ function Comments(props) {
                         <p className=' text-xs opacity-50'>u/{postMetaData.author} {getDatefromSeconds(postMetaData.timestamp?.seconds, Timestamp.now().seconds)}</p>
                     </span>
                     <h1 className='mt-4 text-2xl break-words'>{postMetaData.postTitle}</h1>
+                    <img className='mt-4'  src={postMetaData.imageURL}></img>
                     <p className='mt-4 text-sm break-words'>{postMetaData.text}</p>
                     <li className='flex gap-2 opacity-50 mt-4'>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">

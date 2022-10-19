@@ -149,7 +149,7 @@ function Comments(props) {
     <>{loading ? <LoadingWheel/> :
         <div className='bg-gray-100 dark:bg-black min-h-screen'>
             <div className='flex flex-col-reverse md:flex-row justify-center md:py-4 gap-4'>
-                <ul className='flex relative flex-col lg:w-[40rem] md:w-[30rem] dark:bg-gray-900 bg-white px-4 py-4'>
+                <ul className='flex relative flex-col lg:w-[40rem] md:w-[30rem] dark:bg-gray-900 bg-white px-4 py-4 rounded-sm border border-gray-200 dark:border-gray-800'>
                 <div className='flex flex-col justify-evenly items-center h-20 absolute left-0 top-4 w-10 dark:text-white text-sm font-bold'>
                     <button disabled={buttonLoading} onClick={() => upvotePost(setButtonLoading, postMetaData, id, currentUser)}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke={ isUpvotedByUser ? "#ff4500" : "#424444"} strokeWidth="2">

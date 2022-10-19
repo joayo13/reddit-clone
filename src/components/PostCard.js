@@ -37,6 +37,7 @@ function PostCard(props) {
         <a onClick={() => navigate(`/r/${id}/comments/${post.id}`)} className='flex flex-col gap-2'>
         <p className='text-xs text-gray-500'>Posted by u/{post.author} {getDatefromSeconds(post.timestamp?.seconds, Timestamp.now().seconds)}</p>
         <h1 className='break-words'>{post.postTitle}</h1>
+        <img  src={post.imageURL}></img>
         </a>
         <ul className='flex gap-2'>
             <li className='flex gap-2 font-semibold'>

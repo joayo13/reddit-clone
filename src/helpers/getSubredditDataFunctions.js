@@ -66,7 +66,7 @@ export async function getHomePagePosts(currentUser, setHomepagePostsData, setLoa
         }
     }
     async function getPostsFromJoinedSubreddits(joinedSubredditsArray) {
-            joinedSubredditsArray.forEach(async (subreddit) => {
+            joinedSubredditsArray.forEach(async (subreddit, index) => {
                 try {
                     const querySnapshot = await getDocs(collection(db, 'subreddits', subreddit, 'posts'))
                     querySnapshot.forEach((post) => {
@@ -77,7 +77,8 @@ export async function getHomePagePosts(currentUser, setHomepagePostsData, setLoa
                     console.log(e)
                 }
                 finally {
-                    setHomepagePostsData(popularPosts)
+                    if(index === joinedSubredditsArray.length - 1)
+                    setHomepagePostsData(popularPosts) 
                 }
             })
             

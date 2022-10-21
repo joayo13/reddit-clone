@@ -3,6 +3,7 @@ import redditIcon from '../images/reddit-icon.png'
 import { useAuth } from '../contexts/AuthContext'
 import MobileNavLinks from './MobileNavLinks'
 import { useNavigate } from 'react-router-dom'
+import { searchSubreddit } from '../helpers/searchFunctions'
 
 
 const Navbar = (props) => {
@@ -26,7 +27,9 @@ const Navbar = (props) => {
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 dark:invert" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
-          <input type='text' placeholder='Search !Reddit' className='bg-gray-50 dark:bg-gray-800 dark:text-white focus:outline-none w-full'>
+          <input onChange={(e) => {
+            searchSubreddit(e.target.value)
+          }} type='text' placeholder='Search !Reddit' className='bg-gray-50 dark:bg-gray-800 dark:text-white focus:outline-none w-full'>
           </input>
         </div>
         {/* sign up and login buttons */}

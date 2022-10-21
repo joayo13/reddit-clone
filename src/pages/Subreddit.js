@@ -5,8 +5,9 @@ import { useParams} from 'react-router-dom'
 import { db } from '../firebase'
 import ListPosts from '../components/ListPosts'
 import CreatePostCard from '../components/CreatePostCard'
-import { userJoinSubreddit } from '../helpers/userJoinSubreddit'
+import { userJoinSubreddit, userLeaveSubreddit } from '../helpers/userJoinSubreddit'
 import { fetchSubredditData, fetchSubredditPosts } from '../helpers/getSubredditDataFunctions'
+import { doc, getDoc } from 'firebase/firestore'
 
 
 function Subreddit(props) {
@@ -15,6 +16,7 @@ function Subreddit(props) {
     const [subredditPostsData, setSubredditPostsData] = useState([])
     const [subredditMetaData, setSubredditMetaData] = useState({})
     const [loading, setLoading] = useState(true)
+    const [userHasJoined, setUserHasJoined] = useState(false)
     let { id } = useParams()
 
     useEffect(() => {
@@ -22,13 +24,28 @@ function Subreddit(props) {
         fetchSubredditPosts(setSubredditPostsData, setLoading, id)
     },[id])
 
+    useEffect(() => {
+        async function checkIfUserHasJoined () {
+            if(userHasJoined) return 
+            try {
+                const docSnap = await getDoc(doc(db, 'users', currentUser.email))
+                if(docSnap.data().joinedSubreddits.includes(subredditMetaData.title))
+                setUserHasJoined(true)
+            }
+            catch(e) {
+                throw(e)
+            }
+        }
+        checkIfUserHasJoined()
+    })
+
   return (
     <>{loading ? null :
         <div className='bg-gray-100 dark:bg-black min-h-screen'>
             <section className='flex flex-col items-center md:flex-row md:justify-center gap-4 bg-white dark:bg-gray-900 dark:text-white py-2'>
                 <div style={subredditMetaData.communityColor ? {backgroundColor: subredditMetaData.communityColor} : {backgroundColor: 'black'}} className='w-20 h-20 text-white rounded-full border border-gray-200 dark:border-gray-800 text-center text-7xl'>r/</div>
                 <h1 className='font-bold text-3xl text-center'>{subredditMetaData.title}</h1>
-                <button onClick={() =>  userJoinSubreddit(db, currentUser, subredditMetaData.title )} className='border border-gray-800 text-gray-800 w-24 py-1 rounded-full dark:text-white dark:border-white'>Join</button>
+                <button onClick={() => !userHasJoined ?  userJoinSubreddit(db, currentUser, subredditMetaData.title, setUserHasJoined) : userLeaveSubreddit(db, currentUser, subredditMetaData.title, setUserHasJoined)} className='w-32 py-1 bg-blue-500 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>{`${userHasJoined ? 'Unfollow' : 'Follow'}`}</button>
             </section>
             <div className='flex flex-col-reverse md:flex-row justify-center mt-4 gap-4'>
                 <ul className='flex flex-col gap-4 lg:w-[40rem] md:w-[30rem]'>

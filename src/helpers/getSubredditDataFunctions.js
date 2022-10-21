@@ -71,6 +71,7 @@ export async function getHomePagePosts(currentUser, setHomepagePostsData, setLoa
                     const querySnapshot = await getDocs(collection(db, 'subreddits', subreddit, 'posts'))
                     querySnapshot.forEach((post) => {
                         popularPosts.push(post.data())
+
                     })
                 }
                 catch(e) {
@@ -78,7 +79,7 @@ export async function getHomePagePosts(currentUser, setHomepagePostsData, setLoa
                 }
                 finally {
                     if(index === joinedSubredditsArray.length - 1)
-                    setHomepagePostsData(popularPosts) 
+                    setHomepagePostsData(randomizePosts(popularPosts)) 
                 }
             })
             

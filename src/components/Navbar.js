@@ -12,13 +12,17 @@ const Navbar = (props) => {
 
   const [mobileNavLinksVisible, setMobileNavLinksVisible] = useState(false)
 
+  const [searchResultsVisible, setSearchResultsVisible] = useState(false)
+
   const {currentUser, logOut, userInfo} = useAuth()
+
+  const [searchResults, setSearchResults] = useState([])
 
   return (
     <div className='font-poppins relative border-b border-gray-200 dark:bg-gray-900 dark:border-gray-800'>
       <header className='flex items-center px-4 py-1'>
         {/* logo and name */}
-        <div className='flex items-center gap-2' onClick={() => navigate('/')}>
+        <div className='flex items-center gap-2 md:w-[248px]' onClick={() => navigate('/')}>
         <img src={redditIcon} className='w-10'></img>
         <h1 className='hidden md:block text-1xl font-semibold text-gray-700 dark:text-white'>!Reddit</h1>
         </div>
@@ -28,10 +32,18 @@ const Navbar = (props) => {
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input onChange={(e) => {
-            searchSubreddit(e.target.value)
+            searchSubreddit(e.target.value, setSearchResults, setSearchResultsVisible)
           }} type='text' placeholder='Search !Reddit' className='bg-gray-50 dark:bg-gray-800 dark:text-white focus:outline-none w-full'>
           </input>
         </div>
+        {searchResultsVisible ? 
+        <ul className='absolute top-12 bg bg-gray-50 dark:bg-gray-900 shadow-md dark:text-white md:w-4/12 w-screen left-1/2 transform -translate-x-1/2 z-10'>
+        {searchResults.map((result) => {
+          return <li onClick={() => navigate(`/r/${result}`)} className='px-2 cursor-pointer py-4 hover:bg-gray-200 dark:hover:bg-gray-800'>r/{result}</li>
+        })}
+        </ul>
+        : null}
+        
         {/* sign up and login buttons */}
         <ul className='flex text-1xl gap-2'>
           {currentUser ? 
@@ -75,6 +87,7 @@ const Navbar = (props) => {
       /> : null}
       {/* full screen button for disabling dropdown if clicking outside of it */}
       { mobileNavLinksVisible ? <button onClick={() => setMobileNavLinksVisible(!mobileNavLinksVisible)} className='fixed top-0 right-0 bottom-0 left-0 h-full w-full cursor-default'></button> : null}
+      { searchResultsVisible ? <button onClick={() => setSearchResultsVisible(!searchResultsVisible)} className='fixed top-0 right-0 bottom-0 left-0 h-full w-full cursor-default'></button> : null}
     </div>
   )
 }

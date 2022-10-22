@@ -31,7 +31,7 @@ const Navbar = (props) => {
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 dark:invert" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
-          <input onChange={(e) => {
+          <input onClick={() => setSearchResultsVisible(true) } onChange={(e) => {
             searchSubreddit(e.target.value, setSearchResults, setSearchResultsVisible)
           }} type='text' placeholder='Search !Reddit' className='bg-gray-50 dark:bg-gray-800 dark:text-white focus:outline-none w-full'>
           </input>
@@ -39,7 +39,7 @@ const Navbar = (props) => {
         {searchResultsVisible ? 
         <ul className='absolute top-12 bg bg-gray-50 dark:bg-gray-900 shadow-md dark:text-white md:w-4/12 w-screen left-1/2 transform -translate-x-1/2 z-10'>
         {searchResults.map((result) => {
-          return <li onClick={() => navigate(`/r/${result}`)} className='px-2 cursor-pointer py-4 hover:bg-gray-200 dark:hover:bg-gray-800'>r/{result}</li>
+          return <li onClick={() => {navigate(`/r/${result}`); setSearchResultsVisible(false)}} className='px-2 cursor-pointer py-4 hover:bg-gray-200 dark:hover:bg-gray-800'>r/{result}</li>
         })}
         </ul>
         : null}

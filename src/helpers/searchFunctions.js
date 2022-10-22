@@ -4,7 +4,10 @@ import { db } from "../firebase";
 
 
 export async function searchSubreddit (chars, setSearchResults, setSearchResultsVisible) {
-    if(!chars) return 
+    if(!chars) {
+        setSearchResults([])
+        return 
+    }
     let matchedSubreddits = []
     try {
         const querySnapshot = await getDocs(collection(db, 'subreddits'))

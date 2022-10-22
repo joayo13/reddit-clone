@@ -8,6 +8,7 @@ import CreatePostCard from '../components/CreatePostCard'
 import { userJoinSubreddit, userLeaveSubreddit } from '../helpers/userJoinSubreddit'
 import { fetchSubredditData, fetchSubredditPosts } from '../helpers/getSubredditDataFunctions'
 import { doc, getDoc } from 'firebase/firestore'
+import LoadingWheel from '../components/LoadingWheel'
 
 
 function Subreddit(props) {
@@ -40,7 +41,7 @@ function Subreddit(props) {
     })
 
   return (
-    <>{loading ? null :
+    <>{loading ? <LoadingWheel/> :
         <div className='bg-gray-100 dark:bg-black min-h-screen'>
             <section className='flex flex-col items-center md:flex-row md:justify-center gap-4 bg-white dark:bg-gray-900 dark:text-white py-2'>
                 <div style={subredditMetaData.communityColor ? {backgroundColor: subredditMetaData.communityColor} : {backgroundColor: 'black'}} className='w-20 h-20 text-white rounded-full border border-gray-200 dark:border-gray-800 text-center text-7xl'>r/</div>

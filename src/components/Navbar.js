@@ -87,7 +87,7 @@ const Navbar = (props) => {
       /> : null}
       {/* full screen button for disabling dropdown if clicking outside of it */}
       { mobileNavLinksVisible ? <button onClick={() => setMobileNavLinksVisible(!mobileNavLinksVisible)} className='fixed top-0 right-0 bottom-0 left-0 h-full w-full cursor-default'></button> : null}
-      { searchResultsVisible ? <button onClick={() => setSearchResultsVisible(!searchResultsVisible)} className='fixed top-0 right-0 bottom-0 left-0 h-full w-full cursor-default'></button> : null}
+      { searchResultsVisible ? <button onClick={() => setSearchResultsVisible(!searchResultsVisible)} className='fixed opacity-50 bg-black top-12 right-0 bottom-0 left-0 h-full w-full cursor-default'></button> : null}
     </div>
   )
 }

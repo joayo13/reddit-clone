@@ -165,7 +165,7 @@ function Comments(props) {
                 </div>
                 <section className='dark:text-white px-8'>
                     <span className='flex gap-2 items-center'>
-                        <p className='font-bold text-sm'>r/{subredditMetaData.title}</p>
+                        <p className='font-bold text-sm cursor-pointer' onClick={() => navigate(`/r/${subredditMetaData.title}`)}>r/{subredditMetaData.title}</p>
                         <p className=' text-xs opacity-50'>u/{postMetaData.author} {getDatefromSeconds(postMetaData.timestamp?.seconds, Timestamp.now().seconds)}</p>
                     </span>
                     <h1 className='mt-4 text-2xl break-words'>{postMetaData.postTitle}</h1>

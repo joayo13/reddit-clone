@@ -57,7 +57,7 @@ function Subreddit(props) {
                     <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-sm'>
                         <h2 className='text-xl font-semibold'>About Community</h2>
                         <p>{subredditMetaData.aboutCommunity}</p>
-                        <p className='font-semibold'>0 members</p>
+                        <p className='font-semibold'>{subredditMetaData.joined} Members</p>
                     </li>
                     <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-sm'>
                         <h2 className='text-xl font-semibold'>Subreddit Rules</h2>

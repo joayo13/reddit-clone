@@ -23,7 +23,7 @@ function CreateCommunity(props) {
                 aboutCommunity: aboutCommunityRef.current.value,
                 admin: userInfo.username,
                 communityColor: colorRef.current.value,
-
+                joined: 0,
             })
             .then(() => {
                 navigate(`/r/${nameRef.current.value}`)

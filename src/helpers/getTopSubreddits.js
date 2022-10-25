@@ -15,6 +15,6 @@ export async function getTopSubreddits(setTopSubreddits) {
         console.log(e)
     }
     finally {
-        setTopSubreddits(topSubreddits.sort((a, b) => a.joined - b.joined))
+        setTopSubreddits(topSubreddits.sort((a, b) => b.joined - a.joined))
     }
 }

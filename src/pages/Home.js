@@ -41,8 +41,8 @@ function Home() {
               <ul className='flex flex-col gap-4 lg:w-[20rem] md:w-[15rem]'>
                   <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-sm'>
                       <h2 className='text-xl font-semibold'>Top Communities</h2>
-                      {topSubreddits.map((subreddit) => <div className='flex gap-2 items-center'><p className='cursor-pointer' onClick={() => navigate(`/r/${subreddit.title}`)}>r/{subreddit.title}</p>
-                      <p className='font-bold'>{subreddit.joined} Members</p></div>)}
+                      {topSubreddits.map((subreddit) => <div className='cursor-pointer' onClick={() => navigate(`/r/${subreddit.title}`)}><p>r/{subreddit.title}</p>
+                      <span className='font-bold text-xs'>{subreddit.joined} Members</span></div>)}
                   </li>
                   <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-sm'>
                       <h2 className='text-xl font-semibold'>Popular Communities</h2>

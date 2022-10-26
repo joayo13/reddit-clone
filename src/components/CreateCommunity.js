@@ -11,7 +11,6 @@ function CreateCommunity(props) {
     const ruleOneRef = useRef()
     const ruleTwoRef = useRef()
     const ruleThreeRef = useRef()
-    const colorRef = useRef()
     let navigate = useNavigate()
 
 

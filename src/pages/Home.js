@@ -6,6 +6,7 @@ import LoadingWheel from '../components/LoadingWheel'
 import { useAuth } from '../contexts/AuthContext'
 import { getHomePagePosts} from '../helpers/getSubredditDataFunctions'
 import { getTopSubreddits } from '../helpers/getTopSubreddits'
+import bannerImage from '../images/banner-background.png'
 
 function Home() {
   const {currentUser} = useAuth()
@@ -39,12 +40,16 @@ function Home() {
           )}</div>
               </ul>
               <ul className='flex flex-col gap-4 lg:w-[20rem] md:w-[15rem]'>
-                  <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-sm'>
-                      <h2 className='text-xl font-semibold'>Top Communities</h2>
-                      {topSubreddits.map((subreddit) => <div className='cursor-pointer' onClick={() => navigate(`/r/${subreddit.title}`)}><p>r/{subreddit.title}</p>
+                  <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md pb-4'>
+                    <div className='relative rounded-t-md overflow-hidden'>
+                      <img src={bannerImage}></img>
+                      <div className='absolute shadow-[inset_0_-35px_20px_-5px_rgba(0,0,0,0.4)] bottom-0 right-0 top-0 left-0'></div>
+                      <h2 className='text-lg font-semibold text-white absolute bottom-2 left-4'>Top Communities</h2>
+                    </div>
+                      {topSubreddits.map((subreddit) => <div className='cursor-pointer ml-4' onClick={() => navigate(`/r/${subreddit.title}`)}><p>r/{subreddit.title}</p>
                       <span className='font-bold text-xs'>{subreddit.joined} Members</span></div>)}
                   </li>
-                  <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-sm'>
+                  <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md'>
                       <h2 className='text-xl font-semibold'>Popular Communities</h2>
                       <ul className='flex flex-col gap-4'>
                       <p>r/Minions</p>

@@ -7,18 +7,20 @@ import { useAuth } from '../contexts/AuthContext'
 import { getHomePagePosts} from '../helpers/getSubredditDataFunctions'
 import { getTopSubreddits } from '../helpers/getTopSubreddits'
 import bannerImage from '../images/banner-background.png'
+import bannerImage2 from '../images/yourCommunitiesPhoto.jpg'
 
 function Home() {
   const {currentUser} = useAuth()
   const [homepagePostsData, setHomepagePostsData] = useState([])
   const [loading, setLoading] = useState(true)
   const [topSubreddits, setTopSubreddits] = useState([])
+  const [userJoinedSubreddits, setUserJoinedSubreddits] = useState([])
   const navigate = useNavigate()
 
   useEffect(() => {
     async function getHomepage() {
       try {
-        await getHomePagePosts(currentUser, setHomepagePostsData, setLoading)
+        await getHomePagePosts(currentUser, setHomepagePostsData, setLoading, setUserJoinedSubreddits)
         await getTopSubreddits(setTopSubreddits)
       }
       catch (e) {
@@ -62,14 +64,14 @@ function Home() {
                       <button className='absolute right-4 bottom-1/2 translate-y-1/2 w-16 bg-blue-500 h-6 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Join</button>
                       </div>)}
                   </li>
-                  <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md'>
-                      <h2 className='text-xl font-semibold'>Popular Communities</h2>
-                      <ul className='flex flex-col gap-4'>
-                      <p>r/Minions</p>
-                      <p>r/Minions</p>
-                      <p>r/Minions</p>
-                      <p>r/Minions</p>
-                      <p>r/Minions</p>
+                  <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md pb-4'>
+                  <div className='relative rounded-t-md overflow-hidden h-24'>
+                      <img src={bannerImage2}></img>
+                      <div className='absolute shadow-[inset_0_-35px_20px_-5px_rgba(0,0,0,0.4)] bottom-0 right-0 top-0 left-0'></div>
+                      <h2 className='text-lg font-semibold text-white absolute bottom-2 left-4'>Your Communities</h2>
+                    </div>
+                      <ul className='flex px-4 flex-col gap-4'>
+                      {userJoinedSubreddits.map((subreddit) => <p className='font-bold'>r/{subreddit}</p>)}
                       </ul>
                   </li>
               </ul>

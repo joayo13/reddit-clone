@@ -53,13 +53,14 @@ export async function fetchSubredditPosts(setSubredditPostsData, setLoading, id)
     }
 }
 
-export async function getHomePagePosts(currentUser, setHomepagePostsData, setLoading) {
+export async function getHomePagePosts(currentUser, setHomepagePostsData, setLoading, setUserJoinedSubreddits) {
     let joinedSubredditsArray = []
     let popularPosts = []
     async function getUsersJoinedSubredditsArray(currentUser) {
         try {
             const docSnap = await getDoc(doc(db, 'users', currentUser.email))
             joinedSubredditsArray = docSnap.data().joinedSubreddits
+            setUserJoinedSubreddits(docSnap.data().joinedSubreddits)
         }
         catch(e) {
             throw(e)

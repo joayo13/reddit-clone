@@ -46,8 +46,13 @@ function Home() {
                       <div className='absolute shadow-[inset_0_-35px_20px_-5px_rgba(0,0,0,0.4)] bottom-0 right-0 top-0 left-0'></div>
                       <h2 className='text-lg font-semibold text-white absolute bottom-2 left-4'>Top Communities</h2>
                     </div>
-                      {topSubreddits.map((subreddit) => <div className='cursor-pointer ml-4' onClick={() => navigate(`/r/${subreddit.title}`)}><p>r/{subreddit.title}</p>
-                      <span className='font-bold text-xs'>{subreddit.joined} Members</span></div>)}
+                      {topSubreddits.map((subreddit) => <div className='px-4 flex w-full items-center justify-between'><div><p>r/{subreddit.title}</p>
+                      <span className='font-bold text-xs'>{subreddit.joined} Members</span>
+                      </div>
+                      <button 
+                      className='w-16 bg-blue-500 h-6 font-bold rounded-full text-white hover:bg-blue-400 text-sm'
+                      >Join</button>
+                    </div>)}
                   </li>
                   <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md'>
                       <h2 className='text-xl font-semibold'>Popular Communities</h2>

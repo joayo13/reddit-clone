@@ -27,7 +27,7 @@ function SubmitPost() {
     <>{loading ? null :
         <div className='bg-gray-100 dark:bg-black min-h-screen'>
                 <div className='flex md:flex-row justify-center py-4 gap-4'>
-                    <ul className='flex flex-col lg:w-[40rem] md:w-[30rem] w-full px-4 py-4 bg-white dark:bg-gray-900  border-gray-200 rounded-t-md'>
+                    <ul className='flex flex-col lg:w-[40rem] md:w-[30rem] w-full px-4 py-4 bg-white dark:bg-gray-900  border-gray-200 rounded-md'>
                     <h1 className='dark:text-white text-black mb-4'>Create a post</h1>
                         <li className='px-4 py-2'>
                             <input type='text' ref={postTitleRef} placeholder='Title' maxLength={100} className='w-full outline-none border bg-inherit dark:text-white dark:border-gray-700 indent-2 rounded-sm py-1'></input>
@@ -46,12 +46,12 @@ function SubmitPost() {
                         </li>
                     </ul>
                     <ul className='hidden md:flex flex-col gap-4 lg:w-[20rem] md:w-[15rem]'>
-                        <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-sm'>
+                        <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md'>
                             <h2 className='text-xl font-semibold'>About Community</h2>
                             <p>{subredditMetaData.aboutCommunity}</p>
                             <p className='font-semibold'>0 members</p>
                         </li>
-                        <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-sm'>
+                        <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md'>
                             <h2 className='text-xl font-semibold'>Subreddit Rules</h2>
                             <ol className='flex flex-col px-4 gap-4 list-decimal'>
                             {subredditMetaData.subredditRules.map((rule, index) => <li key={index}>{rule}</li>)}

@@ -152,7 +152,7 @@ function Comments(props) {
     <>{loading ? <LoadingWheel/> :
         <div className='bg-gray-100 dark:bg-black min-h-screen'>
             <div className='flex flex-col-reverse md:flex-row justify-center md:py-4 gap-4'>
-                <ul className='flex relative flex-col lg:w-[40rem] md:w-[30rem] dark:bg-gray-900 bg-white px-4 py-4 rounded-sm border border-gray-200 dark:border-gray-800'>
+                <ul className='flex relative flex-col lg:w-[40rem] md:w-[30rem] dark:bg-gray-900 bg-white px-4 py-4 rounded-md border border-gray-200 dark:border-gray-800'>
                 <div className='flex flex-col justify-evenly items-center h-20 absolute left-0 top-4 w-10 dark:text-white text-sm font-bold'>
                     <button disabled={buttonLoading} onClick={() => upvotePost(setButtonLoading, postMetaData, id, currentUser)}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke={ isUpvotedByUser ? "#ff4500" : "#424444"} strokeWidth="2">
@@ -218,12 +218,12 @@ function Comments(props) {
                 </section>
                 </ul>
                 <ul className='flex-col hidden md:flex gap-4 lg:w-[20rem] md:w-[15rem]'>
-                    <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-sm'>
+                    <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md'>
                         <h2 className='text-xl font-semibold'>About Community</h2>
                         <p>{subredditMetaData.aboutCommunity}</p>
                         <p className='font-semibold'>0 members</p>
                     </li>
-                    <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-sm'>
+                    <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md'>
                         <h2 className='text-xl font-semibold'>Subreddit Rules</h2>
                         <ol className='flex flex-col px-4 gap-4 list-decimal'>
                         {subredditMetaData.subredditRules.map((rule, index) => <li key={index}>{rule}</li>)}

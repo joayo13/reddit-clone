@@ -6,7 +6,7 @@ function CreatePostCard(props) {
     const {userInfo, id} = props
   return (
     <div>
-        <li className='flex gap-2 px-4 py-4 bg-white dark:bg-gray-900 dark:border-gray-800 border border-gray-200 rounded-sm'>
+        <li className='flex gap-2 px-4 py-4 bg-white dark:bg-gray-900 dark:border-gray-800 border border-gray-200 rounded-md'>
             <img src={userInfo.profilePicture} className='w-10 rounded-full'></img>
              <input type='text' onClick={() => navigate(`/r/${id}/submit`)} placeholder='Create Post' className='w-full outline-none bg-gray-100 dark:bg-gray-800 dark:text-white indent-2 rounded-sm'></input>
         </li>

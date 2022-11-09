@@ -61,7 +61,8 @@ function Home() {
                           <p>r/{subreddit.title}</p>
                           <span className='font-bold text-xs'>{subreddit.joined} Members</span>
                         </div>
-                      <button className='absolute right-4 bottom-1/2 translate-y-1/2 w-16 bg-blue-500 h-6 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Join</button>
+                      {userJoinedSubreddits.includes(subreddit.title) ? <button className='absolute right-4 bottom-1/2 translate-y-1/2 w-20 bg-blue-500 h-6 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Unfollow</button>
+                      : <button className='absolute right-4 bottom-1/2 translate-y-1/2 w-20 bg-blue-500 h-6 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Follow</button>}
                       </div>)}
                   </li>
                   <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md pb-4'>
@@ -71,7 +72,7 @@ function Home() {
                       <h2 className='text-lg font-semibold text-white absolute bottom-2 left-4'>Your Communities</h2>
                     </div>
                       <ul className='flex px-4 flex-col gap-4'>
-                      {userJoinedSubreddits.map((subreddit) => <p className='font-bold'>r/{subreddit}</p>)}
+                      {userJoinedSubreddits.map((subreddit) => <p className='font-bold cursor-pointer' onClick={() => navigate(`/r/${subreddit}`)}>r/{subreddit}</p>)}
                       </ul>
                   </li>
               </ul>

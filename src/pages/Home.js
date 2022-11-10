@@ -6,8 +6,10 @@ import LoadingWheel from '../components/LoadingWheel'
 import { useAuth } from '../contexts/AuthContext'
 import { getHomePagePosts} from '../helpers/getSubredditDataFunctions'
 import { getTopSubreddits } from '../helpers/getTopSubreddits'
+import { userJoinSubredditFromHome, userLeaveSubredditFromHome } from '../helpers/userJoinSubreddit'
 import bannerImage from '../images/banner-background.png'
 import bannerImage2 from '../images/yourCommunitiesPhoto.jpg'
+import { db } from '../firebase'
 
 function Home() {
   const {currentUser} = useAuth()
@@ -61,8 +63,8 @@ function Home() {
                           <p>r/{subreddit.title}</p>
                           <span className='font-bold text-xs'>{subreddit.joined} Members</span>
                         </div>
-                      {userJoinedSubreddits.includes(subreddit.title) ? <button className='absolute right-4 bottom-1/2 translate-y-1/2 w-20 bg-blue-500 h-6 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Unfollow</button>
-                      : <button className='absolute right-4 bottom-1/2 translate-y-1/2 w-20 bg-blue-500 h-6 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Follow</button>}
+                      {userJoinedSubreddits.includes(subreddit.title) ? <button onClick={async () => await userLeaveSubredditFromHome(db, currentUser, subreddit.title, setUserJoinedSubreddits)} className='absolute right-4 bottom-1/2 translate-y-1/2 w-20 bg-blue-500 h-6 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Unfollow</button>
+                      : <button onClick={async () => await userJoinSubredditFromHome(db, currentUser, subreddit.title, setUserJoinedSubreddits)} className='absolute right-4 bottom-1/2 translate-y-1/2 w-20 bg-blue-500 h-6 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Follow</button>}
                       </div>)}
                   </li>
                   <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md pb-4'>
@@ -72,7 +74,7 @@ function Home() {
                       <h2 className='text-lg font-semibold text-white absolute bottom-2 left-4'>Your Communities</h2>
                     </div>
                       <ul className='flex px-4 flex-col gap-4'>
-                      {userJoinedSubreddits.map((subreddit) => <p className='font-bold cursor-pointer' onClick={() => navigate(`/r/${subreddit}`)}>r/{subreddit}</p>)}
+                      {userJoinedSubreddits.map((subreddit) => <li className='font-bold cursor-pointer' onClick={() => navigate(`/r/${subreddit}`)}>r/{subreddit}</li>)}
                       </ul>
                   </li>
               </ul>

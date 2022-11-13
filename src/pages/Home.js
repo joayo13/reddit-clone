@@ -78,7 +78,7 @@ function Home () {
                       <ul className='flex px-4 flex-col gap-4'>
                       {userJoinedSubreddits.map((subreddit, index) =>
                        <li key={index} className='font-bold cursor-pointer' onClick={() => navigate(`/r/${subreddit}`)}>r/{subreddit}</li>)}
-                       {userJoinedSubreddits.length === 0 ? <li>You haven't joined any communities yet. </li> : null}
+                       {userJoinedSubreddits.length === 0 ? <li>You haven&apos;t joined any communities yet. </li> : null}
                       </ul>
                   </li>
               </ul>

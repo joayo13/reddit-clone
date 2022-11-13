@@ -1,20 +1,21 @@
-import { useState } from "react";
-import { AuthProvider } from "../contexts/AuthContext";
-import Subreddit from "../pages/Subreddit";
-import LogIn from "./LogIn";
-import Navbar from "./Navbar";
-import SignUp from "./SignUp";
+/* eslint-disable react/react-in-jsx-scope */
+import { useState } from 'react'
+import { AuthProvider } from '../contexts/AuthContext'
+import Subreddit from '../pages/Subreddit'
+import LogIn from './LogIn'
+import Navbar from './Navbar'
+import SignUp from './SignUp'
 import {
   BrowserRouter as Router,
   Routes,
   Route
-} from "react-router-dom";
-import Home from "../pages/Home";
-import SubmitPost from "../pages/SubmitPost";
-import CreateCommunity from "./CreateCommunity";
-import Comments from "../pages/Comments";
+} from 'react-router-dom'
+import Home from '../pages/Home'
+import SubmitPost from '../pages/SubmitPost'
+import CreateCommunity from './CreateCommunity'
+import Comments from '../pages/Comments'
 
-function App() {
+function App () {
   const [logInPopUp, setLogInPopUp] = useState(false)
   const [signUpPopUp, setSignUpPopUp] = useState(false)
   const [createCommunityPopUp, setCreateCommunityPopUp] = useState(false)

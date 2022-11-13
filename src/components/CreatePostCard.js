@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function CreatePostCard(props) {
-    const navigate = useNavigate()
-    const {userInfo, id} = props
+function CreatePostCard (props) {
+  const navigate = useNavigate()
+  const { userInfo, id } = props
   return (
     <div>
         <li className='flex gap-2 px-4 py-4 bg-white dark:bg-gray-900 dark:border-gray-800 border border-gray-200 rounded-md'>

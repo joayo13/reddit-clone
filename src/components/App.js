@@ -7,8 +7,7 @@ import SignUp from "./SignUp";
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import Home from "../pages/Home";
 import SubmitPost from "../pages/SubmitPost";
@@ -36,7 +35,7 @@ function App() {
     </AuthProvider>
     </Router>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

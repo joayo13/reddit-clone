@@ -46,14 +46,14 @@ function Home () {
               </div>
               </ul>
               <ul className='flex flex-col gap-4 lg:w-[20rem] md:w-[15rem]'>
-                  <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md pb-4'>
-                    <div className='relative rounded-t-md overflow-hidden'>
+                  <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 rounded-md'>
+                    <div className='relative rounded-t-md overflow-hidden h-20'>
                       <img src={bannerImage}></img>
-                      <div className='absolute shadow-[inset_0_-35px_40px_-5px_rgba(0,0,0,0.7)] bottom-0 right-0 top-0 left-0'></div>
+                      <div className='absolute shadow-[inset_0_-60px_50px_-20px_rgba(0,0,0,0.7)] bottom-0 right-0 top-0 left-0'></div>
                       <h2 className='text-lg font-semibold text-white absolute bottom-2 left-4'>Top Communities</h2>
                     </div>
                       {topSubreddits.map((subreddit, index) =>
-                      <div key={index} className='px-4 relative w-full'>
+                      <div key={index} className='px-4 py-2 relative w-full border-t border-gray-200 dark:border-gray-800'>
                         <div className='absolute left-4 bottom-1/2 translate-y-1/2 flex items-center gap-2'>
                         <p className='font-bold text-sm'>{topSubreddits.indexOf(subreddit) + 1}</p>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="4" stroke="#46d160" className="w-4 h-4">
@@ -69,17 +69,17 @@ function Home () {
                         : <button disabled={joinCommunityButtonLoading} onClick={async () => await userJoinSubredditFromHome(db, currentUser, subreddit.title, setUserJoinedSubreddits, setJoinCommunityButtonLoading)} className='absolute right-4 bottom-1/2 translate-y-1/2 w-20 bg-blue-500 h-6 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Follow</button>}
                       </div>)}
                   </li>
-                  <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md pb-4'>
-                  <div className='relative rounded-t-md overflow-hidden h-24'>
+                  <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 rounded-md'>
+                  <div className='relative rounded-t-md overflow-hidden h-20'>
                       <img src={bannerImage2}></img>
-                      <div className='absolute shadow-[inset_0_-35px_40px_-5px_rgba(0,0,0,0.7)] bottom-0 right-0 top-0 left-0'></div>
+                      <div className='absolute shadow-[inset_0_-60px_50px_-20px_rgba(0,0,0,0.7)] bottom-0 right-0 top-0 left-0'></div>
                       <h2 className='text-lg font-semibold text-white absolute bottom-2 left-4'>Your Communities</h2>
                     </div>
-                      <ul className='flex px-4 flex-col gap-4'>
+                      <ul className='flex flex-col'>
                       {topSubreddits.filter((subreddit) => userJoinedSubreddits.includes(subreddit.title)).map((filteredSubreddit, index) =>
-                       <div className='flex gap-2' key={index}>
-                        <div style={{ backgroundColor: filteredSubreddit.communityColor }} className='w-8 h-8 flex items-center justify-center text-white rounded-full border border-gray-200 dark:border-gray-800 font-bold'>r/</div>
-                        <div>
+                       <div className='flex px-4 py-2 gap-2 items-center border-t border-gray-200 dark:border-gray-800' key={index}>
+                        <div style={{ backgroundColor: filteredSubreddit.communityColor }} className='w-8 h-8 flex items-center justify-center text-white rounded-full font-bold'>r/</div>
+                        <div className='flex flex-col gap-2'>
                        <li className='font-bold cursor-pointer' onClick={() => navigate(`/r/${filteredSubreddit.title}`)}>r/{filteredSubreddit.title}</li>
                        <p className='text-xs'>{filteredSubreddit.joined} Members</p>
                        </div>

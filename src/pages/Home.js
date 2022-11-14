@@ -49,7 +49,7 @@ function Home () {
                   <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md pb-4'>
                     <div className='relative rounded-t-md overflow-hidden'>
                       <img src={bannerImage}></img>
-                      <div className='absolute shadow-[inset_0_-35px_20px_-5px_rgba(0,0,0,0.4)] bottom-0 right-0 top-0 left-0'></div>
+                      <div className='absolute shadow-[inset_0_-35px_40px_-5px_rgba(0,0,0,0.7)] bottom-0 right-0 top-0 left-0'></div>
                       <h2 className='text-lg font-semibold text-white absolute bottom-2 left-4'>Top Communities</h2>
                     </div>
                       {topSubreddits.map((subreddit, index) =>
@@ -72,7 +72,7 @@ function Home () {
                   <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md pb-4'>
                   <div className='relative rounded-t-md overflow-hidden h-24'>
                       <img src={bannerImage2}></img>
-                      <div className='absolute shadow-[inset_0_-35px_20px_-5px_rgba(0,0,0,0.4)] bottom-0 right-0 top-0 left-0'></div>
+                      <div className='absolute shadow-[inset_0_-35px_40px_-5px_rgba(0,0,0,0.7)] bottom-0 right-0 top-0 left-0'></div>
                       <h2 className='text-lg font-semibold text-white absolute bottom-2 left-4'>Your Communities</h2>
                     </div>
                       <ul className='flex px-4 flex-col gap-4'>

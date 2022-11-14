@@ -61,8 +61,8 @@ function Home () {
                         </svg>
                         </div>
                         <div className='ml-12'>
-                          <p>r/{subreddit.title}</p>
-                          <span className='font-bold text-xs'>{subreddit.joined} Members</span>
+                          <p className='font-bold'>r/{subreddit.title}</p>
+                          <span className='text-xs'>{subreddit.joined} Members</span>
                         </div>
                       {userJoinedSubreddits.includes(subreddit.title)
                         ? <button disabled={joinCommunityButtonLoading} onClick={async () => await userLeaveSubredditFromHome(db, currentUser, subreddit.title, setUserJoinedSubreddits, setJoinCommunityButtonLoading)} className='absolute right-4 bottom-1/2 translate-y-1/2 w-20 bg-blue-500 h-6 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Unfollow</button>
@@ -76,8 +76,14 @@ function Home () {
                       <h2 className='text-lg font-semibold text-white absolute bottom-2 left-4'>Your Communities</h2>
                     </div>
                       <ul className='flex px-4 flex-col gap-4'>
-                      {userJoinedSubreddits.map((subreddit, index) =>
-                       <li key={index} className='font-bold cursor-pointer' onClick={() => navigate(`/r/${subreddit}`)}>r/{subreddit}</li>)}
+                      {topSubreddits.filter((subreddit) => userJoinedSubreddits.includes(subreddit.title)).map((filteredSubreddit, index) =>
+                       <div className='flex gap-2' key={index}>
+                        <div style={{ backgroundColor: filteredSubreddit.communityColor }} className='w-8 h-8 flex items-center justify-center text-white rounded-full border border-gray-200 dark:border-gray-800 font-bold'>r/</div>
+                        <div>
+                       <li className='font-bold cursor-pointer' onClick={() => navigate(`/r/${filteredSubreddit.title}`)}>r/{filteredSubreddit.title}</li>
+                       <p className='text-xs'>{filteredSubreddit.joined} Members</p>
+                       </div>
+                       </div>)}
                        {userJoinedSubreddits.length === 0 ? <li>You haven&apos;t joined any communities yet. </li> : null}
                       </ul>
                   </li>

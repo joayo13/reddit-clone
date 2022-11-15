@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import { getDatefromSeconds } from '../helpers/getDate'
-import { Timestamp } from 'firebase/firestore'
+import { collection, getDocs, Timestamp } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { determineUpvoteCountElementColor, displayUpvotedOrDownvoted, downvotePost, getPostUpvotes, upvotePost } from '../helpers/upvoteFunctions'
+import { db } from '../firebase'
 
 function HomePostCard (props) {
   const navigate = useNavigate()
@@ -14,6 +15,7 @@ function HomePostCard (props) {
   const [isUpvotedByUser, setIsUpvotedByUser] = useState(false)
   const [isDownvotedByUser, setIsDownvotedByUser] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [commentLength, setCommentLength] = useState(0)
 
   useEffect(() => {
     if (!currentUser) return
@@ -27,6 +29,13 @@ function HomePostCard (props) {
       await getPostUpvotes(post, setUpvotes)
     }
     getPostUpvoteData()
+  })
+  useEffect(() => {
+    async function fetchSubredditPostCommentData () {
+      const querySnapshot = await getDocs(collection(db, 'subreddits', post.subredditId, 'posts', post.id, 'comments'))
+      setCommentLength(querySnapshot.size)
+    }
+    fetchSubredditPostCommentData()
   })
   return (
     <>
@@ -57,7 +66,7 @@ function HomePostCard (props) {
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
             </svg>
-            Comments
+            {commentLength} Comments
             </li>
         </ul>
     </li>

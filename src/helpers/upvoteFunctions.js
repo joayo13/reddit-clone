@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-finally */
 import { arrayRemove, arrayUnion, doc, getDoc, increment, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 
@@ -84,6 +85,7 @@ export async function upvotePost (setLoading, post, id, currentUser) {
       console.log(e)
     } finally {
       setLoading(false)
+      return
     }
   }
   if (await checkIfCurrentPostInUsersDownvotedPostIdsArray(post, await getUsersDownvotedPostIdsArray(currentUser)) === true) {
@@ -103,6 +105,7 @@ export async function upvotePost (setLoading, post, id, currentUser) {
     console.log(e)
   } finally {
     setLoading(false)
+    return
   }
 }
 export async function downvotePost (setLoading, post, id, currentUser) {
@@ -121,6 +124,7 @@ export async function downvotePost (setLoading, post, id, currentUser) {
       console.log(e)
     } finally {
       setLoading(false)
+      return
     }
   }
   if (await checkIfCurrentPostInUsersUpvotedPostIdsArray(post, await getUsersUpvotedPostIdsArray(currentUser)) === true) {
@@ -140,6 +144,7 @@ export async function downvotePost (setLoading, post, id, currentUser) {
     console.log(e)
   } finally {
     setLoading(false)
+    return
   }
 }
 export async function getPostUpvotes (post, setUpvotes) {

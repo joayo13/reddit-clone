@@ -48,15 +48,15 @@ function Subreddit (props) {
                     <ListPosts subredditPostsData={subredditPostsData} id={id}/>
                 </ul>
                 <ul className='flex flex-col gap-4 lg:w-[20rem] md:w-[15rem]'>
-                    <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md'>
-                        <h2 className='text-xl font-semibold'>About Community</h2>
-                        <p>{subredditMetaData.aboutCommunity}</p>
-                        <p className='font-semibold'>{subredditMetaData.joined} Members</p>
+                    <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md overflow-hidden'>
+                        <h2 style={{ backgroundColor: subredditMetaData.communityColor }} className='px-4 py-2 text-md text-white font-semibold'>About Community</h2>
+                        <p className='px-4 text-sm'>{subredditMetaData.aboutCommunity}</p>
+                        <p className='font-semibold text-sm px-4 pb-4'>{subredditMetaData.joined} Members</p>
                     </li>
-                    <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md'>
-                        <h2 className='text-xl font-semibold'>Subreddit Rules</h2>
-                        <ol className='flex flex-col px-4 gap-4 list-decimal'>
-                        {subredditMetaData.subredditRules?.map((rule, index) => <li key={index}>{rule}</li>)}
+                    <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md overflow-hidden'>
+                        <h2 style={{ backgroundColor: subredditMetaData.communityColor }} className='px-4 py-2 text-md text-white font-semibold'>Subreddit Rules</h2>
+                        <ol className='flex flex-col gap-4 list-decimal pb-4'>
+                        {subredditMetaData.subredditRules?.map((rule, index) => <li className='px-4 text-sm' key={index}>{index + 1}. {rule}</li>)}
                         </ol>
                     </li>
                 </ul>

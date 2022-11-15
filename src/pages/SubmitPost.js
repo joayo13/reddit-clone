@@ -23,7 +23,7 @@ function SubmitPost () {
     <>{loading
       ? null
       : <div className='bg-gray-100 dark:bg-black min-h-screen'>
-                <div className='flex md:flex-row justify-center py-4 gap-4'>
+                <div className='flex flex-col-reverse md:flex-row justify-center py-4 gap-4'>
                     <ul className='flex flex-col lg:w-[40rem] md:w-[30rem] w-full px-4 py-4 bg-white dark:bg-gray-900  border-gray-200 rounded-md'>
                     <h1 className='dark:text-white text-black mb-4'>Create a post</h1>
                         <li className='px-4 py-2'>

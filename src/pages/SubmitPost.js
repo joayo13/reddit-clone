@@ -27,7 +27,7 @@ function SubmitPost () {
                     <ul className='flex flex-col lg:w-[40rem] md:w-[30rem] w-full px-4 py-4 bg-white dark:bg-gray-900  border-gray-200 rounded-md'>
                     <h1 className='dark:text-white text-black mb-4'>Create a post</h1>
                         <li className='px-4 py-2'>
-                            <input type='text' ref={postTitleRef} placeholder='Title' maxLength={100} className='w-full outline-none border bg-inherit dark:text-white dark:border-gray-700 indent-2 rounded-sm py-1'></input>
+                            <input type='text' ref={postTitleRef} placeholder='Title' maxLength={100} className='w-full outline-none border bg-inherit dark:text-white dark:border-gray-700 indent-2 rounded-md py-1'></input>
                         </li>
                         <li className= 'px-4 py-2'>
                             <img src={imageURL}></img>
@@ -51,19 +51,19 @@ function SubmitPost () {
                             <button onClick={() => createPost(id, postTitleRef, userInfo, postTextRef, navigate, imageURL)} className='bg-blue-500 text-white w-20 py-1 rounded-full'>Post</button>
                         </li>
                     </ul>
-                    <ul className='hidden md:flex flex-col gap-4 lg:w-[20rem] md:w-[15rem]'>
-                        <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md'>
-                            <h2 className='text-xl font-semibold'>About Community</h2>
-                            <p>{subredditMetaData.aboutCommunity}</p>
-                            <p className='font-semibold'>0 members</p>
-                        </li>
-                        <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md'>
-                            <h2 className='text-xl font-semibold'>Subreddit Rules</h2>
-                            <ol className='flex flex-col px-4 gap-4 list-decimal'>
-                            {subredditMetaData.subredditRules.map((rule, index) => <li key={index}>{rule}</li>)}
-                            </ol>
-                        </li>
-                    </ul>
+                    <ul className='flex flex-col gap-4 lg:w-[20rem] md:w-[15rem]'>
+                    <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md overflow-hidden'>
+                        <h2 style={{ backgroundColor: subredditMetaData.communityColor }} className='px-4 py-2 text-md text-white font-semibold'>About Community</h2>
+                        <p className='px-4 text-sm'>{subredditMetaData.aboutCommunity}</p>
+                        <p className='font-semibold text-sm px-4 pb-4'>{subredditMetaData.joined} Members</p>
+                    </li>
+                    <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md overflow-hidden'>
+                        <h2 style={{ backgroundColor: subredditMetaData.communityColor }} className='px-4 py-2 text-md text-white font-semibold'>Subreddit Rules</h2>
+                        <ol className='flex flex-col gap-4 list-decimal pb-4'>
+                        {subredditMetaData.subredditRules?.map((rule, index) => <li className='px-4 text-sm font-bold' key={index}>{index + 1}. {rule}</li>)}
+                        </ol>
+                    </li>
+                </ul>
                 </div>
             </div>}
         </>

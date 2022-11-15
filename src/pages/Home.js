@@ -84,7 +84,7 @@ function Home () {
                        <p className='text-xs'>{filteredSubreddit.joined} Members</p>
                        </div>
                        </div>)}
-                       {userJoinedSubreddits.length === 0 ? <li>You haven&apos;t joined any communities yet. </li> : null}
+                       {userJoinedSubreddits.length === 0 ? <li className='text-sm px-2 py-4'>You haven&apos;t joined any communities yet. </li> : null}
                       </ul>
                   </li>
               </ul>

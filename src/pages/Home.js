@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -11,7 +12,7 @@ import bannerImage from '../images/banner-background.png'
 import bannerImage2 from '../images/yourCommunitiesPhoto.jpg'
 import { db } from '../firebase'
 
-function Home () {
+function Home (props) {
   const { currentUser } = useAuth()
   const [homepagePostsData, setHomepagePostsData] = useState([])
   const [loading, setLoading] = useState(true)
@@ -19,10 +20,17 @@ function Home () {
   const [userJoinedSubreddits, setUserJoinedSubreddits] = useState([])
   const navigate = useNavigate()
   const [joinCommunityButtonLoading, setJoinCommunityButtonLoading] = useState(false)
+  const defaultUser = {
+    email: 'default@default.default'
+  }
 
   useEffect(() => {
     async function getHomepage () {
       try {
+        if (!currentUser) {
+          await getHomePagePosts(defaultUser, setHomepagePostsData, setLoading, setUserJoinedSubreddits)
+          await getTopSubreddits(setTopSubreddits)
+        }
         await getHomePagePosts(currentUser, setHomepagePostsData, setLoading, setUserJoinedSubreddits)
         await getTopSubreddits(setTopSubreddits)
       } catch (e) {
@@ -76,7 +84,7 @@ function Home () {
                       <h2 className='text-lg font-semibold text-white absolute bottom-2 left-4'>Your Communities</h2>
                     </div>
                       <ul className='flex flex-col'>
-                      {topSubreddits.filter((subreddit) => userJoinedSubreddits.includes(subreddit.title)).map((filteredSubreddit, index) =>
+                      {currentUser && topSubreddits.filter((subreddit) => userJoinedSubreddits.includes(subreddit.title)).map((filteredSubreddit, index) =>
                        <div className='flex px-4 py-2 gap-2 items-center border-t border-gray-200 dark:border-gray-800' key={index}>
                         <div style={{ backgroundColor: filteredSubreddit.communityColor }} className='w-8 h-8 flex items-center justify-center text-white rounded-full font-bold'>r/</div>
                         <div className='flex flex-col gap-2'>
@@ -85,6 +93,7 @@ function Home () {
                        </div>
                        </div>)}
                        {userJoinedSubreddits.length === 0 ? <li className='text-sm px-2 py-4'>You haven&apos;t joined any communities yet. </li> : null}
+                       {!currentUser ? <li className='text-sm px-2 py-4'><a className='text-blue-500 cursor-pointer' onClick={() => props.setSignUpPopUp(true)}>Sign Up</a> to start joining communities. </li> : null }
                       </ul>
                   </li>
               </ul>

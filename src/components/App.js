@@ -28,7 +28,7 @@ function App () {
     {signUpPopUp ? <SignUp setLogInPopUp={setLogInPopUp} setSignUpPopUp={setSignUpPopUp}></SignUp> : null}
     {createCommunityPopUp ? <CreateCommunity setCreateCommunityPopUp={setCreateCommunityPopUp}></CreateCommunity> : null}
     <Routes>
-    <Route exact path='/' element={<Home/>}/>
+    <Route exact path='/' element={<Home setSignUpPopUp={setSignUpPopUp}/>}/>
     <Route exact path='/r/:id' element={<Subreddit/>}/>
     <Route exact path ='/r/:id/submit' element={<SubmitPost/>}/>
     <Route exact path ='/r/:id/comments/:post' element={<Comments/>}/>

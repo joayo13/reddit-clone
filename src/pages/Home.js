@@ -72,7 +72,7 @@ function Home (props) {
                           <p className='font-bold'>r/{subreddit.title}</p>
                           <span className='text-xs'>{subreddit.joined} Members</span>
                         </div>
-                      {userJoinedSubreddits.includes(subreddit.title)
+                      {currentUser && userJoinedSubreddits.includes(subreddit.title)
                         ? <button disabled={joinCommunityButtonLoading} onClick={async () => await userLeaveSubredditFromHome(db, currentUser, subreddit.title, setUserJoinedSubreddits, setJoinCommunityButtonLoading)} className='absolute right-4 bottom-1/2 translate-y-1/2 w-20 bg-blue-500 h-6 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Unfollow</button>
                         : <button disabled={joinCommunityButtonLoading} onClick={async () => await userJoinSubredditFromHome(db, currentUser, subreddit.title, setUserJoinedSubreddits, setJoinCommunityButtonLoading)} className='absolute right-4 bottom-1/2 translate-y-1/2 w-20 bg-blue-500 h-6 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Follow</button>}
                       </div>)}

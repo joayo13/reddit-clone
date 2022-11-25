@@ -1,7 +1,8 @@
 import { getDocs, collection } from 'firebase/firestore'
 import { db } from '../firebase'
 
-export async function getTopSubreddits (setTopSubreddits) {
+// eslint-disable-next-line space-before-function-paren
+export async function getTopSubreddits(setTopSubreddits) {
   const topSubreddits = []
   try {
     const querySnapshot = await getDocs(collection(db, 'subreddits'))
@@ -11,6 +12,6 @@ export async function getTopSubreddits (setTopSubreddits) {
   } catch (e) {
     console.log(e)
   } finally {
-    setTopSubreddits(topSubreddits.sort((a, b) => b.joined - a.joined))
+    setTopSubreddits(topSubreddits.sort((a, b) => b.joined - a.joined).splice(0, 5))
   }
 }

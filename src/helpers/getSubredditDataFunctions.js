@@ -56,7 +56,7 @@ export async function getHomePagePosts (currentUser, setHomepagePostsData, setLo
   const popularPosts = []
   async function getUsersJoinedSubredditsArray (currentUser) {
     try {
-      const docSnap = await getDoc(doc(db, 'users', currentUser.email))
+      const docSnap = await getDoc(doc(db, 'users', currentUser.uid))
       joinedSubredditsArray = docSnap.data().joinedSubreddits
       setUserJoinedSubreddits(docSnap.data().joinedSubreddits)
     } catch (e) {

@@ -16,7 +16,7 @@ export function AuthProvider ({ children }) {
   const [loading, setLoading] = useState(true)
   const [userInfo, setUserInfo] = useState({})
   async function fetchUserData () {
-    const docRef = doc(db, 'users', currentUser.email)
+    const docRef = doc(db, 'users', currentUser.uid)
     try {
       const docSnap = await getDoc(docRef)
       if (docSnap.exists()) {

@@ -5,7 +5,7 @@ import { db } from '../firebase'
 export async function getUsersUpvotedPostIdsArray (currentUser) {
   let postIdsArray = []
   try {
-    const docSnap = await getDoc(doc(db, 'users', currentUser.email))
+    const docSnap = await getDoc(doc(db, 'users', currentUser.uid))
     if (docSnap.exists()) {
       postIdsArray = docSnap.data().upvotedPosts
     }
@@ -17,7 +17,7 @@ export async function getUsersUpvotedPostIdsArray (currentUser) {
 export async function getUsersDownvotedPostIdsArray (currentUser) {
   let postIdsArray = []
   try {
-    const docSnap = await getDoc(doc(db, 'users', currentUser.email))
+    const docSnap = await getDoc(doc(db, 'users', currentUser.uid))
     if (docSnap.exists()) {
       postIdsArray = docSnap.data().downvotedPosts
     }
@@ -29,7 +29,7 @@ export async function getUsersDownvotedPostIdsArray (currentUser) {
 export async function getUsersUpvotedCommentIdsArray (currentUser) {
   let commentIdsArray = []
   try {
-    const docSnap = await getDoc(doc(db, 'users', currentUser.email))
+    const docSnap = await getDoc(doc(db, 'users', currentUser.uid))
     if (docSnap.exists()) {
       commentIdsArray = docSnap.data().upvotedComments
     }
@@ -41,7 +41,7 @@ export async function getUsersUpvotedCommentIdsArray (currentUser) {
 export async function getUsersDownvotedCommentIdsArray (currentUser) {
   let commentIdsArray = []
   try {
-    const docSnap = await getDoc(doc(db, 'users', currentUser.email))
+    const docSnap = await getDoc(doc(db, 'users', currentUser.uid))
     if (docSnap.exists()) {
       commentIdsArray = docSnap.data().downvotedComments
     }
@@ -78,7 +78,7 @@ export async function upvotePost (setLoading, post, id, currentUser) {
       await updateDoc(doc(db, 'subreddits', id, 'posts', post.id, 'feelings', 'upvotes'), {
         upvotes: increment(-1)
       })
-      await updateDoc(doc(db, 'users', currentUser.email), {
+      await updateDoc(doc(db, 'users', currentUser.uid), {
         upvotedPosts: arrayRemove(post.id)
       })
     } catch (e) {
@@ -95,10 +95,10 @@ export async function upvotePost (setLoading, post, id, currentUser) {
     await updateDoc(doc(db, 'subreddits', id, 'posts', post.id, 'feelings', 'upvotes'), {
       upvotes: increment(voteAmount)
     })
-    await updateDoc(doc(db, 'users', currentUser.email), {
+    await updateDoc(doc(db, 'users', currentUser.uid), {
       downvotedPosts: arrayRemove(post.id)
     })
-    await updateDoc(doc(db, 'users', currentUser.email), {
+    await updateDoc(doc(db, 'users', currentUser.uid), {
       upvotedPosts: arrayUnion(post.id)
     })
   } catch (e) {
@@ -117,7 +117,7 @@ export async function downvotePost (setLoading, post, id, currentUser) {
       await updateDoc(doc(db, 'subreddits', id, 'posts', post.id, 'feelings', 'upvotes'), {
         upvotes: increment(1)
       })
-      await updateDoc(doc(db, 'users', currentUser.email), {
+      await updateDoc(doc(db, 'users', currentUser.uid), {
         downvotedPosts: arrayRemove(post.id)
       })
     } catch (e) {
@@ -134,10 +134,10 @@ export async function downvotePost (setLoading, post, id, currentUser) {
     await updateDoc(doc(db, 'subreddits', id, 'posts', post.id, 'feelings', 'upvotes'), {
       upvotes: increment(voteAmount)
     })
-    await updateDoc(doc(db, 'users', currentUser.email), {
+    await updateDoc(doc(db, 'users', currentUser.uid), {
       upvotedPosts: arrayRemove(post.id)
     })
-    await updateDoc(doc(db, 'users', currentUser.email), {
+    await updateDoc(doc(db, 'users', currentUser.uid), {
       downvotedPosts: arrayUnion(post.id)
     })
   } catch (e) {

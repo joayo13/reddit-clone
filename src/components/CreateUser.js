@@ -2,6 +2,7 @@
 import React, { useState, useRef } from 'react'
 import sideImage from '../images/login-signup-image.png'
 import images from '../images/profilePictures/allPictures'
+import { useAuth } from '../contexts/AuthContext'
 import { doc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 
@@ -10,16 +11,17 @@ function CreateUser (props) {
   const [loading, setLoading] = useState(false)
   const usernameRef = useRef()
   const [profilePicture, setProfilePicture] = useState(null)
+  const { currentUser } = useAuth()
 
   async function handleSubmit (e) {
     e.preventDefault()
     try {
       setError('')
       setLoading(true)
-      await props.signUp(props.emailRef, props.passwordRef)
+      console.log(currentUser)
       try {
-        await setDoc(doc(db, 'users', props.emailRef), {
-          profilePicture: profilePicture,
+        await setDoc(doc(db, 'users', currentUser.uid), {
+          profilePicture,
           username: usernameRef.current.value,
           upvotedPosts: [],
           downvotedPosts: [],

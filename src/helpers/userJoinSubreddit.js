@@ -1,7 +1,7 @@
 import { arrayRemove, arrayUnion, doc, increment, updateDoc } from 'firebase/firestore'
 export async function userJoinSubreddit (db, currentUser, subreddit, setUserHasJoined, setButtonLoading) {
   setButtonLoading(true)
-  await updateDoc(doc(db, 'users', currentUser.email), {
+  await updateDoc(doc(db, 'users', currentUser.uid), {
     joinedSubreddits: arrayUnion(subreddit)
   })
   await updateDoc(doc(db, 'subreddits', subreddit), {
@@ -12,7 +12,7 @@ export async function userJoinSubreddit (db, currentUser, subreddit, setUserHasJ
 }
 export async function userLeaveSubreddit (db, currentUser, subreddit, setUserHasJoined, setButtonLoading) {
   setButtonLoading(true)
-  await updateDoc(doc(db, 'users', currentUser.email), {
+  await updateDoc(doc(db, 'users', currentUser.uid), {
     joinedSubreddits: arrayRemove(subreddit)
   })
   await updateDoc(doc(db, 'subreddits', subreddit), {
@@ -23,7 +23,7 @@ export async function userLeaveSubreddit (db, currentUser, subreddit, setUserHas
 }
 export async function userJoinSubredditFromHome (db, currentUser, subreddit, setUsersJoinedSubreddits, setJoinCommunityButtonLoading) {
   setJoinCommunityButtonLoading(true)
-  await updateDoc(doc(db, 'users', currentUser.email), {
+  await updateDoc(doc(db, 'users', currentUser.uid), {
     joinedSubreddits: arrayUnion(subreddit)
   })
   await updateDoc(doc(db, 'subreddits', subreddit), {
@@ -34,7 +34,7 @@ export async function userJoinSubredditFromHome (db, currentUser, subreddit, set
 }
 export async function userLeaveSubredditFromHome (db, currentUser, subreddit, setUsersJoinedSubreddits, setJoinCommunityButtonLoading) {
   setJoinCommunityButtonLoading(true)
-  await updateDoc(doc(db, 'users', currentUser.email), {
+  await updateDoc(doc(db, 'users', currentUser.uid), {
     joinedSubreddits: arrayRemove(subreddit)
   })
   await updateDoc(doc(db, 'subreddits', subreddit), {

@@ -21,14 +21,14 @@ function Home (props) {
   const navigate = useNavigate()
   const [joinCommunityButtonLoading, setJoinCommunityButtonLoading] = useState(false)
   const defaultUser = {
-    email: 'default@default.default'
+    uid: 'FYTHeAA0osdRNlMoV4zaEulVVwD2'
   }
 
   useEffect(() => {
     async function getHomepage () {
       try {
         if (!currentUser) {
-          await getHomePagePosts(defaultUser, setHomepagePostsData, setLoading, setUserJoinedSubreddits)
+          await getHomePagePosts(defaultUser, setHomepagePostsData, setLoading, setUserJoinedSubreddits, true)
           await getTopSubreddits(setTopSubreddits)
         }
         await getHomePagePosts(currentUser, setHomepagePostsData, setLoading, setUserJoinedSubreddits)

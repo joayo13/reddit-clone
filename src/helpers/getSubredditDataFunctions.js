@@ -51,14 +51,19 @@ export async function fetchSubredditPosts (setSubredditPostsData, setLoading, id
   }
 }
 
-export async function getHomePagePosts (currentUser, setHomepagePostsData, setLoading, setUserJoinedSubreddits) {
+export async function getHomePagePosts (currentUser, setHomepagePostsData, setLoading, setUserJoinedSubreddits, isNotSignedUp) {
   let joinedSubredditsArray = []
   const popularPosts = []
   async function getUsersJoinedSubredditsArray (currentUser) {
     try {
-      const docSnap = await getDoc(doc(db, 'users', currentUser.uid))
-      joinedSubredditsArray = docSnap.data().joinedSubreddits
-      setUserJoinedSubreddits(docSnap.data().joinedSubreddits)
+      if (isNotSignedUp === true) {
+        joinedSubredditsArray = ['fasd']
+      }
+      if (!isNotSignedUp) {
+        const docSnap = await getDoc(doc(db, 'users', currentUser.uid))
+        joinedSubredditsArray = docSnap.data().joinedSubreddits
+        setUserJoinedSubreddits(docSnap.data().joinedSubreddits)
+      }
     } catch (e) {
       throw (e)
     }

@@ -25,7 +25,7 @@ function Subreddit (props) {
   useEffect(() => {
     async function checkIfUserHasJoined () {
       if (userHasJoined) return
-      const docSnap = await getDoc(doc(db, 'users', currentUser.email))
+      const docSnap = await getDoc(doc(db, 'users', currentUser.uid))
       if (docSnap.data().joinedSubreddits.includes(subredditMetaData.title)) {
         setUserHasJoined(true)
       }

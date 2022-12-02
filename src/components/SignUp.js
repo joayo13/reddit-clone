@@ -25,7 +25,7 @@ function SignUp (props) {
         <h1 className='font-medium text-lg'>Sign Up</h1>
         <p className='text-xs mt-2 md:w-1/3'>By continuing, you are setting up a Reddit account and you agree to our User Agreement and Privacy Policy.</p>
         {error && <div className='w-full bg-red-700 p-4 font-semibold rounded-md mt-4 text-white'>{error}</div>}
-        <form onSubmit={ async (e) => { e.preventDefault(); await signUp(emailRef.current.value, passwordRef.current.value); setCreateUser(true) } } className='mt-20 flex flex-col gap-6'>
+        <form onSubmit={ async (e) => { e.preventDefault(); setCreateUser(true) } } className='mt-20 flex flex-col gap-6'>
           <input required placeholder='EMAIL' ref={emailRef} type='email' className=' bg-gray-100 dark:bg-gray-800 py-4 indent-4 w-80 focus:outline-none'></input>
           <input required minLength={6} placeholder='PASSWORD' ref={passwordRef} type='password' className=' bg-gray-100 dark:bg-gray-800 py-4 indent-4 w-80 focus:outline-none'></input>
           <button type='submit' className=' bg-blue-500 py-2 rounded-full text-white w-80 font-semibold mx-auto md:mx-0 hover:bg-blue-400'>Continue</button>

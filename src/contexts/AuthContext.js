@@ -2,7 +2,7 @@
 /* eslint-disable import/no-duplicates */
 import React, { useContext, useEffect, useState } from 'react'
 import { auth } from '../firebase'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 
 const AuthContext = React.createContext()
@@ -39,8 +39,19 @@ export function AuthProvider ({ children }) {
     }
   }, [currentUser])
 
-  function signUp (email, password) {
-    return auth.createUserWithEmailAndPassword(email, password)
+  async function signUp (email, password, profilePicture, usernameRef) {
+    await auth.createUserWithEmailAndPassword(email, password)
+    const user = await auth.currentUser
+    await setDoc(doc(db, 'users', user.uid), {
+      profilePicture,
+      username: usernameRef,
+      upvotedPosts: [],
+      downvotedPosts: [],
+      upvotedComments: [],
+      downvotedComments: [],
+      joinedSubreddits: [],
+      createdPosts: []
+    })
   }
   function logIn (email, password) {
     return auth.signInWithEmailAndPassword(email, password)

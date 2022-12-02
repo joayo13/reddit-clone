@@ -1,37 +1,29 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import sideImage from '../images/login-signup-image.png'
 import images from '../images/profilePictures/allPictures'
-import { useAuth } from '../contexts/AuthContext'
-import { doc, setDoc } from 'firebase/firestore'
-import { db } from '../firebase'
+import { randomUsername } from '../helpers/randomUsername'
 
 function CreateUser (props) {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const usernameRef = useRef()
   const [profilePicture, setProfilePicture] = useState(null)
-  const { currentUser } = useAuth()
+
+  useEffect(() => {
+    usernameRef.current.value = randomUsername()
+  }, [])
 
   async function handleSubmit (e) {
     e.preventDefault()
     try {
       setError('')
       setLoading(true)
-      console.log(currentUser)
       try {
-        await setDoc(doc(db, 'users', currentUser.uid), {
-          profilePicture,
-          username: usernameRef.current.value,
-          upvotedPosts: [],
-          downvotedPosts: [],
-          upvotedComments: [],
-          downvotedComments: [],
-          joinedSubreddits: [],
-          createdPosts: []
-        })
+        await props.signUp(props.emailRef, props.passwordRef, profilePicture, usernameRef.current.value)
         props.setSignUpPopUp(false)
       } catch (e) {
+        props.setCreateUser(false)
         props.setError(`${e}`)
       }
     } catch (e) {
@@ -51,14 +43,19 @@ function CreateUser (props) {
         </svg>
         <h1 className='font-medium text-lg text-center md:text-start'>Create your profile</h1>
         <p className='text-xs mt-2 md:w-1/3 text-center md:text-start'>Select a profile picture:</p>
-        <ul className='w-80 flex flex-wrap gap-3 mt-4 justify-center md:justify-start mx-auto md:mx-0'>
+        <ul className='flex flex-wrap md:w-80 gap-3 mt-4 justify-center md:justify-start mx-auto md:mx-0'>
             {images.map((image, index) => <li key={index}><img className={profilePicture !== image ? 'w-12 rounded-full' : 'w-12 rounded-full border-4 border-blue-500'} key={index} src={image} onClick={(e) => { setProfilePicture(e.target.src) }}></img></li>)}
         </ul>
         {error && <div className='w-full bg-red-400 p-4 font-semibold rounded-md mt-4'>{error}</div>}
         <form onSubmit={handleSubmit} className='mt-4 flex flex-col gap-6'>
         <p className='text-xs mt-2 md:w-1/3 text-center md:text-start'>Create a Username</p>
-        <input maxLength={15} minLength={4} placeholder='USERNAME' type='text' ref={usernameRef} className='bg-gray-100 dark:bg-gray-800 py-4 indent-4 w-80 focus:outline-none'></input>
-          <button disabled={loading} type='submit' className=' bg-blue-500 py-2 rounded-full text-white w-80 font-semibold mx-auto md:mx-0 hover:bg-blue-400'>Create Account</button>
+        <div className='bg-gray-100 dark:bg-gray-800 w-full md:w-80 flex items-center justify-between px-4'>
+        <input minLength={4} placeholder='USERNAME' type='text' ref={usernameRef} className='bg-gray-100 dark:bg-gray-800 py-4 focus:outline-none'></input>
+        <svg onClick={() => { usernameRef.current.value = randomUsername() }}xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="cursor-pointer w-8 h-8 opacity-50">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+        </svg>
+        </div>
+          <button disabled={loading} type='submit' className=' bg-blue-500 py-2 rounded-full text-white w-full md:w-80 font-semibold mx-auto md:mx-0 hover:bg-blue-400'>Create Account</button>
         </form>
         </div>
       </div>

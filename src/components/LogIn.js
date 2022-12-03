@@ -41,9 +41,9 @@ function LogIn (props) {
         <p className='text-xs mt-2'>By continuing, you agree to our User Agreement and Privacy Policy.</p>
         {error && <div className='w-full bg-red-400'>{error}</div>}
         <form className='mt-20 flex flex-col gap-6' onSubmit={handleSubmit}>
-          <input placeholder='EMAIL' ref={emailRef} type='email' className=' bg-gray-100 dark:bg-gray-800 py-4 indent-4 w-80 focus:outline-none'></input>
-          <input placeholder='PASSWORD' ref={passwordRef} type='password' className=' bg-gray-100 dark:bg-gray-800 py-4 indent-4 w-80 focus:outline-none'></input>
-          <button type='submit' className=' bg-blue-500 py-2 rounded-full text-white w-80 font-semibold mx-auto md:mx-0 hover:bg-blue-400'>Log In</button>
+          <input placeholder='EMAIL' ref={emailRef} type='email' className=' bg-gray-100 dark:bg-gray-800 py-4 indent-4 md:w-80 focus:outline-none'></input>
+          <input placeholder='PASSWORD' ref={passwordRef} type='password' className=' bg-gray-100 dark:bg-gray-800 py-4 indent-4 md:w-80 focus:outline-none'></input>
+          <button type='submit' className=' bg-blue-500 py-2 rounded-full text-white w-full md:w-80 font-semibold mx-auto md:mx-0 hover:bg-blue-400'>Log In</button>
         </form>
         <h2 className='text-sm mt-10'>New to !Reddit? <button className='text-blue-500' onClick={() => { props.setLogInPopUp(false); props.setSignUpPopUp(true) }}>Sign Up</button></h2>
         </div>

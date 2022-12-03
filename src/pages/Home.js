@@ -53,10 +53,10 @@ function Home (props) {
               )}
               </div>
               </ul>
-              <ul className='flex flex-col gap-4 lg:w-[20rem] md:w-[15rem]'>
-                  <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 rounded-md'>
-                    <div className='relative rounded-t-md overflow-hidden h-20'>
-                      <img src={bannerImage}></img>
+              <ul className='flex flex-col -mt-4 md:mt-0 md:gap-4 lg:w-[20rem] md:w-[15rem]'>
+                  <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 md:rounded-md'>
+                    <div className='relative md:rounded-t-md overflow-hidden h-20'>
+                      <img className='object-cover h-full w-full' src={bannerImage}></img>
                       <div className='absolute shadow-[inset_0_-60px_50px_-20px_rgba(0,0,0,0.7)] bottom-0 right-0 top-0 left-0'></div>
                       <h2 className='text-lg font-semibold text-white absolute bottom-2 left-4'>Top Communities</h2>
                     </div>
@@ -77,8 +77,8 @@ function Home (props) {
                         : <button disabled={joinCommunityButtonLoading} onClick={async () => await userJoinSubredditFromHome(db, currentUser, subreddit.title, setUserJoinedSubreddits, setJoinCommunityButtonLoading)} className='absolute right-4 bottom-1/2 translate-y-1/2 w-20 bg-blue-500 h-6 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Follow</button>}
                       </div>)}
                   </li>
-                  <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 rounded-md'>
-                  <div className='relative rounded-t-md overflow-hidden h-20'>
+                  <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 md:rounded-md'>
+                  <div className='relative md:rounded-t-md object-cover w-full overflow-hidden'>
                       <img src={bannerImage2}></img>
                       <div className='absolute shadow-[inset_0_-60px_50px_-20px_rgba(0,0,0,0.7)] bottom-0 right-0 top-0 left-0'></div>
                       <h2 className='text-lg font-semibold text-white absolute bottom-2 left-4'>Your Communities</h2>

@@ -22,7 +22,7 @@ const Navbar = (props) => {
         <h1 className='hidden md:block text-1xl font-semibold text-gray-700 dark:text-white'>!Reddit</h1>
         </div>
         {/* search bar */}
-        <div className='flex mx-auto gap-1 bg-gray-50 dark:bg-gray-800 px-2 py-2 outline-blue-500 hover:outline outline-1 rounded-md md:w-4/12 w-48 focus-within:outline'>
+        <div className='flex mx-auto gap-1 bg-gray-50 dark:bg-gray-800 px-2 py-2 outline-blue-500 hover:outline outline-1 rounded-md md:w-4/12 w-1/2 focus-within:outline'>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 dark:invert" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
@@ -39,11 +39,16 @@ const Navbar = (props) => {
         </ul>
           : null}
         {/* sign up and login buttons */}
-        <ul className='flex text-1xl gap-2'>
+        <ul className='flex text-1xl gap-2 md:mx-4'>
           {currentUser
-            ? <span className='hidden md:flex w-8 h-8 justify-center items-center rounded-full'>
+            ? <span className='hidden md:flex justify-center md:gap-4 items-center'>
             <button>
-              <svg onClick={() => props.setCreateCommunityPopUp(true)} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-4 dark:text-white opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-6 w-6 dark:text-white opacity-50">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+            </svg>
+            </button>
+            <button>
+              <svg onClick={() => props.setCreateCommunityPopUp(true)} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 dark:text-white opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
               </svg>
            </button>
@@ -56,6 +61,13 @@ const Navbar = (props) => {
             className='hidden md:block w-32 py-1 bg-blue-500 font-bold rounded-full text-white hover:bg-blue-400 text-sm'
             onClick={() => props.setSignUpPopUp(true)}>Sign Up</button>
           </>}
+          {currentUser
+            ? <button>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className=" md:hidden h-6 w-6 mr-4 dark:text-white opacity-50">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+            </svg>
+            </button>
+            : null}
           {/* dropdown menu button */}
           {!currentUser
             ? <button className='flex justify-center py-1 opacity-50' onClick={() => setMobileNavLinksVisible(!mobileNavLinksVisible)}>

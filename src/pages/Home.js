@@ -92,7 +92,7 @@ function Home (props) {
                        <p className='text-xs'>{filteredSubreddit.joined} Members</p>
                        </div>
                        </div>)}
-                       {userJoinedSubreddits.length === 0 ? <li className='text-sm px-2 py-4'>You haven&apos;t joined any communities yet. </li> : null}
+                       {userJoinedSubreddits.length === 0 && currentUser ? <li className='text-sm px-2 py-4'>You haven&apos;t joined any communities yet. </li> : null}
                        {!currentUser ? <li className='text-sm px-2 py-4'><a className='text-blue-500 cursor-pointer' onClick={() => props.setSignUpPopUp(true)}>Sign Up</a> to start joining communities. </li> : null }
                       </ul>
                   </li>

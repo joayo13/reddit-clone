@@ -21,6 +21,7 @@ function App () {
   const [signUpPopUp, setSignUpPopUp] = useState(false)
   const [createCommunityPopUp, setCreateCommunityPopUp] = useState(false)
   const [notificationsPopUp, setNotificationsPopUp] = useState(false)
+  const [notifications, setNotifications] = useState([])
   return (
     <>
     <Router>
@@ -29,7 +30,7 @@ function App () {
     {logInPopUp ? <LogIn setLogInPopUp={setLogInPopUp} setSignUpPopUp={setSignUpPopUp}></LogIn> : null}
     {signUpPopUp ? <SignUp setLogInPopUp={setLogInPopUp} setSignUpPopUp={setSignUpPopUp}></SignUp> : null}
     {createCommunityPopUp ? <CreateCommunity setCreateCommunityPopUp={setCreateCommunityPopUp}></CreateCommunity> : null}
-    {notificationsPopUp ? <Notifications setNotificationsPopUp={setNotificationsPopUp}></Notifications> : null}
+    {notificationsPopUp ? <Notifications notifications={notifications} setNotifications={setNotifications} setNotificationsPopUp={setNotificationsPopUp}></Notifications> : null}
     <Routes>
     <Route exact path='/' element={<Home setSignUpPopUp={setSignUpPopUp}/>}/>
     <Route exact path='/r/:id' element={<Subreddit/>}/>

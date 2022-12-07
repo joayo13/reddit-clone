@@ -42,6 +42,10 @@ export function AuthProvider ({ children }) {
   async function signUp (email, password, profilePicture, usernameRef) {
     await auth.createUserWithEmailAndPassword(email, password)
     const user = await auth.currentUser
+    user.updateProfile({
+      displayName: usernameRef
+    })
+    console.log(user)
     await setDoc(doc(db, 'users', user.uid), {
       profilePicture,
       username: usernameRef,
@@ -51,6 +55,11 @@ export function AuthProvider ({ children }) {
       downvotedComments: [],
       joinedSubreddits: [],
       createdPosts: []
+    })
+    await setDoc(doc(db, 'notifications', usernameRef), {
+      link: '/',
+      message: 'welcome to !reddit, click here to join a community',
+      sentFrom: 'admin'
     })
   }
   function logIn (email, password) {

@@ -19,7 +19,7 @@ const Navbar = (props) => {
         {/* logo and name */}
         <div className='flex items-center gap-2 md:w-[248px]' onClick={() => navigate('/')}>
         <img src={redditIcon} className='w-10'></img>
-        <h1 className='hidden md:block text-1xl font-semibold text-gray-700 dark:text-white'>!Reddit</h1>
+        <h1 className='hidden md:block text-1xl font-semibold text-gray-700 dark:text-white'>Not Reddit</h1>
         </div>
         {/* search bar */}
         <div className='flex mx-auto gap-1 bg-gray-50 dark:bg-gray-800 px-2 py-2 outline-blue-500 hover:outline outline-1 rounded-md md:w-4/12 w-1/2 focus-within:outline'>
@@ -43,7 +43,7 @@ const Navbar = (props) => {
           {currentUser
             ? <span className='hidden md:flex justify-center md:gap-4 items-center'>
             <button>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-6 w-6 dark:text-white opacity-50">
+            <svg onClick={() => props.setNotificationsPopUp(true)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-6 w-6 dark:text-white opacity-50">
             <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
             </svg>
             </button>

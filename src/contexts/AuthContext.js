@@ -56,10 +56,9 @@ export function AuthProvider ({ children }) {
       joinedSubreddits: [],
       createdPosts: []
     })
-    await setDoc(doc(db, 'notifications', usernameRef), {
-      link: '/',
-      message: 'welcome to !reddit, click here to join a community',
-      sentFrom: 'admin'
+    await setDoc(doc(db, 'notifications', user.displayName), {
+      userId: user.uid,
+      notifications: [{ message: 'yo' }]
     })
   }
   function logIn (email, password) {

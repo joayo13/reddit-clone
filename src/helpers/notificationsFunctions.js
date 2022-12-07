@@ -11,7 +11,7 @@ export async function getNotifications (setNotifications) {
     setNotifications(docSnap.data().notifications)
   }
 }
-export async function getNotificationsLength (setNotificationsLength) {
+export async function getNotificationsLength () {
   const docSnap = await getDoc(doc(db, 'notifications', currentUser.displayName))
   if (docSnap.exists()) {
     return docSnap.data().notifications.length

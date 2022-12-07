@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import redditIcon from '../images/reddit-icon.png'
 import { useAuth } from '../contexts/AuthContext'
 import MobileNavLinks from './MobileNavLinks'
 import { useNavigate } from 'react-router-dom'
 import { searchSubreddit } from '../helpers/searchFunctions'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '../firebase'
 
 const Navbar = (props) => {
   const navigate = useNavigate()
@@ -12,6 +14,17 @@ const Navbar = (props) => {
   const [searchResultsVisible, setSearchResultsVisible] = useState(false)
   const { currentUser, logOut, userInfo } = useAuth()
   const [searchResults, setSearchResults] = useState([])
+  const [notificationsLength, setNotificationsLength] = useState(0)
+
+  useEffect(() => {
+    async function getNotificationsLength () {
+      const docSnap = await getDoc(doc(db, 'notifications', currentUser.displayName))
+      if (docSnap.exists()) {
+        setNotificationsLength(docSnap.data().notifications.length)
+      }
+    }
+    getNotificationsLength()
+  }, [])
 
   return (
     <div className='font-poppins relative border-b border-gray-200 dark:bg-gray-900 dark:border-gray-800'>
@@ -42,7 +55,10 @@ const Navbar = (props) => {
         <ul className='flex text-1xl gap-2 md:mx-4'>
           {currentUser
             ? <span className='hidden md:flex justify-center md:gap-4 items-center'>
-            <button>
+            <button className='relative'>
+            <div className='rounded-full flex items-center justify-center z-10 full h-[0.85rem] w-[0.85rem] absolute -top-1 -left-1 bg-[#ff4500]'>
+              <p className='text-xs font-bold text-white'>{notificationsLength}</p>
+            </div>
             <svg onClick={() => props.setNotificationsPopUp(true)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-6 w-6 dark:text-white opacity-50">
             <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
             </svg>
@@ -62,8 +78,11 @@ const Navbar = (props) => {
             onClick={() => props.setSignUpPopUp(true)}>Sign Up</button>
           </>}
           {currentUser
-            ? <button>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className=" md:hidden h-6 w-6 mr-4 dark:text-white opacity-50">
+            ? <button className='relative md:hidden'>
+              <div className='rounded-full flex items-center justify-center z-10 full h-[0.85rem] w-[0.85rem] absolute -top-1 -left-1 bg-[#ff4500]'>
+              <p className='text-xs font-bold text-white'>{notificationsLength}</p>
+            </div>
+            <svg onClick={() => props.setNotificationsPopUp(true)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className=" md:hidden h-6 w-6 mr-4 dark:text-white opacity-50">
             <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
             </svg>
             </button>

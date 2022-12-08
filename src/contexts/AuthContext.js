@@ -2,7 +2,7 @@
 /* eslint-disable import/no-duplicates */
 import React, { useContext, useEffect, useState } from 'react'
 import { auth } from '../firebase'
-import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc, Timestamp } from 'firebase/firestore'
 import { db } from '../firebase'
 
 const AuthContext = React.createContext()
@@ -58,7 +58,7 @@ export function AuthProvider ({ children }) {
     })
     await setDoc(doc(db, 'notifications', user.displayName), {
       userId: user.uid,
-      notifications: [{ message: 'yo' }]
+      notifications: [{ message: 'Welcome to Fake Reddit! Click here to start joining some communities.', sender: '!Reddit', timestamp: Timestamp.now().seconds }]
     })
   }
   function logIn (email, password) {

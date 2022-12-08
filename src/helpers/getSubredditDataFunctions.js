@@ -13,7 +13,7 @@ export async function createPost (id, postTitleRef, userInfo, postTextRef, navig
       text: postTextRef.current.value,
       id: uniqueId,
       subredditId: id,
-      imageURL: imageURL
+      imageURL
     })
     await setDoc(doc(db, 'subreddits', id, 'posts', uniqueId, 'feelings', 'upvotes'), {
       upvotes: 0

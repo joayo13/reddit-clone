@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { searchSubreddit } from '../helpers/searchFunctions'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../firebase'
+import Notifications from './Notifications'
 
 const Navbar = (props) => {
   const navigate = useNavigate()
@@ -14,16 +15,17 @@ const Navbar = (props) => {
   const [searchResultsVisible, setSearchResultsVisible] = useState(false)
   const { currentUser, logOut, userInfo } = useAuth()
   const [searchResults, setSearchResults] = useState([])
-  const [notificationsLength, setNotificationsLength] = useState(0)
+  const [notifications, setNotifications] = useState([])
+  const [notificationsVisible, setNotificationsVisible] = useState(false)
 
   useEffect(() => {
-    async function getNotificationsLength () {
+    async function getNotifications () {
       const docSnap = await getDoc(doc(db, 'notifications', currentUser.displayName))
       if (docSnap.exists()) {
-        setNotificationsLength(docSnap.data().notifications.length)
+        setNotifications(docSnap.data().notifications)
       }
     }
-    getNotificationsLength()
+    getNotifications()
   }, [])
 
   return (
@@ -57,9 +59,9 @@ const Navbar = (props) => {
             ? <span className='hidden md:flex justify-center md:gap-4 items-center'>
             <button className='relative'>
             <div className='rounded-full flex items-center justify-center z-10 full h-[0.85rem] w-[0.85rem] absolute -top-1 -left-1 bg-[#ff4500]'>
-              <p className='text-xs font-bold text-white'>{notificationsLength}</p>
+              <p className='text-xs font-bold text-white'>{notifications.length}</p>
             </div>
-            <svg onClick={() => props.setNotificationsPopUp(true)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-6 w-6 dark:text-white opacity-50">
+            <svg onClick={() => setNotificationsVisible(true)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-6 w-6 dark:text-white opacity-50">
             <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
             </svg>
             </button>
@@ -80,9 +82,9 @@ const Navbar = (props) => {
           {currentUser
             ? <button className='relative md:hidden'>
               <div className='rounded-full flex items-center justify-center z-10 full h-[0.85rem] w-[0.85rem] absolute -top-1 -left-1 bg-[#ff4500]'>
-              <p className='text-xs font-bold text-white'>{notificationsLength}</p>
+              <p className='text-xs font-bold text-white'>{notifications.length}</p>
             </div>
-            <svg onClick={() => props.setNotificationsPopUp(true)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className=" md:hidden h-6 w-6 mr-4 dark:text-white opacity-50">
+            <svg onClick={() => setNotificationsVisible(true)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className=" md:hidden h-6 w-6 mr-4 dark:text-white opacity-50">
             <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
             </svg>
             </button>
@@ -111,8 +113,13 @@ const Navbar = (props) => {
         ? <MobileNavLinks currentUser={currentUser} userInfo={userInfo} setMobileNavLinksVisible={setMobileNavLinksVisible}
         setLogInPopUp={props.setLogInPopUp} logOut={logOut} setCreateCommunityPopUp={props.setCreateCommunityPopUp}/>
         : null}
+      {/* notification menu contents */}
+      { notificationsVisible
+        ? <Notifications notifications={notifications}/>
+        : null}
       {/* full screen button for disabling dropdown if clicking outside of it */}
       { mobileNavLinksVisible ? <button onClick={() => setMobileNavLinksVisible(!mobileNavLinksVisible)} className='fixed top-0 right-0 bottom-0 left-0 h-full w-full cursor-default'></button> : null}
+      { notificationsVisible ? <button onClick={() => setNotificationsVisible(!notificationsVisible)} className='fixed top-0 right-0 bottom-0 left-0 h-full w-full cursor-default'></button> : null}
       { searchResultsVisible ? <button onClick={() => setSearchResultsVisible(!searchResultsVisible)} className='fixed opacity-50 z-10 bg-black top-12 right-0 bottom-0 left-0 h-full w-full cursor-default'></button> : null}
     </div>
   )

@@ -28,7 +28,7 @@ function Subreply (props) {
           upvotedComments: arrayRemove(comment.id)
         })
         await updateDoc(doc(db, 'notifications', comment.author), {
-          notifications: arrayUnion({ message: 'Your comment has received an upvote', sender: `r/${comment.postedIn}`, timestamp: Timestamp.now().seconds })
+          notifications: arrayUnion({ message: 'Your comment has received an upvote', sender: `r/${comment.postedIn}`, timestamp: Timestamp.now().seconds, link: `/r/${comment.postedIn}/comments/${post}` })
         })
         setButtonLoading(false)
         return

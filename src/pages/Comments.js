@@ -3,7 +3,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { getDatefromSeconds } from '../helpers/getDate'
 import { useParams, useNavigate } from 'react-router-dom'
 import { db } from '../firebase'
-import { doc, getDoc, getDocs, setDoc, collection, Timestamp, serverTimestamp } from 'firebase/firestore'
+import { doc, getDoc, getDocs, setDoc, collection, Timestamp, serverTimestamp, updateDoc, arrayUnion } from 'firebase/firestore'
 import uniqid from 'uniqid'
 import Thread from '../components/Thread'
 import { determineUpvoteCountElementColor, displayUpvotedOrDownvoted, downvotePost, getPostUpvotes, upvotePost } from '../helpers/upvoteFunctions'
@@ -41,6 +41,9 @@ function Comments (props) {
       await setDoc(doc(db, 'subreddits', id, 'posts', post, 'comments', uniqueId, 'feelings', 'upvotes'), {
         upvotes: 0
       })
+      await updateDoc(doc(db, 'notifications', postMetaData.author), {
+        notifications: arrayUnion({ message: `${userInfo.username} commented on your post`, sender: `r/${id}`, timestamp: Timestamp.now().seconds, link: `/r/${id}/comments/${post}` })
+      })
       setCommentMetaData(prev => prev.concat({
         author: userInfo.username,
         authorProfilePicture: userInfo.profilePicture,
@@ -69,6 +72,9 @@ function Comments (props) {
       })
       await setDoc(doc(db, 'subreddits', id, 'posts', post, 'comments', uniqueId, 'feelings', 'upvotes'), {
         upvotes: 0
+      })
+      await updateDoc(doc(db, 'notifications', postMetaData.author), {
+        notifications: arrayUnion({ message: `${userInfo.username} replied to your comment`, sender: `r/${id}`, timestamp: Timestamp.now().seconds, link: `/r/${id}/comments/${post}` })
       })
       setCommentMetaData(prev => prev.concat({
         author: userInfo.username,

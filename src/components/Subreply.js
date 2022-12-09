@@ -27,9 +27,6 @@ function Subreply (props) {
         await updateDoc(doc(db, 'users', currentUser.email), {
           upvotedComments: arrayRemove(comment.id)
         })
-        await updateDoc(doc(db, 'notifications', comment.author), {
-          notifications: arrayUnion({ message: 'Your comment has received an upvote', sender: `r/${comment.postedIn}`, timestamp: Timestamp.now().seconds, link: `/r/${comment.postedIn}/comments/${post}` })
-        })
         setButtonLoading(false)
         return
       } catch (e) {
@@ -48,6 +45,9 @@ function Subreply (props) {
       })
       await updateDoc(doc(db, 'users', currentUser.email), {
         upvotedComments: arrayUnion(comment.id)
+      })
+      await updateDoc(doc(db, 'notifications', comment.author), {
+        notifications: arrayUnion({ message: 'Your comment has received an upvote', sender: `r/${comment.postedIn}`, timestamp: Timestamp.now().seconds, link: `/r/${comment.postedIn}/comments/${post}` })
       })
     } catch (e) {
       console.log(e)

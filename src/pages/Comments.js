@@ -35,6 +35,7 @@ function Comments (props) {
         authorProfilePicture: userInfo.profilePicture,
         timestamp: serverTimestamp(),
         text: commentTextRef.current.value,
+        postedIn: id,
         id: uniqueId
       })
       await setDoc(doc(db, 'subreddits', id, 'posts', post, 'comments', uniqueId, 'feelings', 'upvotes'), {
@@ -45,6 +46,7 @@ function Comments (props) {
         authorProfilePicture: userInfo.profilePicture,
         timestamp: serverTimestamp(),
         text: commentTextRef.current.value,
+        postedIn: id,
         id: uniqueId
       }))
       commentTextRef.current.value = ''
@@ -62,6 +64,7 @@ function Comments (props) {
         timestamp: serverTimestamp(),
         text: commentTextRef.current.value,
         id: uniqueId,
+        postedIn: id,
         replyTo: parentCommentId
       })
       await setDoc(doc(db, 'subreddits', id, 'posts', post, 'comments', uniqueId, 'feelings', 'upvotes'), {
@@ -73,6 +76,7 @@ function Comments (props) {
         timestamp: serverTimestamp(),
         text: commentTextRef.current.value,
         id: uniqueId,
+        postedIn: id,
         replyTo: parentCommentId
       }))
       setReplyToId(null)

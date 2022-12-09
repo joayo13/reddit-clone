@@ -1,5 +1,5 @@
 /* eslint-disable no-unsafe-finally */
-import { arrayRemove, arrayUnion, doc, getDoc, increment, updateDoc } from 'firebase/firestore'
+import { arrayRemove, arrayUnion, doc, getDoc, increment, Timestamp, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 
 export async function getUsersUpvotedPostIdsArray (currentUser) {
@@ -80,6 +80,9 @@ export async function upvotePost (setLoading, post, id, currentUser) {
       })
       await updateDoc(doc(db, 'users', currentUser.uid), {
         upvotedPosts: arrayRemove(post.id)
+      })
+      await updateDoc(doc(db, 'notifications', post.author), {
+        notifications: arrayUnion({ message: 'Your post has received an upvote', sender: `r/${post.subredditId}`, timestamp: Timestamp.now().seconds })
       })
     } catch (e) {
       console.log(e)

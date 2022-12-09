@@ -119,7 +119,7 @@ const Navbar = (props) => {
         : null}
       {/* notification menu contents */}
       { notificationsVisible
-        ? <Notifications notifications={notifications}/>
+        ? <Notifications notifications={notifications} setNotifications={setNotifications}/>
         : null}
       {/* full screen button for disabling dropdown if clicking outside of it */}
       { mobileNavLinksVisible ? <button onClick={() => setMobileNavLinksVisible(!mobileNavLinksVisible)} className='fixed top-0 right-0 bottom-0 left-0 h-full w-full cursor-default'></button> : null}

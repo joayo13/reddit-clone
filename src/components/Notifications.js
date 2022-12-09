@@ -18,6 +18,9 @@ function Notifications (props) {
   return (
     <ul className='mobileNav w-80 flex flex-col justify-evenly absolute right-4 bg-white dark:bg-gray-900 dark:text-white rounded-md z-10 border border-gray-200 dark:border-gray-700 text-sm font-medium '>
     <h1 className='py-4 px-4'>Notifications</h1>
+    {props.notifications.length === 0
+      ? <h2 className='pb-2 px-4 text-lg'>No notifications &#128546;</h2>
+      : null }
     {props.notifications.map((notification, index) =>
     <li className='py-6 px-4 dark:bg-gray-800 dark:hover:bg-gray-700 bg-blue-100 hover:bg-blue-50 relative cursor-pointer' key={index}>
        <svg onClick={() => deleteNotification(notification)} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 absolute right-2 top-2 opacity-50 dark:text-white" viewBox="0 0 20 20" fill="currentColor">

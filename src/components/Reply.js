@@ -25,7 +25,7 @@ function Reply (props) {
         await updateDoc(doc(db, 'subreddits', id, 'posts', post, 'comments', comment.id, 'feelings', 'upvotes'), {
           upvotes: increment(-1)
         })
-        await updateDoc(doc(db, 'users', currentUser.email), {
+        await updateDoc(doc(db, 'users', currentUser.uid), {
           upvotedComments: arrayRemove(comment.id)
         })
         setButtonLoading(false)
@@ -41,10 +41,10 @@ function Reply (props) {
       await updateDoc(doc(db, 'subreddits', id, 'posts', post, 'comments', comment.id, 'feelings', 'upvotes'), {
         upvotes: increment(voteAmount)
       })
-      await updateDoc(doc(db, 'users', currentUser.email), {
+      await updateDoc(doc(db, 'users', currentUser.uid), {
         downvotedComments: arrayRemove(comment.id)
       })
-      await updateDoc(doc(db, 'users', currentUser.email), {
+      await updateDoc(doc(db, 'users', currentUser.uid), {
         upvotedComments: arrayUnion(comment.id)
       })
       await updateDoc(doc(db, 'notifications', comment.author), {
@@ -64,7 +64,7 @@ function Reply (props) {
         await updateDoc(doc(db, 'subreddits', id, 'posts', post, 'comments', comment.id, 'feelings', 'upvotes'), {
           upvotes: increment(1)
         })
-        await updateDoc(doc(db, 'users', currentUser.email), {
+        await updateDoc(doc(db, 'users', currentUser.uid), {
           downvotedComments: arrayRemove(comment.id)
         })
         setButtonLoading(false)
@@ -80,10 +80,10 @@ function Reply (props) {
       await updateDoc(doc(db, 'subreddits', id, 'posts', post, 'comments', comment.id, 'feelings', 'upvotes'), {
         upvotes: increment(voteAmount)
       })
-      await updateDoc(doc(db, 'users', currentUser.email), {
+      await updateDoc(doc(db, 'users', currentUser.uid), {
         upvotedComments: arrayRemove(comment.id)
       })
-      await updateDoc(doc(db, 'users', currentUser.email), {
+      await updateDoc(doc(db, 'users', currentUser.uid), {
         downvotedComments: arrayUnion(comment.id)
       })
     } catch (e) {

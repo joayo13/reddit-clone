@@ -40,7 +40,7 @@ function SubmitPost () {
                                 <span className="sr-only">Loading...</span>
                                 </div>
                               : null}
-                            <textarea ref={postTextRef} placeholder='Text(optional)' className='w-full outline-nonedark:bg-gray-800 bg-inherit dark:border-gray-700 dark:text-white border indent-2 rounded-sm py-1 h-28'>
+                            <textarea ref={postTextRef} placeholder='Text(optional)' className='w-full outline-nonedark:bg-gray-800 bg-inherit dark:border-gray-700 dark:text-white border indent-2 rounded-md py-1 h-28'>
                             </textarea>
                             <div className='relative dark:text-white py-4 mt-4'>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="absolute opacity-50 left-0 w-8 h-8 bottom-0">

@@ -58,11 +58,11 @@ function CreateCommunity (props) {
           {newRuleInput
             ? null
             : <div className='absolute flex gap-1 bottom-0 right-0'>
-              <button className='flex items-center text-xs py-3 px-2 dark:text-white dark:bg-gray-700 bg-gray-300 gap-1 rounded-md' onClick={() => setNewRuleInput(true)}>
+              <button className='flex items-center text-xs py-3 px-3 dark:text-white dark:bg-gray-700 bg-gray-300 gap-1 rounded-md' onClick={() => setNewRuleInput(true)}>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 dark:text-white opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                 </svg>
-                Add new rule</button>
+                </button>
               <button onClick={() => setDeleteMode(!deleteMode)} style={deleteMode ? { backgroundColor: '#46d160' } : null} className='flex items-center text-xs py-3 px-3 dark:text-white bg-red-500 gap-1 rounded-md transition-colors'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
@@ -85,11 +85,6 @@ function CreateCommunity (props) {
                 }}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#46d160" className="w-8 h-8">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </button>
-              <button onClick={() => setNewRuleInput(false)}>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 20 20" fill="#fe3a3a">
-                  <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
               </button>
             </div>

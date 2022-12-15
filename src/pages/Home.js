@@ -58,18 +58,18 @@ function Home (props) {
                     <div className='relative h-20'>
                       <img className='object-cover h-full w-full' src={bannerImage}></img>
                       <div className='absolute shadow-[inset_0_-60px_50px_-20px_rgba(0,0,0,0.5)] bottom-0 right-0 top-0 left-0'></div>
-                      <h2 className='text-lg font-semibold text-white absolute bottom-2 left-4'>Top Communities</h2>
+                      <h2 className='text-lg font-medium text-white absolute bottom-2 left-4'>Top Communities</h2>
                     </div>
                       {topSubreddits.map((subreddit, index) =>
                       <div key={index} className='px-4 py-2 relative w-full border-t border-gray-300 dark:border-gray-800'>
                         <div className='absolute left-4 bottom-1/2 translate-y-1/2 flex items-center gap-2'>
-                        <p className='font-bold text-sm'>{topSubreddits.indexOf(subreddit) + 1}</p>
+                        <p className='font-medium text-sm'>{topSubreddits.indexOf(subreddit) + 1}</p>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="4" stroke="#46d160" className="w-4 h-4">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
                         </svg>
                         </div>
                         <div className='ml-12'>
-                          <p className='font-bold'>r/{subreddit.title}</p>
+                          <p className='font-medium'>r/{subreddit.title}</p>
                           <span className='text-xs'>{subreddit.joined} Members</span>
                         </div>
                       {currentUser && userJoinedSubreddits.includes(subreddit.title)
@@ -81,14 +81,14 @@ function Home (props) {
                   <div className='relative h-20'>
                       <img className='object-cover h-full w-full' src={bannerImage2}></img>
                       <div className='absolute shadow-[inset_0_-60px_50px_-20px_rgba(0,0,0,0.5)] bottom-0 right-0 top-0 left-0'></div>
-                      <h2 className='text-lg font-semibold text-white absolute bottom-2 left-4'>Your Communities</h2>
+                      <h2 className='text-lg font-medium text-white absolute bottom-2 left-4'>Your Communities</h2>
                     </div>
                       <ul className='flex flex-col'>
                       {currentUser && topSubreddits.filter((subreddit) => userJoinedSubreddits.includes(subreddit.title)).map((filteredSubreddit, index) =>
                        <div className='flex px-4 py-2 gap-2 items-center border-t border-gray-300 dark:border-gray-800' key={index}>
-                        <div style={{ backgroundColor: filteredSubreddit.communityColor }} className='w-8 h-8 flex items-center justify-center text-white rounded-full font-bold'>r/</div>
+                        <div style={{ backgroundColor: filteredSubreddit.communityColor }} className='w-8 h-8 flex items-center justify-center text-white rounded-full font-medium'>r/</div>
                         <div className='flex flex-col gap-2'>
-                       <li className='font-bold cursor-pointer' onClick={() => navigate(`/r/${filteredSubreddit.title}`)}>r/{filteredSubreddit.title}</li>
+                       <li className='font-medium cursor-pointer' onClick={() => navigate(`/r/${filteredSubreddit.title}`)}>r/{filteredSubreddit.title}</li>
                        <p className='text-xs'>{filteredSubreddit.joined} Members</p>
                        </div>
                        </div>)}

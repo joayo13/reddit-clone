@@ -36,24 +36,22 @@ function Subreddit (props) {
   return (
     <>{ loading
       ? <LoadingWheel/>
-      : <div className='bg-gray-100 dark:bg-black min-h-screen'>
-            <section className='flex flex-col items-center md:flex-row md:justify-center gap-4 bg-white dark:bg-gray-900 dark:text-white py-2'>
-                <div style={subredditMetaData.communityColor ? { backgroundColor: subredditMetaData.communityColor } : { backgroundColor: 'black' }} className='w-20 h-20 text-white rounded-full text-center text-7xl'>r/</div>
-                <h1 className='font-bold text-3xl text-center'>{subredditMetaData.title}</h1>
-                <button disabled={buttonLoading} onClick={() => !userHasJoined ? userJoinSubreddit(db, currentUser, subredditMetaData.title, setUserHasJoined, setButtonLoading) : userLeaveSubreddit(db, currentUser, subredditMetaData.title, setUserHasJoined, setButtonLoading)} className='w-28 py-1 bg-blue-500 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>{`${userHasJoined ? 'Unfollow' : 'Follow'}`}</button>
-            </section>
-            <div className='flex flex-col-reverse md:flex-row justify-center md:mt-4 gap-4'>
-                <ul className='flex flex-col gap-4 lg:w-[40rem] md:w-[30rem]'>
+      : <div className='bg-gray-200 dark:bg-black min-h-screen'>
+            <div className='flex flex-col-reverse md:flex-row justify-center gap-4'>
+                <ul className='flex flex-col gap-4 lg:w-[40rem] md:w-[30rem] mt-4'>
                     {currentUser ? <CreatePostCard userInfo={userInfo} id={id}/> : null}
                     <ListPosts subredditPostsData={subredditPostsData} id={id}/>
                 </ul>
-                <ul className='flex flex-col md:gap-4 lg:w-[20rem] md:w-[15rem]'>
-                    <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 md:rounded-md overflow-hidden'>
+                <ul className='flex flex-col md:gap-4 lg:w-[20rem] md:w-[15rem] mt-4'>
+                    <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 dark:text-gray-300 gap-4 md:rounded-md overflow-hidden'>
                         <h2 style={{ backgroundColor: subredditMetaData.communityColor }} className='px-4 py-2 text-md text-white font-semibold'>About Community</h2>
                         <p className='px-4 text-sm'>{subredditMetaData.aboutCommunity}</p>
-                        <p className='font-semibold text-sm px-4 pb-4'>{subredditMetaData.joined} Members</p>
+                        <div className='flex gap-4 items-center h-8 px-4'>
+                        <p className='font-semibold text-sm'>{subredditMetaData.joined} Members</p>
+                        <button disabled={buttonLoading} onClick={() => !userHasJoined ? userJoinSubreddit(db, currentUser, subredditMetaData.title, setUserHasJoined, setButtonLoading) : userLeaveSubreddit(db, currentUser, subredditMetaData.title, setUserHasJoined, setButtonLoading)} className='px-2 bg-blue-500 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>{`${userHasJoined ? 'Unfollow' : 'Follow'}`}</button>
+                        </div>
                     </li>
-                    <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 dark:text-gray-300 gap-4 md:rounded-md overflow-hidden'>
+                    <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 dark:text-gray-300 gap-4 md:rounded-md overflow-hidden'>
                         <h2 style={{ backgroundColor: subredditMetaData.communityColor }} className='px-4 py-2 text-xs text-white font-semibold'>R/{subredditMetaData.title.toUpperCase()} RULES</h2>
                         <ol className='flex flex-col gap-4 list-decimal pb-4'>
                         {subredditMetaData.subredditRules?.map((rule, index) => <li className='px-4 text-sm font-bold' key={index}>{index + 1}. {rule}</li>)}

@@ -21,8 +21,8 @@ function Notifications (props) {
     {props.notifications.length === 0
       ? <h2 className='pb-2 px-4 text-lg'>No notifications &#128546;</h2>
       : null }
-    {props.notifications.map((notification, index) =>
-    <li className='py-6 px-4 dark:bg-gray-800 dark:hover:bg-gray-700 bg-blue-100 hover:bg-blue-50 relative cursor-pointer' key={index}>
+    {props.notifications.sort((a, b) => b.timestamp - a.timestamp).map((notification, index) =>
+    <li className='py-6 px-4 dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-blue-50 relative cursor-pointer' key={index}>
        <svg onClick={() => deleteNotification(notification)} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 absolute right-2 top-2 opacity-50 dark:text-white" viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
         </svg>

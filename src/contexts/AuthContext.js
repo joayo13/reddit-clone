@@ -60,6 +60,7 @@ export function AuthProvider ({ children }) {
       userId: user.uid,
       notifications: [{ message: 'Welcome to Fake Reddit! Click here to start joining some communities.', sender: '!Reddit', timestamp: Timestamp.now().seconds }]
     })
+    window.location.reload()
   }
   function logIn (email, password) {
     return auth.signInWithEmailAndPassword(email, password)

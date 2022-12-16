@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { db } from '../firebase'
 import { useNavigate } from 'react-router-dom'
-import { doc, setDoc } from 'firebase/firestore'
+import { doc, setDoc, Timestamp } from 'firebase/firestore'
 
 function CreateCommunity (props) {
   const { userInfo } = useAuth()
@@ -16,13 +16,16 @@ function CreateCommunity (props) {
   const navigate = useNavigate()
 
   async function createCommunity (props) {
+    const timestamp = Timestamp.now().seconds * 1000
+    const birthday = new Date(timestamp)
     try {
       await setDoc(doc(db, 'subreddits', nameRef.current.value), {
         title: nameRef.current.value,
-        subredditRules: subredditRules,
+        subredditRules,
         aboutCommunity: aboutCommunityRef.current.value,
         admin: userInfo.username,
         communityColor: '#0079d3',
+        birthday: birthday.toDateString(),
         joined: 0
       })
         .then(() => {

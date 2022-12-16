@@ -45,11 +45,20 @@ function Subreddit (props) {
                 <ul className='flex flex-col md:gap-4 lg:w-[20rem] md:w-[15rem] mt-4'>
                     <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 dark:text-gray-300 gap-4 md:rounded-md overflow-hidden'>
                         <h2 style={{ backgroundColor: subredditMetaData.communityColor }} className='px-4 py-2 text-md text-white font-semibold'>About Community</h2>
-                        <p className='px-4 text-sm'>{subredditMetaData.aboutCommunity}</p>
-                        <div className='flex gap-4 items-center h-8 px-4'>
-                        <p className='font-semibold text-sm'>{subredditMetaData.joined} Members</p>
-                        <button disabled={buttonLoading} onClick={() => !userHasJoined ? userJoinSubreddit(db, currentUser, subredditMetaData.title, setUserHasJoined, setButtonLoading) : userLeaveSubreddit(db, currentUser, subredditMetaData.title, setUserHasJoined, setButtonLoading)} className='px-2 bg-blue-500 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>{`${userHasJoined ? 'Unfollow' : 'Follow'}`}</button>
+                        <div className='flex gap-2 px-4 items-center'>
+                          <div className='w-16 h-16 rounded-full text-4xl flex items-center justify-center' style={{ backgroundColor: subredditMetaData.communityColor }}>
+                            <p className='text-white'>r/</p>
+                          </div>
+                          <div className='flex flex-col'>
+                          <h1 className='text-2xl'>r/{subredditMetaData.title}</h1>
+                          <p className='text-sm opacity-50'>Created {subredditMetaData.birthday}</p>
+                          </div>
                         </div>
+                        <p className='px-4 text-sm'>{subredditMetaData.aboutCommunity}</p>
+                        <div className='flex gap-4 items-center px-4'>
+                        <p className='font-semibold text-sm'>{subredditMetaData.joined} Members</p>
+                        </div>
+                        <button disabled={buttonLoading} onClick={() => !userHasJoined ? userJoinSubreddit(db, currentUser, subredditMetaData.title, setUserHasJoined, setButtonLoading) : userLeaveSubreddit(db, currentUser, subredditMetaData.title, setUserHasJoined, setButtonLoading)} className='py-1 w-72 mb-4 mx-auto bg-blue-500 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>{`${userHasJoined ? 'Unfollow' : 'Follow'}`}</button>
                     </li>
                     <li className='flex flex-col bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 dark:text-gray-300 gap-4 md:rounded-md overflow-hidden'>
                         <h2 style={{ backgroundColor: subredditMetaData.communityColor }} className='px-4 py-2 text-xs text-white font-semibold'>R/{subredditMetaData.title.toUpperCase()} RULES</h2>

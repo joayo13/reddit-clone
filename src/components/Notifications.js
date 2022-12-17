@@ -19,7 +19,7 @@ function Notifications (props) {
     <ul className='mobileNav w-80 flex flex-col absolute max-h-96 overflow-scroll right-4 bg-white dark:bg-gray-900 dark:text-white rounded-md z-10 border border-gray-200 dark:border-gray-700 text-sm font-medium '>
     <h1 className='bg-blue-200 dark:bg-gray-900 py-4 px-4'>Notifications</h1>
     {props.notifications.length === 0
-      ? <h2 className='pb-2 px-4 text-lg'>No notifications &#128546;</h2>
+      ? <h2 className='py-4 px-4 text-lg'>No notifications &#128546;</h2>
       : null }
     {props.notifications.sort((a, b) => b.timestamp - a.timestamp).map((notification, index) =>
     <li className='py-6 px-4 dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-blue-50 relative cursor-pointer' key={index}>

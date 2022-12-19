@@ -25,7 +25,7 @@ function SubmitPost () {
       : <div className='bg-gray-300 dark:bg-black min-h-screen'>
                 <div className='flex flex-col-reverse md:flex-row justify-center py-4 gap-4'>
                     <ul className='flex flex-col md:border lg:w-[40rem] md:w-[30rem] w-full px-4 py-4 bg-white dark:bg-gray-900 md:dark:border-gray-800 md:border-gray-300 md:rounded-md'>
-                    <h1 className='dark:text-white text-black text-lg mb-4'>Create a post in r/{subredditMetaData.title}</h1>
+                    <h1 className='dark:text-white text-black font-bold text-lg mb-4'>Create a post in r/{subredditMetaData.title}</h1>
                         <li className='py-2'>
                             <input type='text' ref={postTitleRef} placeholder='Title' maxLength={100} className='w-full border bg-inherit dark:text-white dark:border-gray-700 indent-2 rounded-md py-1'></input>
                         </li>

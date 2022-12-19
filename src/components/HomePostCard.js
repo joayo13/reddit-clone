@@ -41,8 +41,8 @@ function HomePostCard (props) {
     <>
     <li key={index} className='flex flex-col gap-2 px-4 py-4 bg-white border border-gray-300 rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700'>
         <div className='flex cursor-pointer flex-col gap-2'>
-        <span className='flex text-xs gap-2'>
-        <a onClick={() => navigate(`/r/${post.subredditId}`)} className='font-bold'>r/{post.subredditId}</a>
+        <span onClick={() => navigate(`/r/${post.subredditId}`)} className='flex text-xs gap-2'>
+        <a className='font-bold'>r/{post.subredditId}</a>
         <p className='text-gray-500'>Posted by u/{post.author} {getDatefromSeconds(post.timestamp?.seconds, Timestamp.now().seconds)}</p>
         </span>
         <h1 onClick={() => navigate(`/r/${post.subredditId}/comments/${post.id}`)} className='break-words'>{post.postTitle}</h1>

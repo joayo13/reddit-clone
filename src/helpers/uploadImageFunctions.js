@@ -1,4 +1,4 @@
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
+import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 
 const storage = getStorage()
 
@@ -19,4 +19,13 @@ export async function getDownloadedImageURL (fileSelected, setImageURL) {
     .catch((error) => {
       console.log(error)
     })
+}
+
+export async function deleteImage (fileSelected, setImageURL) {
+  const storageRef = ref(storage, `images/${fileSelected?.name}`)
+  deleteObject(storageRef).then(() => {
+    setImageURL('')
+  }).catch((e) => {
+    console.log(e)
+  })
 }

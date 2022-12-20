@@ -103,7 +103,7 @@ function CreateCommunity (props) {
                 <li className='flex gap-2'><p className='font-bold'>{subredditRules.indexOf(rule) + 1}.</p>{rule}</li></div>)}
           </div>
         </ol>
-        <button onClick={() => createCommunity()} className='absolute bottom-4 right-4 rounded-full py-2 px-4 mt-4 bg-blue-600 text-white font-semibold'>Create Community</button>
+        <button onClick={() => createCommunity()} className='absolute bottom-4 right-4 rounded-full py-2 px-4 mt-4 bg-blue-500 text-white font-semibold'>Create Community</button>
       </div>
     </div>
   )

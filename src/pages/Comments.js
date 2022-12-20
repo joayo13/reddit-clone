@@ -153,8 +153,8 @@ function Comments (props) {
       ? <LoadingWheel/>
       : <div className='bg-gray-200 dark:bg-black min-h-screen'>
             <div className='flex flex-col-reverse md:flex-row justify-center md:py-4 gap-4'>
-                <ul className='flex relative flex-col lg:w-[40rem] md:w-[30rem] dark:bg-gray-900 bg-white px-4 py-4 rounded-md border border-gray-300 dark:border-gray-800'>
-                <div className='flex flex-col justify-evenly items-center h-20 absolute left-0 top-4 w-10 dark:text-white text-sm font-bold'>
+                <ul className='flex relative flex-col lg:w-[40rem] md:w-[30rem] dark:bg-gray-900 bg-white px-4 gap-4 rounded-md border border-gray-300 dark:border-gray-800'>
+                <div className='hidden md:flex flex-col justify-evenly items-center h-20 absolute left-0 top-4 w-10 dark:text-white text-sm font-bold'>
                     <button disabled={buttonLoading} onClick={() => upvotePost(setButtonLoading, postMetaData, id, currentUser)}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke={ isUpvotedByUser ? '#ff4500' : '#424444'} strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" />
@@ -188,7 +188,7 @@ function Comments (props) {
                     </ul>
                       : null}
                 </div>
-                <section className='dark:text-white px-8'>
+                <section className='dark:text-white md:px-8'>
                     <span className='flex gap-2 items-center'>
                         <p className='font-bold text-sm cursor-pointer' onClick={() => navigate(`/r/${subredditMetaData.title}`)}>r/{subredditMetaData.title}</p>
                         <p className=' text-xs opacity-50'>u/{postMetaData.author} {getDatefromSeconds(postMetaData.timestamp?.seconds, Timestamp.now().seconds)}</p>
@@ -201,17 +201,28 @@ function Comments (props) {
                         {error}
                     </div>}
                     <h1 className='py-2 text-2xl break-words'>{postMetaData.postTitle}</h1>
-                    <img className=' z-10' src={postMetaData.imageURL}></img>
+                    <img className='z-10' src={postMetaData.imageURL}></img>
                     <p className='py-2 text-sm break-words'>{postMetaData.text}</p>
-                    <li className='flex gap-2 opacity-50 mt-4'>
+                    <li className='flex gap-2 mt-4'>
+                      <button className='md:hidden' disabled={buttonLoading} onClick={() => upvotePost(setButtonLoading, postMetaData, id, currentUser)}>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke={ isUpvotedByUser ? '#ff4500' : '#424444'} strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" />
+                      </svg>
+                      </button>
+                      <p className='md:hidden' style={{ color: determineUpvoteCountElementColor(isUpvotedByUser, isDownvotedByUser) }}>{postUpvotes}</p>
+                      <button className='md:hidden' disabled={buttonLoading} onClick={() => downvotePost(setButtonLoading, postMetaData, id, currentUser)}>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke={ isDownvotedByUser ? '#7193ff' : '#424444'} strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
+                      </svg>
+                      </button>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                         </svg>
-                        {commentMetaData.length} Comments
+                        <p className='opacity-50'>{commentMetaData.length} Comments</p>
                     </li>
                     <textarea ref={commentTextRef} placeholder='What are your thoughts?' className='w-full outline-none dark:bg-inherit border dark:border-gray-700 indent-2 rounded-sm py-1 h-28 mt-4'></textarea>
                     <div className='w-full mt-4'>
-                    <button onClick={() => postComment()} className='ml-auto block bg-blue-500 text-white rounded-full py-2 px-4'>Comment</button>
+                    <button onClick={() => postComment()} className='ml-auto block bg-blue-500 text-white font-semibold rounded-full py-2 px-4'>Comment</button>
                     </div>
                 </section>
                 <section className='flex flex-col gap-4'>

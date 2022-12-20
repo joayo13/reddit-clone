@@ -23,9 +23,9 @@ function SubmitPost () {
     <>{loading
       ? null
       : <div className='bg-gray-200 dark:bg-black min-h-screen'>
-                <div className='flex flex-col-reverse md:flex-row justify-center py-4 gap-4'>
+                <div className='flex flex-col-reverse md:flex-row bg-white dark:bg-gray-900 md:bg-inherit dark:md:bg-inherit justify-center py-4 gap-4'>
                   <div className='flex flex-col justify-between h-72'>
-                  <h1 className='dark:text-white text-black text-center md:text-left text-md mb-4'>Create a post in r/{subredditMetaData.title}</h1>
+                  <h1 className='dark:text-white text-black indent-4 font-semibold md:indent-0 text-md md:mb-4'>Create a post in r/{subredditMetaData.title}</h1>
                     <ul className='flex flex-col md:border lg:w-[40rem] md:w-[30rem] w-full px-4 py-4 bg-white dark:bg-gray-900 md:dark:border-gray-800 md:border-gray-300 md:rounded-md'>
                         <li className='py-2'>
                             <input type='text' ref={postTitleRef} placeholder='Title' maxLength={100} className='w-full border bg-inherit dark:text-white dark:border-gray-700 indent-2 rounded-md py-1'></input>
@@ -33,8 +33,8 @@ function SubmitPost () {
                         <li className= 'py-2'>
                             <div className='relative'>
                               {imageURL
-                                ? <button onClick={() => deleteImage(fileSelected, setImageURL)} className='absolute -top-2 -right-2'>
-                                  <svg xmlns="http://www.w3.org/2000/svg" fill="grey" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="w-12 h-12">
+                                ? <button onClick={() => deleteImage(fileSelected, setImageURL)} className='absolute -top-4 -right-4'>
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="grey" viewBox="0 0 24 24" strokeWidth="0.7" stroke="white" className="w-14 h-14">
                                   <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                   </svg>
                                 </button>
@@ -60,22 +60,22 @@ function SubmitPost () {
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="absolute p-[0.15rem] opacity-50 left-10 w-8 h-8 bottom-0">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
                             </svg>
-                            <button onClick={() => createPost(id, postTitleRef, userInfo, postTextRef, navigate, imageURL)} className='bg-blue-500 text-white w-20 py-1 rounded-full absolute bottom-0 right-0'>Post</button>
+                            <button onClick={() => createPost(id, postTitleRef, userInfo, postTextRef, navigate, imageURL)} className='bg-blue-500 text-white w-20 py-1 rounded-full font-semibold absolute bottom-0 right-0'>Post</button>
                             </div>
                         </li>
                     </ul>
                     </div>
                     <ul className='flex flex-col md:gap-4 lg:w-[20rem] md:w-[15rem]'>
-                    <li className='hidden md:flex flex-col bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md overflow-hidden'>
-                        <h2 style={{ backgroundColor: subredditMetaData.communityColor }} className='px-4 py-2 text-md text-white font-semibold'>About Community</h2>
-                        <p className='px-4 text-sm'>{subredditMetaData.aboutCommunity}</p>
-                        <p className='font-semibold text-sm px-4 pb-4'>{subredditMetaData.joined} Members</p>
+                    <li className='hidden md:flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md overflow-hidden'>
+                        <h2 className='text-md dark:text-white text-black font-semibold'>About Community</h2>
+                        <p className='text-sm'>{subredditMetaData.aboutCommunity}</p>
+                        <p className='font-semibold text-sm'>{subredditMetaData.joined} Members</p>
                     </li>
-                    <li className='flex flex-col bg-white dark:bg-gray-900 md:border border-gray-300 dark:border-gray-800 dark:text-gray-300 gap-4 md:rounded-md overflow-hidden'>
-                    <h2 style={{ backgroundColor: subredditMetaData.communityColor }} className='px-4 py-2 text-xs text-white font-semibold'>R/{subredditMetaData.title.toUpperCase()} RULES</h2>
-                        <ol className='flex flex-col gap-4 list-decimal pb-4'>
-                        {subredditMetaData.subredditRules?.map((rule, index) => <li className='px-4 text-sm font-bold' key={index}>{index + 1}. {rule}</li>)}
-                        </ol>
+                    <li className='flex flex-col bg-white px-4 py-4 dark:bg-gray-900 md:border border-gray-300 dark:border-gray-800 dark:text-gray-300 gap-4 md:rounded-md overflow-hidden'>
+                    <h2 className='text-xs dark:text-white text-black font-semibold'>R/{subredditMetaData.title.toUpperCase()} RULES</h2>
+                        <li className='flex flex-col gap-4'>
+                        {subredditMetaData.subredditRules?.map((rule, index) => <li className='text-sm font-bold' key={index}>{index + 1}. {rule}</li>)}
+                        </li>
                     </li>
                 </ul>
                 </div>

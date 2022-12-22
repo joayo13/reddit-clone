@@ -48,20 +48,20 @@ function CreateCommunity (props) {
         </svg>
         <h1>Name</h1>
         <p className='opacity-50 text-sm'>Community names including capitalization cannot be changed.</p>
-        <div className='flex items-center h-10 w-full border border-gray-300 dark:border-gray-700 my-4 rounded-md outline-blue-500 hover:outline outline-1 focus-within:outline'>
-          <label className='mx-2 text-lg opacity-50'>/r</label>
-          <input type='text' ref={nameRef} required maxLength={20} className='bg-inherit outline-none'></input>
+        <div className='flex items-center h-10 w-full bg-gray-100 dark:bg-gray-800 my-4 rounded-md outline-blue-500 hover:outline outline-1 focus-within:outline dark:border-gray-800 border border-gray-200'>
+          <label className='mx-2 text-lg opacity-50'>r/</label>
+          <input type='text' ref={nameRef} required maxLength={20} className='w-full bg-inherit outline-none'></input>
         </div>
         <h1>About Community</h1>
         <p className='opacity-50 text-sm'>Give a brief description of your Community and its intended purpose.</p>
-        <textarea ref={aboutCommunityRef} required className='w-full border border-gray-300 dark:border-gray-700 h-20 my-4 indent-2 rounded-md outline-blue-500 hover:outline outline-1 focus-within:outline bg-inherit text-indent-2'></textarea>
+        <textarea ref={aboutCommunityRef} required maxLength={1000} className='w-full bg-gray-100 dark:bg-gray-800 h-20 my-4 indent-2 rounded-md outline-blue-500 hover:outline outline-1 focus-within:outline bg-inherit text-indent-2 dark:border-gray-800 border border-gray-200'></textarea>
         <div className='relative'>
           <h1>Subreddit Rules</h1>
           <p className='opacity-50 text-sm'>Set the rules for your Subreddit.</p>
           {newRuleInput
             ? null
             : <div className='absolute flex gap-1 bottom-0 right-0'>
-              <button className='flex items-center text-xs py-3 px-3 dark:text-white dark:bg-gray-700 bg-gray-300 gap-1 rounded-md' onClick={() => setNewRuleInput(true)}>
+              <button className='flex items-center text-xs py-3 px-3 dark:text-white dark:bg-gray-700 bg-gray-300 gap-1 rounded-md' onClick={() => { setDeleteMode(false); setNewRuleInput(true) }}>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 dark:text-white opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                 </svg>
@@ -77,7 +77,7 @@ function CreateCommunity (props) {
         <ol type='decimal' className=''>
           {newRuleInput
             ? <div className='flex gap-2'>
-              <li className='flex items-center h-10 w-full border border-gray-300 dark:border-gray-700 my-4 rounded-md outline-blue-500 hover:outline outline-1 focus-within:outline'>
+              <li className='flex items-center h-10 w-full border bg-gray-100 dark:bg-gray-800 my-4 rounded-md outline-blue-500 hover:outline outline-1 focus-within:outline'>
                 <label className='mx-2 text-lg opacity-50'>{subredditRules.length + 1}.</label>
                 <input required ref={newRuleRef} type='text' maxLength={20} className='bg-inherit outline-none'></input>
               </li>

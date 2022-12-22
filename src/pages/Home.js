@@ -46,6 +46,7 @@ function Home (props) {
     <>{loading
       ? <LoadingWheel/>
       : <div className='bg-gray-200 dark:bg-black min-h-screen'>
+        <h1>TODO: ADD TERMS CONDITIONS MODAL</h1>
           <div className='flex flex-col-reverse md:flex-row justify-center pt-4 gap-4'>
               <ul className='flex-col gap-4 lg:w-[40rem] md:w-[30rem]'>
               <div className='flex flex-col gap-4'>{ homepagePostsData.map((post, index) =>

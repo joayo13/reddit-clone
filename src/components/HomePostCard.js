@@ -39,7 +39,7 @@ function HomePostCard (props) {
   }, [])
   return (
     <>
-    <li key={index} className='flex flex-col gap-2 px-4 py-4 bg-white border border-gray-300 rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700'>
+    <li key={index} className='flex flex-col gap-2 px-4 py-4 bg-white border border-gray-300 rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-800'>
         <div className='flex cursor-pointer flex-col gap-2'>
         <span onClick={() => navigate(`/r/${post.subredditId}`)} className='flex text-xs gap-2'>
         <a className='font-bold'>r/{post.subredditId}</a>

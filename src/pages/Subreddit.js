@@ -38,11 +38,11 @@ function Subreddit (props) {
       ? <LoadingWheel/>
       : <div className='bg-gray-200 dark:bg-black min-h-screen'>
             <div className='flex flex-col-reverse md:flex-row justify-center gap-4'>
-                <ul className='flex flex-col gap-4 lg:w-[40rem] md:w-[30rem] mt-4'>
+                <ul className='flex flex-col gap-4 lg:w-[40rem] md:w-[30rem] md:mt-4'>
                     {currentUser ? <CreatePostCard userInfo={userInfo} id={id}/> : null}
                     <ListPosts subredditPostsData={subredditPostsData} id={id}/>
                 </ul>
-                <ul className='flex flex-col md:gap-4 lg:w-[20rem] md:w-[15rem] mt-4'>
+                <ul className='flex flex-col gap-4 lg:w-[20rem] md:w-[15rem] mt-4'>
                     <li className='flex py-4 px-4 flex-col bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 dark:text-gray-300 gap-4 md:rounded-md overflow-hidden'>
                         <h2 className='text-md dark:text-white font-semibold'>About Community</h2>
                         <div className='flex gap-2 items-center'>

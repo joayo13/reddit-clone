@@ -23,7 +23,7 @@ function SignUp (props) {
           <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
         </svg>
         <h1 className='font-medium text-lg'>Sign Up</h1>
-        <p className='text-xs mt-2 md:w-1/3'>By continuing, you are setting up a Reddit account and you agree to our User Agreement and Privacy Policy.</p>
+        <p className='text-xs mt-2 md:w-1/3'>By continuing, you are setting up a !Reddit account.</p>
         {error && <div className='w-full bg-red-700 p-4 font-semibold rounded-md mt-4 text-white'>{error}</div>}
         <form onSubmit={ async (e) => { e.preventDefault(); setCreateUser(true) } } className='mt-20 flex flex-col gap-6'>
           <input required placeholder='EMAIL' ref={emailRef} type='email' className=' bg-gray-100 dark:bg-gray-800 py-4 indent-4 w-80 focus:outline-none'></input>

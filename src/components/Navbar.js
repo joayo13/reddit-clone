@@ -34,7 +34,7 @@ const Navbar = (props) => {
         {/* logo and name */}
         <div className='flex items-center gap-2 md:w-[248px]' onClick={() => navigate('/')}>
         <img src={redditIcon} className='w-10'></img>
-        <h1 className='hidden md:block text-1xl font-semibold text-gray-700 dark:text-white'>Not Reddit</h1>
+        <h1 className='hidden md:block text-1xl font-semibold text-gray-700 dark:text-white'>!Reddit</h1>
         </div>
         {/* search bar */}
         <div className='flex mx-auto gap-1 bg-gray-100 dark:bg-gray-800 dark:border-0 border px-2 py-2 outline-blue-500 hover:outline outline-1 rounded-md md:w-4/12 w-1/2 focus-within:outline'>

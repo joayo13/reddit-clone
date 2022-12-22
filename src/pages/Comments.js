@@ -230,14 +230,24 @@ function Comments (props) {
                     getDatefromSeconds={getDatefromSeconds} replyToId={replyToId} Timestamp={Timestamp} commentTextRef={commentTextRef}/>}
                 </section>
                 </ul>
-                <ul className='hidden md:flex flex-col gap-4 lg:w-[20rem] md:w-[15rem]'>
-                    <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md overflow-hidden'>
+                <ul className='md:flex flex-col hidden md:gap-4 lg:w-[20rem] md:w-[15rem]'>
+                    <li className='flex py-4 px-4 flex-col bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 dark:text-gray-300 gap-4 md:rounded-md overflow-hidden'>
                         <h2 className='text-md dark:text-white font-semibold'>About Community</h2>
+                        <div className='flex gap-2 items-center'>
+                          <div className='w-16 h-16 rounded-full text-4xl flex items-center justify-center' style={{ backgroundColor: subredditMetaData.communityColor }}>
+                            <p className='text-white'>r/</p>
+                          </div>
+                          <div className='flex flex-col'>
+                          <h1 className='text-2xl'>r/{subredditMetaData.title}</h1>
+                          <p className='text-sm opacity-50'>Created {subredditMetaData.birthday}</p>
+                          </div>
+                        </div>
                         <p className='text-sm'>{subredditMetaData.aboutCommunity}</p>
                         <p className='font-semibold text-sm'>{subredditMetaData.joined} Members</p>
+                        <button className='py-1 w-full mb-4 mx-auto bg-blue-500 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Follow</button>
                     </li>
-                    <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 dark:text-gray-300 gap-4 rounded-md overflow-hidden'>
-                    <h2 className='text-xs dark:text-white font-semibold'>R/{subredditMetaData.title.toUpperCase()} RULES</h2>
+                    <li className='flex flex-col px-4 py-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 dark:text-gray-300 gap-4 md:rounded-md overflow-hidden'>
+                        <h2 className='text-xs dark:text-white font-semibold'>R/{subredditMetaData.title.toUpperCase()} RULES</h2>
                         <ol className='flex flex-col gap-4'>
                         {subredditMetaData.subredditRules?.map((rule, index) => <li className='text-sm font-bold' key={index}>{index + 1}. {rule}</li>)}
                         </ol>

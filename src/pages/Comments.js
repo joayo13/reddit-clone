@@ -8,7 +8,7 @@ import uniqid from 'uniqid'
 import Thread from '../components/Thread'
 import { determineUpvoteCountElementColor, displayUpvotedOrDownvoted, downvotePost, getPostUpvotes, upvotePost } from '../helpers/upvoteFunctions'
 import LoadingWheel from '../components/LoadingWheel'
-import { deletePost } from '../helpers/postFunctions'
+import { deletePost, editPost } from '../helpers/postFunctions'
 
 function Comments (props) {
   const { currentUser, userInfo } = useAuth()
@@ -20,11 +20,13 @@ function Comments (props) {
   const navigate = useNavigate()
   const { id, post } = useParams()
   const commentTextRef = useRef()
+  const editedTextRef = useRef()
   const [subredditMetaData, setSubredditMetaData] = useState({})
   const [postUpvotes, setPostUpvotes] = useState(0)
   const [isUpvotedByUser, setIsUpvotedByUser] = useState(false)
   const [isDownvotedByUser, setIsDownvotedByUser] = useState(false)
   const [authorMenuVisible, setAuthorMenuVisible] = useState(false)
+  const [editMode, setEditMode] = useState(false)
   const [error, setError] = useState('')
 
   async function postComment () {
@@ -179,7 +181,7 @@ function Comments (props) {
                             </svg>
                             Delete Post
                         </li>
-                        <li className='flex gap-2 cursor-pointer'>
+                        <li onClick={() => setEditMode(!editMode)} className='flex gap-2 cursor-pointer'>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                             </svg>
@@ -202,7 +204,13 @@ function Comments (props) {
                     </div>}
                     <h1 className='py-2 text-2xl break-words'>{postMetaData.postTitle}</h1>
                     <img className='z-10' src={postMetaData.imageURL}></img>
-                    <p className='py-2 text-sm break-words'>{postMetaData.text}</p>
+                    {!postMetaData.title ? <p>[deleted]</p> : null}
+                    {!editMode
+                      ? <p className='py-2 text-sm break-words'>{postMetaData.text}</p>
+                      : <div>
+                        <textarea ref={editedTextRef} defaultValue={postMetaData.text} className='bg-inherit w-full border dark:border-gray-700 h-28'></textarea>
+                        <button onClick={() => editPost(postMetaData, userInfo, setError, editedTextRef.current.value) } className='ml-auto block bg-blue-500 text-white font-semibold rounded-full py-1 mt-2 px-4'>Save</button>
+                        </div>}
                     <li className='flex gap-2 mt-4'>
                       <button className='md:hidden' disabled={buttonLoading} onClick={() => upvotePost(setButtonLoading, postMetaData, id, currentUser)}>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke={ isUpvotedByUser ? '#ff4500' : '#424444'} strokeWidth="2">
@@ -222,7 +230,7 @@ function Comments (props) {
                     </li>
                     <textarea ref={commentTextRef} placeholder='What are your thoughts?' className='w-full outline-none dark:bg-inherit border dark:border-gray-700 indent-2 rounded-sm py-1 h-28 mt-4'></textarea>
                     <div className='w-full mt-4'>
-                    <button onClick={() => postComment()} className='ml-auto block bg-blue-500 text-white font-semibold rounded-full py-2 px-4'>Comment</button>
+                    <button onClick={() => postComment()} className='ml-auto block bg-blue-500 text-white font-semibold rounded-full py-1 px-4'>Comment</button>
                     </div>
                 </section>
                 <section className='flex flex-col gap-4'>

@@ -68,7 +68,7 @@ function Home (props) {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
                         </svg>
                         </div>
-                        <div className='ml-12 flex md:block items-center gap-2'>
+                        <div className='ml-12 flex md:block items-baseline gap-2'>
                           <p className='font-medium'>r/{subreddit.title}</p>
                           <span className='text-xs'>{subreddit.joined} Members</span>
                         </div>
@@ -87,7 +87,7 @@ function Home (props) {
                       {currentUser && topSubreddits.filter((subreddit) => userJoinedSubreddits.includes(subreddit.title)).map((filteredSubreddit, index) =>
                        <div className='flex px-4 py-2 gap-2 items-center border-t border-gray-300 dark:border-gray-800' key={index}>
                         <div style={{ backgroundColor: filteredSubreddit.communityColor }} className='w-8 h-8 flex items-center justify-center text-white rounded-full font-medium'>r/</div>
-                        <div className='flex md:flex-col gap-2 items-center md:items-baseline'>
+                        <div className='flex md:flex-col gap-2 items-baseline'>
                        <li className='font-medium cursor-pointer' onClick={() => navigate(`/r/${filteredSubreddit.title}`)}>r/{filteredSubreddit.title}</li>
                        <p className='text-xs'>{filteredSubreddit.joined} Members</p>
                        </div>

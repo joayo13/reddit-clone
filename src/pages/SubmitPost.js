@@ -81,12 +81,12 @@ function SubmitPost () {
                         <p className='font-semibold text-sm'>{subredditMetaData.joined} Members</p>
                         <button className='py-1 w-full mb-4 mx-auto bg-blue-500 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Follow</button>
                     </li>
-                    <li className='flex flex-col bg-white px-4 py-4 dark:bg-gray-900 md:border border-gray-300 dark:border-gray-800 dark:text-gray-300 gap-4 md:rounded-md overflow-hidden'>
+                    <ul className='flex flex-col bg-white px-4 py-4 dark:bg-gray-900 md:border border-gray-300 dark:border-gray-800 dark:text-gray-300 gap-4 md:rounded-md overflow-hidden'>
                     <h2 className='text-xs dark:text-white text-black font-semibold'>R/{subredditMetaData.title.toUpperCase()} RULES</h2>
                         <li className='flex flex-col gap-4'>
                         {subredditMetaData.subredditRules?.map((rule, index) => <li className='text-sm font-bold' key={index}>{index + 1}. {rule}</li>)}
                         </li>
-                    </li>
+                    </ul>
                 </ul>
                 </div>
             </div>}

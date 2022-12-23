@@ -37,13 +37,13 @@ const Navbar = (props) => {
         <h1 className='hidden md:block text-1xl font-semibold text-gray-700 dark:text-white'>!Reddit</h1>
         </div>
         {/* search bar */}
-        <div className='flex mx-auto gap-1 bg-gray-100 dark:bg-gray-800 dark:border-0 border px-2 py-2 outline-blue-500 hover:outline outline-1 rounded-md md:w-4/12 w-1/2 focus-within:outline'>
+        <div className='flex mx-auto gap-1 bg-gray-100 dark:bg-gray-800 dark:border-gray-700 border px-2 py-2 outline-blue-500 hover:outline outline-1 rounded-md md:w-4/12 w-1/2 focus-within:outline'>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 dark:invert" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input onClick={() => setSearchResultsVisible(true) } onChange={(e) => {
             searchSubreddit(e.target.value, setSearchResults, setSearchResultsVisible)
-          }} type='text' placeholder='Search !Reddit' className='bg-inherit dark:text-white focus:outline-none w-full'>
+          }} type='text' placeholder='Search !Reddit' className='bg-inherit dark:placeholder-white dark:text-white focus:outline-none w-full'>
           </input>
         </div>
         {searchResultsVisible

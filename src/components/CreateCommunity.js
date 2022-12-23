@@ -48,13 +48,13 @@ function CreateCommunity (props) {
         </svg>
         <h1>Name</h1>
         <p className='opacity-50 text-sm'>Community names including capitalization cannot be changed.</p>
-        <div className='flex items-center h-10 w-full bg-gray-100 dark:bg-gray-800 my-4 rounded-md outline-blue-500 hover:outline outline-1 focus-within:outline dark:border-gray-800 border border-gray-200'>
+        <div className='flex items-center h-10 w-full bg-gray-100 dark:bg-gray-800 my-4 rounded-md outline-blue-500 hover:outline outline-1 focus-within:outline dark:border-gray-700 border border-gray-200'>
           <label className='mx-2 text-lg opacity-50'>r/</label>
           <input type='text' ref={nameRef} required maxLength={20} className='w-full bg-inherit outline-none'></input>
         </div>
         <h1>About Community</h1>
         <p className='opacity-50 text-sm'>Give a brief description of your Community and its intended purpose.</p>
-        <textarea ref={aboutCommunityRef} required maxLength={1000} className='w-full bg-gray-100 dark:bg-gray-800 h-20 my-4 indent-2 rounded-md outline-blue-500 hover:outline outline-1 focus-within:outline bg-inherit text-indent-2 dark:border-gray-800 border border-gray-200'></textarea>
+        <textarea ref={aboutCommunityRef} required maxLength={1000} className='w-full bg-gray-100 dark:bg-gray-800 h-20 my-4 indent-2 rounded-md outline-blue-500 hover:outline outline-1 focus-within:outline text-indent-2 dark:border-gray-700 border border-gray-200'></textarea>
         <div className='relative'>
           <h1>Subreddit Rules</h1>
           <p className='opacity-50 text-sm'>Set the rules for your Subreddit.</p>

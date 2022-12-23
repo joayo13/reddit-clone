@@ -49,9 +49,9 @@ function Subreddit (props) {
                           <div className='w-16 h-16 rounded-full text-4xl flex items-center justify-center' style={{ backgroundColor: subredditMetaData.communityColor }}>
                             <p className='text-white'>r/</p>
                           </div>
-                          <div className='flex flex-col'>
+                          <div className='flex flex-col w-48'>
                           <h1 className='text-2xl'>r/{subredditMetaData.title}</h1>
-                          <p className='text-sm opacity-50'>Created {subredditMetaData.birthday}</p>
+                          <p className='text-sm opacity-50'>Created by {subredditMetaData.admin} on {subredditMetaData.birthday}</p>
                           </div>
                         </div>
                         <p className='text-sm'>{subredditMetaData.aboutCommunity}</p>

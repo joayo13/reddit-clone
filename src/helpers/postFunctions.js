@@ -1,8 +1,8 @@
 import { doc, deleteDoc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
-export async function deletePost (post, user, setError) {
+export async function deletePost (post, user, setError, subredditMetaData) {
   try {
-    if (user.username !== post.author) {
+    if (user.username !== post.author && subredditMetaData.admin !== user.username) {
       setError('Only the author of this post can delete or edit it.')
       return
     }

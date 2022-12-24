@@ -3,7 +3,7 @@ import { db } from '../firebase'
 export async function deletePost (post, user, setError, subredditMetaData) {
   try {
     if (user.username !== post.author && subredditMetaData.admin !== user.username) {
-      setError('Only the author of this post can delete or edit it.')
+      setError('Only the author of this post can delete it.')
       return
     }
     await deleteDoc(doc(db, 'subreddits', post.subredditId, 'posts', post.id))
@@ -14,10 +14,6 @@ export async function deletePost (post, user, setError, subredditMetaData) {
 }
 export async function editPost (post, user, setError, text) {
   try {
-    if (user.username !== post.author) {
-      setError('Only the author of this post can delete or edit it.')
-      return
-    }
     await updateDoc(doc(db, 'subreddits', post.subredditId, 'posts', post.id), {
       text
     })

@@ -60,7 +60,7 @@ function Home (props) {
                       <div className='absolute shadow-[inset_0_-60px_50px_-20px_rgba(0,0,0,0.5)] bottom-0 right-0 top-0 left-0'></div>
                       <h2 className='text-lg font-medium text-white absolute bottom-2 left-4'>Top Communities</h2>
                     </div>
-                      {topSubreddits.map((subreddit, index) =>
+                      {topSubreddits.slice(0, 4).map((subreddit, index) =>
                       <div key={index} className='px-4 py-2 relative w-full border-t border-gray-300 dark:border-gray-800'>
                         <div className='absolute left-4 bottom-1/2 translate-y-1/2 flex items-center gap-2'>
                         <p className='font-medium text-sm'>{topSubreddits.indexOf(subreddit) + 1}</p>

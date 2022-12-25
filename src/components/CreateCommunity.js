@@ -77,7 +77,7 @@ function CreateCommunity (props) {
         <ol type='decimal' className=''>
           {newRuleInput
             ? <div className='flex gap-2'>
-              <li className='flex items-center h-10 w-full border dark:border-0 bg-gray-100 dark:bg-gray-800 my-4 rounded-md outline-blue-500 hover:outline outline-1 focus-within:outline'>
+              <li className='flex items-center h-10 w-full border dark:border-gray-700 bg-gray-100 dark:bg-gray-800 my-4 rounded-md outline-blue-500 hover:outline outline-1 focus-within:outline'>
                 <label className='mx-2 text-lg opacity-50'>{subredditRules.length + 1}.</label>
                 <input required ref={newRuleRef} type='text' maxLength={100} className='bg-inherit outline-none'></input>
               </li>

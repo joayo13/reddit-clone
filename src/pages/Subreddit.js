@@ -37,7 +37,7 @@ function Subreddit (props) {
     <>{ loading
       ? <LoadingWheel/>
       : <div className='bg-gray-200 dark:bg-black min-h-screen'>
-            <div className='flex flex-col-reverse md:flex-row justify-center gap-4'>
+            <div className='flex flex-col-reverse md:flex-row justify-center gap-4 text-gray-800'>
                 <ul className='flex flex-col gap-4 lg:w-[40rem] md:w-[30rem] md:mt-4'>
                     {currentUser ? <CreatePostCard userInfo={userInfo} id={id}/> : null}
                     <ListPosts subredditPostsData={subredditPostsData} id={id}/>

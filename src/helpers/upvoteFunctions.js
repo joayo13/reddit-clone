@@ -67,7 +67,7 @@ export function determineUpvoteCountElementColor (isUpvotedByUser, isDownvotedBy
   if (isDownvotedByUser) {
     return '#7193ff'
   }
-  return '#424444'
+  return '#717781'
 }
 export async function upvotePost (setLoading, post, id, currentUser) {
   setLoading(true)

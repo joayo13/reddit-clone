@@ -23,11 +23,11 @@ function SubmitPost () {
     <>{loading
       ? null
       : <div className='bg-gray-200 dark:bg-black min-h-screen'>
-                <div className='flex flex-col-reverse md:flex-row bg-white dark:bg-gray-900 md:bg-inherit dark:md:bg-inherit justify-center py-4 gap-4'>
+                <div className='flex flex-col-reverse text-gray-800 md:flex-row bg-white dark:bg-gray-900 md:bg-inherit dark:md:bg-inherit justify-center py-4 gap-4'>
                   <div className='flex flex-col justify-between h-72'>
                   <div className='flex flex-col'>
-                  <h1 className='dark:text-white text-black indent-4 md:indent-0 text-lg md:mb-4'>Create a post in r/{subredditMetaData.title}</h1>
-                  <div className='min-h-[1px] w-full -mt-2 mb-4 bg-gray-700 hidden md:block'></div>
+                  <h1 className='dark:text-white text-gray-800 indent-4 md:indent-0 text-lg md:mb-4'>Create a post in r/{subredditMetaData.title}</h1>
+                  <div className='min-h-[1px] w-full -mt-2 mb-4 bg-white dark:bg-gray-800 hidden md:block'></div>
                   </div>
                     <ul className='flex flex-col md:border lg:w-[40rem] md:w-[30rem] w-full px-4 py-4 bg-white dark:bg-gray-900 md:dark:border-gray-800 md:border-gray-300 md:rounded-md'>
                         <li className='py-2'>
@@ -85,7 +85,7 @@ function SubmitPost () {
                         <button className='py-1 w-full mb-4 mx-auto bg-blue-500 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Follow</button>
                     </li>
                     <ul className='flex flex-col bg-white px-4 py-4 dark:bg-gray-900 md:border border-gray-300 dark:border-gray-800 dark:text-gray-300 gap-4 md:rounded-md overflow-hidden'>
-                    <h2 className='text-xs dark:text-white text-black font-semibold'>R/{subredditMetaData.title.toUpperCase()} RULES</h2>
+                    <h2 className='text-xs dark:text-white font-semibold'>R/{subredditMetaData.title.toUpperCase()} RULES</h2>
                         <li className='flex flex-col gap-4'>
                         {subredditMetaData.subredditRules?.map((rule, index) => <li className='text-sm font-bold' key={index}>{index + 1}. {rule}</li>)}
                         </li>

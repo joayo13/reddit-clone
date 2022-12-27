@@ -135,13 +135,13 @@ function Reply (props) {
     <span className='flex px-8 gap-2 mt-2'>
         <div className='flex -ml-1 gap-1 text-sm items-center'>
         <button disabled={buttonLoading} onClick={() => upvoteComment()}>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 " fill="none" viewBox="0 0 24 24" stroke={ isUpvotedByUser ? '#ff4500' : '#424444'} strokeWidth="2">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 " fill="none" viewBox="0 0 24 24" stroke={ isUpvotedByUser ? '#ff4500' : '#717781'} strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" />
             </svg>
             </button>
             <p style={{ color: determineUpvoteCountElementColor(isUpvotedByUser, isDownvotedByUser) }}>{commentUpvotes}</p>
             <button disabled={buttonLoading} onClick={() => downvoteComment()}>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 " fill="none" viewBox="0 0 24 24" stroke={ isDownvotedByUser ? '#7193ff' : '#424444'} strokeWidth="2">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 " fill="none" viewBox="0 0 24 24" stroke={ isDownvotedByUser ? '#7193ff' : '#717781'} strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
             </svg>
             </button>

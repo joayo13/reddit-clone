@@ -20,13 +20,13 @@ function Notifications (props) {
     props.setNotifications(prev => prev.filter((x) => x !== notification))
   }
   return (
-    <ul className='mobileNav w-80 flex flex-col absolute max-h-96 overflow-scroll right-4 bg-white dark:bg-gray-900 dark:text-white rounded-md z-10 border border-gray-200 dark:border-gray-700 text-sm font-medium '>
-    <h1 className='bg-blue-200 dark:bg-gray-800 py-4 px-4'>Notifications</h1>
+    <ul className='mobileNav w-80 flex flex-col absolute max-h-96 overflow-scroll right-4 bg-white dark:bg-neutral-900 dark:text-white rounded-md z-10 border border-neutral-200 dark:border-neutral-700 text-sm font-medium '>
+    <h1 className='bg-blue-200 dark:bg-neutral-800 py-4 px-4'>Notifications</h1>
     {props.notifications.length === 0
       ? <h2 className='py-4 px-4 text-lg'>{randomNoNotificationMessage()} &#128546;</h2>
       : null }
     {props.notifications.sort((a, b) => b.timestamp - a.timestamp).map((notification, index) =>
-    <li className='py-6 px-4 dark:hover:bg-gray-700 hover:bg-blue-50 relative cursor-pointer' key={index}>
+    <li className='py-6 px-4 dark:hover:bg-neutral-700 hover:bg-blue-50 relative cursor-pointer' key={index}>
        <svg onClick={() => deleteNotification(notification)} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 absolute right-2 top-2 opacity-50 dark:text-white" viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
         </svg>

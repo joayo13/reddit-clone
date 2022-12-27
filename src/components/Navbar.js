@@ -29,15 +29,15 @@ const Navbar = (props) => {
   }, [])
 
   return (
-    <div className='font-poppins relative border-b border-gray-200 dark:bg-gray-900 dark:border-gray-800'>
+    <div className='font-poppins relative border-b border-neutral-200 dark:bg-neutral-900 dark:border-neutral-800'>
       <header className='flex items-center px-4 py-1'>
         {/* logo and name */}
         <div className='flex items-center gap-2 md:w-[248px]' onClick={() => navigate('/')}>
         <img src={redditIcon} className='w-10'></img>
-        <h1 className='hidden md:block text-1xl font-semibold text-gray-700 dark:text-white'>!Reddit</h1>
+        <h1 className='hidden md:block text-1xl font-semibold text-neutral-700 dark:text-white'>!Reddit</h1>
         </div>
         {/* search bar */}
-        <div className='flex mx-auto gap-1 md:relative bg-gray-100 dark:bg-gray-800 px-2 py-2 outline-blue-500 hover:outline outline-1 rounded-full md:w-4/12 w-1/2 focus-within:outline'>
+        <div className='flex mx-auto gap-1 md:relative bg-neutral-100 dark:bg-neutral-800 px-2 py-2 outline-blue-500 hover:outline outline-1 rounded-full md:w-4/12 w-1/2 focus-within:outline'>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 dark:invert" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
@@ -46,9 +46,9 @@ const Navbar = (props) => {
           }} type='text' placeholder='Search !Reddit' className='bg-inherit dark:text-white focus:outline-none w-full'>
           </input>
           {searchResultsVisible
-            ? <ul className='absolute top-12 bg bg-gray-50 dark:bg-gray-900 shadow-md dark:text-white w-full left-0 z-20'>
+            ? <ul className='absolute top-12 bg bg-neutral-50 dark:bg-neutral-900 shadow-md dark:text-white w-full left-0 z-20'>
         {searchResults.map((result, index) => {
-          return <li key={index} onClick={() => { navigate(`/r/${result}`); setSearchResultsVisible(false) }} className='px-2 cursor-pointer py-4 hover:bg-gray-200 dark:hover:bg-gray-800'>r/{result}</li>
+          return <li key={index} onClick={() => { navigate(`/r/${result}`); setSearchResultsVisible(false) }} className='px-2 cursor-pointer py-4 hover:bg-neutral-200 dark:hover:bg-neutral-800'>r/{result}</li>
         })}
         </ul>
             : null}
@@ -75,7 +75,7 @@ const Navbar = (props) => {
           </span>
             : <>
           <button
-            className='hidden md:block w-32 py-1 border-blue-500 font-bold border rounded-full text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm'
+            className='hidden md:block w-32 py-1 border-blue-500 font-bold border rounded-full text-blue-500 hover:bg-neutral-100 dark:hover:bg-neutral-700 text-sm'
             onClick={() => props.setLogInPopUp(true)}>Log In</button>
           <button
             className='hidden md:block w-32 py-1 bg-blue-500 font-bold rounded-full text-white hover:bg-blue-400 text-sm'

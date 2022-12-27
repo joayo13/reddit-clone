@@ -48,7 +48,7 @@ function HomePostCard (props) {
         <h1 onClick={() => navigate(`/r/${post.subredditId}/comments/${post.id}`)} className='break-words'>{post.postTitle}</h1>
         <img onClick={() => navigate(`/r/${post.subredditId}/comments/${post.id}`)} src={post.imageURL}></img>
         </div>
-        <ul className='flex gap-2' onClick={() => navigate(`/r/${post.subredditId}/comments/${post.id}`)}>
+        <ul className='flex gap-2'>
             <li className='flex gap-2 font-semibold'>
                 <button disabled={loading} onClick={() => upvotePost(setLoading, post, post.subredditId, currentUser)}>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke={ isUpvotedByUser ? '#ff4500' : '#737373'} strokeWidth="2">
@@ -62,12 +62,12 @@ function HomePostCard (props) {
                 </svg>
                 </button>
             </li>
-            <li className='flex gap-2 cursor-pointer dark:text-[#737373]' >
+            <button onClick={() => navigate(`/r/${post.subredditId}/comments/${post.id}`)} className='flex gap-2 cursor-pointer dark:text-[#737373]' >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#737373" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
             </svg>
             {commentLength} Comments
-            </li>
+            </button>
         </ul>
     </li>
     </>

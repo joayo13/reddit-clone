@@ -20,8 +20,8 @@ function LogIn (props) {
         .then(() => {
           props.setLogInPopUp(false)
         })
-    } catch {
-      setError('Failed to Log In')
+    } catch (e) {
+      setError(e.message)
     }
     setLoading(false)
   }
@@ -39,7 +39,7 @@ function LogIn (props) {
         </svg>
         <h1 className='font-medium text-lg'>Log In</h1>
         <p className='text-xs mt-2'>By continuing, you agree to not post any malicious content.</p>
-        {error && <div className='w-full bg-red-400'>{error}</div>}
+        {error && <div className='w-full bg-red-700 p-4 font-semibold rounded-md mt-4 text-white'>{error}</div>}
         <form className='mt-20 flex flex-col gap-6' onSubmit={handleSubmit}>
           <input placeholder='EMAIL' ref={emailRef} type='email' className=' bg-neutral-100 dark:bg-neutral-800 py-4 indent-4 md:w-80 focus:outline-none'></input>
           <input placeholder='PASSWORD' ref={passwordRef} type='password' className=' bg-neutral-100 dark:bg-neutral-800 py-4 indent-4 md:w-80 focus:outline-none'></input>

@@ -50,13 +50,13 @@ function PostCard (props) {
         <ul className='flex gap-2'>
             <li className='flex gap-2 font-semibold'>
                 <button disabled={loading} onClick={() => upvotePost(setLoading, post, id, currentUser)}>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke={ isUpvotedByUser ? '#ff4500' : '#717781'} strokeWidth="2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke={ isUpvotedByUser ? '#ff4500' : '#737373'} strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" />
                 </svg>
                 </button>
                 <p style={{ color: determineUpvoteCountElementColor(isUpvotedByUser, isDownvotedByUser) }}>{upvotes}</p>
                 <button disabled={loading} onClick={() => downvotePost(setLoading, post, id, currentUser)}>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke={ isDownvotedByUser ? '#7193ff' : '#717781'} strokeWidth="2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke={ isDownvotedByUser ? '#7193ff' : '#737373'} strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z" />
                 </svg>
                 </button>

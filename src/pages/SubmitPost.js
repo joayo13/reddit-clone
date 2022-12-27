@@ -23,7 +23,7 @@ function SubmitPost () {
   return (
     <>{loading
       ? <LoadingWheel/>
-      : <div className='bg-neutral-200 dark:bg-black min-h-screen'>
+      : <div className='bg-neutral-200 dark:bg-[#030303] min-h-screen'>
                 <div className='flex flex-col-reverse text-neutral-800 md:flex-row bg-white dark:bg-neutral-900 md:bg-inherit dark:md:bg-inherit justify-center py-4 gap-4'>
                   <div className='flex flex-col justify-between h-72'>
                   <div className='flex flex-col'>

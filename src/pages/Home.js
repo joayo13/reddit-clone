@@ -45,7 +45,7 @@ function Home (props) {
   return (
     <>{loading
       ? <LoadingWheel/>
-      : <div className='bg-neutral-200 dark:bg-black min-h-screen'>
+      : <div className='bg-neutral-200 dark:bg-[#030303] min-h-screen'>
           <div className='flex flex-col-reverse md:flex-row text-neutral-800 justify-center pt-4 gap-4'>
               <ul className='flex-col gap-4 lg:w-[40rem] md:w-[30rem]'>
               <div className='flex flex-col gap-4'>{ homepagePostsData.map((post, index) =>

@@ -30,6 +30,8 @@ export async function fetchSubredditData (setSubredditMetaData, setLoading, id) 
     if (docSnap.exists()) {
       setSubredditMetaData(docSnap.data())
       setLoading(false)
+    } else {
+      setLoading(false)
     }
   } catch (e) {
     console.log(e)

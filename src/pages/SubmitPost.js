@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { createPost, fetchSubredditData } from '../helpers/getSubredditDataFunctions'
 import { deleteImage, uploadImage } from '../helpers/uploadImageFunctions'
 import LoadingWheel from '../components/LoadingWheel'
+import { searchSubreddit } from '../helpers/searchFunctions'
 
 function SubmitPost () {
   const { userInfo } = useAuth()
@@ -13,22 +14,47 @@ function SubmitPost () {
   const [fileSelected, setFileSelected] = useState(null)
   const [imageURL, setImageURL] = useState('')
   const [imageLoading, setImageLoading] = useState(false)
+  const [searchResults, setSearchResults] = useState([])
+  const [searchResultsVisible, setSearchResultsVisible] = useState(false)
   const { id } = useParams()
   const postTitleRef = useRef()
   const postTextRef = useRef()
+  const communitySearchInputRef = useRef()
   const navigate = useNavigate()
   useEffect(() => {
     fetchSubredditData(setSubredditMetaData, setLoading, id)
   }, [id])
+  const [searchCommunityFocused, setSearchCommunityFocused] = useState(false)
+  const searchCommunityUnfocusedPlaceholder = () => {
+    return subredditMetaData.title ? subredditMetaData.title : 'Choose A Community'
+  }
   return (
     <>{loading
       ? <LoadingWheel/>
       : <div className='bg-neutral-200 dark:bg-[#030303] min-h-screen'>
                 <div className='flex flex-col-reverse text-neutral-800 md:flex-row bg-white dark:bg-neutral-900 md:bg-inherit dark:md:bg-inherit justify-center py-4 gap-4'>
-                  <div className='flex flex-col justify-between h-72'>
-                  <div className='flex flex-col'>
-                  <h1 className='dark:text-white text-neutral-800 indent-4 md:indent-0 text-lg md:mb-4'>Create a post in r/{subredditMetaData.title}</h1>
-                  <div className='min-h-[1px] w-full -mt-2 mb-4 bg-white dark:bg-neutral-800 hidden md:block'></div>
+                  <div className='flex flex-col relative justify-between h-72'>
+                  <div className='flex flex-col gap-4 mx-4 md:mx-0 mb-4'>
+                  <h1 className='dark:text-white text-neutral-800 md:indent-0 text-lg'>Create a post</h1>
+                  <div className='min-h-[1px] w-full bg-white dark:bg-neutral-800 hidden md:block'></div>
+                  {/* the search community box */}
+                  <div style={searchCommunityFocused ? { borderColor: '#ff4500' } : null} className='dark:bg-neutral-900 bg-white w-72 py-2 px-4 rounded-md text-sm font-bold flex justify-between border text-black dark:text-white dark:border-neutral-600 border-neutral-300 dark:border-opacity-50 relative'>
+                  <input onChange={(e) => {
+                    searchSubreddit(e.target.value, setSearchResults, setSearchResultsVisible)
+                  }} type='text' ref={communitySearchInputRef} onFocus={() => setSearchCommunityFocused(!searchCommunityFocused)} className='z-10 outline-none bg-inherit' placeholder={ communitySearchInputRef.current !== document.activeElement ? searchCommunityUnfocusedPlaceholder() : 'Search Communities'}></input>
+                  <button onClick={() => communitySearchInputRef.current.focus()}>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-auto opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                  </button>
+                  {searchResultsVisible
+                    ? <ul className='absolute top-12 bg bg-neutral-50 dark:bg-neutral-800 shadow-md dark:text-white text-black w-full left-0 z-20'>
+                      {searchResults.map((result, index) => {
+                        return <li key={index} onClick={() => { navigate(`/r/${result}/submit`); setSearchResultsVisible(false); communitySearchInputRef.current.value = '' }} className='px-2 cursor-pointer py-4 hover:bg-neutral-200 dark:hover:bg-neutral-800'>r/{result}</li>
+                      })}
+                      </ul>
+                    : null}
+                  </div>
                   </div>
                     <ul className='flex flex-col md:border lg:w-[40rem] md:w-[30rem] w-full px-4 py-4 bg-white dark:bg-neutral-900 md:dark:border-neutral-800 md:border-neutral-300 md:rounded-md'>
                         <li className='py-2'>
@@ -69,7 +95,8 @@ function SubmitPost () {
                         </li>
                     </ul>
                     </div>
-                    <ul className='flex flex-col md:gap-4 lg:w-[20rem] md:w-[15rem]'>
+                    {subredditMetaData.title
+                      ? <ul className='flex flex-col md:gap-4 lg:w-[20rem] md:w-[15rem]'>
                     <li className= 'hidden md:flex py-4 px-4 flex-col bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 dark:text-neutral-300 gap-4 md:rounded-md overflow-hidden'>
                         <h2 className='text-md dark:text-white font-semibold'>About Community</h2>
                         <div className='flex gap-2 items-center'>
@@ -87,12 +114,29 @@ function SubmitPost () {
                     </li>
                     <ul className='flex flex-col bg-white px-4 py-4 dark:bg-neutral-900 md:border border-neutral-300 dark:border-neutral-800 dark:text-neutral-300 gap-4 md:rounded-md overflow-hidden'>
                     <h2 className='text-xs dark:text-white font-semibold'>R/{subredditMetaData.title.toUpperCase()} RULES</h2>
-                        <li className='flex flex-col gap-4'>
+                        <div className='flex flex-col gap-4'>
                         {subredditMetaData.subredditRules?.map((rule, index) => <li className='text-sm font-bold' key={index}>{index + 1}. {rule}</li>)}
-                        </li>
+                        </div>
                     </ul>
                 </ul>
+                      : <ul className='flex flex-col bg-white px-4 py-4 h-min dark:bg-neutral-900 md:border border-neutral-300 dark:border-neutral-800 dark:text-neutral-300 gap-4 md:rounded-md overflow-hidden'>
+                        <h2 className=' dark:text-white font-semibold'>Posting to !Reddit</h2>
+                        <div className='flex flex-col gap-3'>
+                        <div className='min-h-[1px] w-full bg-neutral-200 dark:bg-neutral-800'></div>
+                          <li className='text-sm font-bold'>1. Remember the human</li>
+                          <div className='min-h-[1px] w-full bg-neutral-200 dark:bg-neutral-800'></div>
+                          <li className='text-sm font-bold'>2. Behave like you would in real life</li>
+                          <div className='min-h-[1px] w-full bg-neutral-200 dark:bg-neutral-800'></div>
+                          <li className='text-sm font-bold'>3. Look for the original source of content</li>
+                          <div className='min-h-[1px] w-full bg-neutral-200 dark:bg-neutral-800'></div>
+                          <li className='text-sm font-bold'>4. Search for duplicates before posting</li>
+                          <div className='min-h-[1px] w-full bg-neutral-200 dark:bg-neutral-800'></div>
+                          <li className='text-sm font-bold'>5. Read the community’s rules</li>
+                          <div className='min-h-[1px] w-full bg-neutral-200 dark:bg-neutral-800'></div>
+                        </div>
+                        </ul>}
                 </div>
+                { searchCommunityFocused ? <button onClick={() => { setSearchCommunityFocused(false); setSearchResultsVisible(false) }} className='fixed z-10 top-12 right-0 bottom-0 left-0 h-full w-full cursor-default'></button> : null}
             </div>}
         </>
   )

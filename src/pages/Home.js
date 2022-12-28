@@ -8,12 +8,13 @@ import { useAuth } from '../contexts/AuthContext'
 import { getHomePagePosts } from '../helpers/getSubredditDataFunctions'
 import { getTopSubreddits } from '../helpers/getTopSubreddits'
 import { userJoinSubredditFromHome, userLeaveSubredditFromHome } from '../helpers/userJoinSubreddit'
+import CreatePostCard from '../components/CreatePostCard'
 import bannerImage from '../images/banner-background.png'
 import bannerImage2 from '../images/yourCommunitiesPhoto.jpg'
 import { db } from '../firebase'
 
 function Home (props) {
-  const { currentUser } = useAuth()
+  const { currentUser, userInfo } = useAuth()
   const [homepagePostsData, setHomepagePostsData] = useState([])
   const [loading, setLoading] = useState(true)
   const [topSubreddits, setTopSubreddits] = useState([])
@@ -48,9 +49,11 @@ function Home (props) {
       : <div className='bg-neutral-200 dark:bg-[#030303] min-h-screen'>
           <div className='flex flex-col-reverse md:flex-row text-neutral-800 justify-center pt-4 gap-4'>
               <ul className='flex-col gap-4 lg:w-[40rem] md:w-[30rem]'>
-              <div className='flex flex-col gap-4'>{ homepagePostsData.map((post, index) =>
+              <div className='flex flex-col gap-4'>
+              {currentUser ? <CreatePostCard userInfo={ userInfo } id={'default'}/> : null}
+                { homepagePostsData.map((post, index) =>
             <HomePostCard key={index} post={post} index={index}/>
-              )}
+                )}
               </div>
               </ul>
               <ul className='flex flex-col -mt-4 md:mt-0 gap-4 md:gap-4 lg:w-[20rem] md:w-[15rem]'>

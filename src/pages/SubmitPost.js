@@ -41,7 +41,7 @@ function SubmitPost () {
                   <div style={searchCommunityFocused ? { borderColor: '#ff4500' } : null} className='dark:bg-neutral-900 bg-white w-72 py-2 px-4 rounded-md text-sm font-bold flex justify-between border text-black dark:text-white dark:border-neutral-600 border-neutral-300 dark:border-opacity-50 relative'>
                   <input onChange={(e) => {
                     searchSubreddit(e.target.value, setSearchResults, setSearchResultsVisible)
-                  }} type='text' ref={communitySearchInputRef} onFocus={() => setSearchCommunityFocused(!searchCommunityFocused)} className='z-10 outline-none bg-inherit' placeholder={ communitySearchInputRef.current !== document.activeElement ? searchCommunityUnfocusedPlaceholder() : 'Search Communities'}></input>
+                  }} type='text' ref={communitySearchInputRef} onFocus={() => setSearchCommunityFocused(!searchCommunityFocused)} className=' outline-none bg-inherit' placeholder={ communitySearchInputRef.current !== document.activeElement ? searchCommunityUnfocusedPlaceholder() : 'Search Communities'}></input>
                   <button onClick={() => communitySearchInputRef.current.focus()}>
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-auto opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />

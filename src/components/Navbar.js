@@ -41,7 +41,7 @@ const Navbar = (props) => {
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 dark:invert opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
-          <input onClick={() => setSearchResultsVisible(true) } onChange={(e) => {
+          <input onBlur={() => setSearchResultsVisible(false)} onClick={() => setSearchResultsVisible(true) } onChange={(e) => {
             searchSubreddit(e.target.value, setSearchResults, setSearchResultsVisible)
           }} type='text' placeholder='Search !Reddit' className='bg-inherit dark:text-white focus:outline-none w-full'>
           </input>
@@ -57,18 +57,18 @@ const Navbar = (props) => {
         <ul className='flex text-1xl gap-2 md:mx-4'>
           {currentUser
             ? <span className='hidden md:flex justify-center md:gap-4 items-center'>
-            <button className='relative'>
+            <button tabIndex={0} onClick={() => setNotificationsVisible(!notificationsVisible)} className='relative'>
             {notifications.length > 0
               ? <div className='rounded-full flex items-center justify-center z-10 full h-[0.85rem] w-[0.85rem] absolute -top-1 -left-1 bg-[#ff4500]'>
               <p className='text-xs font-bold text-white'>{notifications.length}</p>
             </div>
               : null }
-            <svg onClick={() => setNotificationsVisible(true)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-6 w-6 dark:text-white opacity-50">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-6 w-6 dark:text-white opacity-50">
             <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
             </svg>
             </button>
-            <button>
-              <svg onClick={() => navigate('/r/default/submit')} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 dark:text-white opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <button onClick={() => navigate('/r/default/submit')}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 dark:text-white opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
               </svg>
            </button>
@@ -82,16 +82,18 @@ const Navbar = (props) => {
             onClick={() => props.setSignUpPopUp(true)}>Sign Up</button>
           </>}
           {currentUser
-            ? <button className='relative md:hidden'>
+            ? <div className='relative md:hidden'>
               {notifications.length > 0
                 ? <div className='rounded-full flex items-center justify-center z-10 full h-[0.85rem] w-[0.85rem] absolute -top-1 -left-1 bg-[#ff4500]'>
               <p className='text-xs font-bold text-white'>{notifications.length}</p>
             </div>
                 : null }
-            <svg onClick={() => setNotificationsVisible(true)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className=" md:hidden h-6 w-6 mr-4 dark:text-white opacity-50">
+            <button onClick={() => setNotificationsVisible(!notificationsVisible)}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className=" md:hidden h-6 w-6 mr-4 dark:text-white opacity-50">
             <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
             </svg>
             </button>
+            </div>
             : null}
           {/* dropdown menu button */}
           {!currentUser

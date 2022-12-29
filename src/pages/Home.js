@@ -89,7 +89,9 @@ function Home (props) {
                       <ul className='flex flex-col'>
                       {currentUser && topSubreddits.filter((subreddit) => userJoinedSubreddits.includes(subreddit.title)).map((filteredSubreddit, index) =>
                        <div className='flex px-4 py-2 gap-2 items-center border-t border-neutral-300 dark:border-neutral-800' key={index}>
-                        <div style={{ backgroundColor: filteredSubreddit.communityColor }} className='w-8 h-8 flex items-center justify-center text-white rounded-full font-medium'>r/</div>
+                        <div className='w-8 h-8 flex items-center overflow-hidden justify-center text-white rounded-full font-medium'>
+                          <img src={filteredSubreddit.communityDisplayPictureURL}></img>
+                        </div>
                         <div className='flex md:flex-col gap-2 items-baseline'>
                        <li className='font-medium cursor-pointer' onClick={() => navigate(`/r/${filteredSubreddit.title}`)}>r/{filteredSubreddit.title}</li>
                        <p className='text-xs'>{filteredSubreddit.joined} Members</p>

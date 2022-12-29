@@ -24,7 +24,7 @@ function CreateCommunity (props) {
         subredditRules,
         aboutCommunity: aboutCommunityRef.current.value,
         admin: userInfo.username,
-        communityColor: '#0079d3',
+        communityDisplayPictureURL: 'https://firebasestorage.googleapis.com/v0/b/reddit-clone-development.appspot.com/o/subredditDisplayPictures%2Fdefaultsubredditdisplaypicture.png?alt=media&token=24bfb557-2118-4cb9-ac44-901d7c692e48',
         birthday: birthday.toDateString(),
         joined: 0
       })

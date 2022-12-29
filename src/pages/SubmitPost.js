@@ -128,8 +128,8 @@ function SubmitPost () {
                     <li className= 'hidden md:flex py-4 px-4 flex-col bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 dark:text-neutral-300 gap-4 md:rounded-md overflow-hidden'>
                         <h2 className='text-md dark:text-white font-semibold'>About Community</h2>
                         <div className='flex gap-2 items-center'>
-                          <div className='w-16 h-16 rounded-full text-4xl flex items-center justify-center' style={{ backgroundColor: subredditMetaData.communityColor }}>
-                            <p className='text-white'>r/</p>
+                          <div className='w-16 h-16 rounded-full overflow-hidden flex items-center justify-center'>
+                            <img src={subredditMetaData.communityDisplayPictureURL}></img>
                           </div>
                           <div className='flex flex-col'>
                           <h1 className='text-2xl'>r/{subredditMetaData.title}</h1>

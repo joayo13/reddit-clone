@@ -3,7 +3,7 @@ import { doc, getDoc, getDocs, setDoc, serverTimestamp, collection } from 'fireb
 import uniqid from 'uniqid'
 import { db } from '../firebase'
 
-export async function createPost (id, postTitleRef, userInfo, postTextRef, navigate, imageURL) {
+export async function createPost (id, postTitleRef, userInfo, postTextRef, navigate, imageURL, url) {
   const uniqueId = uniqid()
   try {
     await setDoc(doc(db, 'subreddits', id, 'posts', uniqueId), {
@@ -13,7 +13,8 @@ export async function createPost (id, postTitleRef, userInfo, postTextRef, navig
       text: postTextRef.current.value,
       id: uniqueId,
       subredditId: id,
-      imageURL
+      imageURL,
+      url
     })
     await setDoc(doc(db, 'subreddits', id, 'posts', uniqueId, 'feelings', 'upvotes'), {
       upvotes: 0

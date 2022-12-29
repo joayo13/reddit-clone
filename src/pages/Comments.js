@@ -151,7 +151,7 @@ function Comments (props) {
   })
 
   const editModeToggle = () => {
-    if (currentUser.displayName !== post.author) {
+    if (currentUser.displayName !== postMetaData.author) {
       setError('Only the author of this post can edit it.')
       return
     }
@@ -212,6 +212,7 @@ function Comments (props) {
                         {error}
                     </div>}
                     <h1 className='py-2 text-2xl break-words'>{postMetaData.postTitle}</h1>
+                    {postMetaData.url?.link ? <li><a className='text-blue-500 underline' href={postMetaData.url.link}>{postMetaData.url.title || postMetaData.url.link}</a></li> : null}
                     <img className='z-10' src={postMetaData.imageURL}></img>
                     {!postMetaData.postTitle ? <p>[deleted]</p> : null}
                     {!editMode

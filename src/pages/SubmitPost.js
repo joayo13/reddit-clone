@@ -18,6 +18,7 @@ function SubmitPost () {
   const [searchResults, setSearchResults] = useState([])
   const [searchResultsVisible, setSearchResultsVisible] = useState(false)
   const [popUpLinkVisible, setPopUpLinkVisible] = useState(false)
+  const [link, setLink] = useState({})
   const { id } = useParams()
   const postTitleRef = useRef()
   const postTextRef = useRef()
@@ -62,6 +63,7 @@ function SubmitPost () {
                         <li className='py-2'>
                             <input type='text' ref={postTitleRef} placeholder='Title' maxLength={100} className='w-full py-2 dark:bg-neutral-900 dark:text-white indent-2 rounded-md dark:border-neutral-700 border'></input>
                         </li>
+                        {link.link ? <li className='py-2'><a className='text-blue-500 underline' href={link.link}>{link.title || link.link}</a></li> : null}
                         <li className= 'py-2'>
                             <div className='relative'>
                               {imageURL
@@ -99,8 +101,8 @@ function SubmitPost () {
                             </svg>
                             <input type="file" accept="image/gif" className='w-8 bottom-0 left-20 absolute opacity-0' onChange={(file) => { setFileSelected(file.target.files[0]); uploadImage(file.target.files[0], setImageURL, setImageLoading) }}></input>
                             {/* add link container is positioned absolutely in parent div if button was clicked */}
-                            {popUpLinkVisible ? <AddLinkPopUp setPopUpLinkVisible={setPopUpLinkVisible}/> : null}
-                            <button onClick={() => createPost(id, postTitleRef, userInfo, postTextRef, navigate, imageURL)} className='bg-blue-500 text-white w-20 py-1 rounded-full font-semibold absolute bottom-0 right-0'>Post</button>
+                            {popUpLinkVisible ? <AddLinkPopUp setLink={setLink} setPopUpLinkVisible={setPopUpLinkVisible}/> : null}
+                            {subredditMetaData.title ? <button onClick={() => createPost(id, postTitleRef, userInfo, postTextRef, navigate, imageURL, link)} className='bg-blue-500 text-white w-20 py-1 rounded-full font-semibold absolute bottom-0 right-0'>Post</button> : null}
                             </div>
                         </li>
                     </ul>

@@ -9,6 +9,7 @@ import Thread from '../components/Thread'
 import { determineUpvoteCountElementColor, displayUpvotedOrDownvoted, downvotePost, getPostUpvotes, upvotePost } from '../helpers/upvoteFunctions'
 import LoadingWheel from '../components/LoadingWheel'
 import { deletePost, editPost } from '../helpers/postFunctions'
+import { userJoinSubreddit, userLeaveSubreddit } from '../helpers/userJoinSubreddit'
 
 function Comments (props) {
   const { currentUser, userInfo } = useAuth()
@@ -26,6 +27,7 @@ function Comments (props) {
   const [isUpvotedByUser, setIsUpvotedByUser] = useState(false)
   const [isDownvotedByUser, setIsDownvotedByUser] = useState(false)
   const [authorMenuVisible, setAuthorMenuVisible] = useState(false)
+  const [userHasJoined, setUserHasJoined] = useState(false)
   const [editMode, setEditMode] = useState(false)
   const [error, setError] = useState('')
 
@@ -133,7 +135,16 @@ function Comments (props) {
     }
     fetchSubredditPostCommentData()
   }, [id, post])
-
+  useEffect(() => {
+    async function checkIfUserHasJoined () {
+      if (userHasJoined) return
+      const docSnap = await getDoc(doc(db, 'users', currentUser.uid))
+      if (docSnap.data().joinedSubreddits.includes(subredditMetaData.title)) {
+        setUserHasJoined(true)
+      }
+    }
+    checkIfUserHasJoined()
+  })
   useEffect(() => {
     if (!currentUser || loading) return
     async function displayVoteState () {
@@ -262,7 +273,7 @@ function Comments (props) {
                         </div>
                         <p className='text-sm'>{subredditMetaData.aboutCommunity}</p>
                         <p className='font-semibold text-sm'>{subredditMetaData.joined} Members</p>
-                        <button className='py-1 w-full mb-4 mx-auto bg-blue-500 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Follow</button>
+                        <button disabled={buttonLoading} onClick={() => !userHasJoined ? userJoinSubreddit(db, currentUser, subredditMetaData.title, setUserHasJoined, setButtonLoading) : userLeaveSubreddit(db, currentUser, subredditMetaData.title, setUserHasJoined, setButtonLoading)} className='py-1 w-72 mb-4 mx-auto bg-blue-500 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>{`${userHasJoined ? 'Unfollow' : 'Follow'}`}</button>
                     </li>
                     <li className='flex flex-col px-4 py-4 bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 dark:text-neutral-300 gap-4 md:rounded-md overflow-hidden'>
                         <h2 className='text-xs dark:text-white font-semibold'>R/{subredditMetaData.title.toUpperCase()} RULES</h2>

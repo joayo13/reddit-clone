@@ -6,9 +6,12 @@ import { deleteImage, uploadImage } from '../helpers/uploadImageFunctions'
 import LoadingWheel from '../components/LoadingWheel'
 import { searchSubreddit } from '../helpers/searchFunctions'
 import AddLinkPopUp from '../components/AddLinkPopUp'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '../firebase'
+import { userJoinSubreddit, userLeaveSubreddit } from '../helpers/userJoinSubreddit'
 
 function SubmitPost () {
-  const { userInfo } = useAuth()
+  const { userInfo, currentUser } = useAuth()
   const [subredditMetaData, setSubredditMetaData] = useState({})
   const [loading, setLoading] = useState(true)
   // eslint-disable-next-line no-unused-vars
@@ -18,8 +21,12 @@ function SubmitPost () {
   const [searchResults, setSearchResults] = useState([])
   const [searchResultsVisible, setSearchResultsVisible] = useState(false)
   const [popUpLinkVisible, setPopUpLinkVisible] = useState(false)
+  const [buttonLoading, setButtonLoading] = useState(false)
+  const [userHasJoined, setUserHasJoined] = useState(false)
+  const [searchCommunityFocused, setSearchCommunityFocused] = useState(false)
   const [link, setLink] = useState({})
   const { id } = useParams()
+
   const postTitleRef = useRef()
   const postTextRef = useRef()
   const communitySearchInputRef = useRef()
@@ -27,7 +34,16 @@ function SubmitPost () {
   useEffect(() => {
     fetchSubredditData(setSubredditMetaData, setLoading, id)
   }, [id])
-  const [searchCommunityFocused, setSearchCommunityFocused] = useState(false)
+  useEffect(() => {
+    async function checkIfUserHasJoined () {
+      if (userHasJoined) return
+      const docSnap = await getDoc(doc(db, 'users', currentUser.uid))
+      if (docSnap.data().joinedSubreddits.includes(subredditMetaData.title)) {
+        setUserHasJoined(true)
+      }
+    }
+    checkIfUserHasJoined()
+  })
   const searchCommunityUnfocusedPlaceholder = () => {
     return subredditMetaData.title ? subredditMetaData.title : 'Choose A Community'
   }
@@ -122,7 +138,7 @@ function SubmitPost () {
                         </div>
                         <p className='text-sm'>{subredditMetaData.aboutCommunity}</p>
                         <p className='font-semibold text-sm'>{subredditMetaData.joined} Members</p>
-                        <button className='py-1 w-full mb-4 mx-auto bg-blue-500 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>Follow</button>
+                        <button disabled={buttonLoading} onClick={() => !userHasJoined ? userJoinSubreddit(db, currentUser, subredditMetaData.title, setUserHasJoined, setButtonLoading) : userLeaveSubreddit(db, currentUser, subredditMetaData.title, setUserHasJoined, setButtonLoading)} className='py-1 w-72 mb-4 mx-auto bg-blue-500 font-bold rounded-full text-white hover:bg-blue-400 text-sm'>{`${userHasJoined ? 'Unfollow' : 'Follow'}`}</button>
                     </li>
                     <ul className='flex flex-col bg-white px-4 py-4 dark:bg-neutral-900 md:border border-neutral-300 dark:border-neutral-800 dark:text-neutral-300 gap-4 md:rounded-md overflow-hidden'>
                     <h2 className='text-xs dark:text-white font-semibold'>R/{subredditMetaData.title.toUpperCase()} RULES</h2>

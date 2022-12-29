@@ -9,6 +9,7 @@ import { userJoinSubreddit, userLeaveSubreddit } from '../helpers/userJoinSubred
 import { fetchSubredditData, fetchSubredditPosts } from '../helpers/getSubredditDataFunctions'
 import { doc, getDoc } from 'firebase/firestore'
 import LoadingWheel from '../components/LoadingWheel'
+import AdminTools from '../components/AdminTools'
 
 function Subreddit (props) {
   const { currentUser, userInfo } = useAuth()
@@ -64,6 +65,7 @@ function Subreddit (props) {
                         {subredditMetaData.subredditRules?.map((rule, index) => <li className='text-sm font-bold' key={index}>{index + 1}. {rule}</li>)}
                         </ol>
                     </li>
+                    {subredditMetaData.admin === currentUser.displayName ? <AdminTools/> : null}
                 </ul>
             </div>
         </div>}

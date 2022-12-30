@@ -45,9 +45,11 @@ function Comments (props) {
       await setDoc(doc(db, 'subreddits', id, 'posts', post, 'comments', uniqueId, 'feelings', 'upvotes'), {
         upvotes: 0
       })
-      await updateDoc(doc(db, 'notifications', postMetaData.author), {
-        notifications: arrayUnion({ message: `${userInfo.username} commented on your post`, sender: `r/${id}`, timestamp: Timestamp.now().seconds, link: `/r/${id}/comments/${post}` })
-      })
+      if (postMetaData.author !== userInfo.username) {
+        await updateDoc(doc(db, 'notifications', postMetaData.author), {
+          notifications: arrayUnion({ message: `${userInfo.username} commented on your post`, sender: `r/${id}`, timestamp: Timestamp.now().seconds, link: `/r/${id}/comments/${post}` })
+        })
+      }
       setCommentMetaData(prev => prev.concat({
         author: userInfo.username,
         authorProfilePicture: userInfo.profilePicture,
@@ -77,9 +79,11 @@ function Comments (props) {
       await setDoc(doc(db, 'subreddits', id, 'posts', post, 'comments', uniqueId, 'feelings', 'upvotes'), {
         upvotes: 0
       })
-      await updateDoc(doc(db, 'notifications', postMetaData.author), {
-        notifications: arrayUnion({ message: `${userInfo.username} replied to your comment`, sender: `r/${id}`, timestamp: Timestamp.now().seconds, link: `/r/${id}/comments/${post}` })
-      })
+      if (postMetaData.author !== userInfo.username) {
+        await updateDoc(doc(db, 'notifications', postMetaData.author), {
+          notifications: arrayUnion({ message: `${userInfo.username} replied to your comment`, sender: `r/${id}`, timestamp: Timestamp.now().seconds, link: `/r/${id}/comments/${post}` })
+        })
+      }
       setCommentMetaData(prev => prev.concat({
         author: userInfo.username,
         authorProfilePicture: userInfo.profilePicture,

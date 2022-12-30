@@ -46,9 +46,11 @@ function Subreply (props) {
       await updateDoc(doc(db, 'users', currentUser.uid), {
         upvotedComments: arrayUnion(comment.id)
       })
-      await updateDoc(doc(db, 'notifications', comment.author), {
-        notifications: arrayUnion({ message: 'Your comment has received an upvote', sender: `r/${comment.postedIn}`, timestamp: Timestamp.now().seconds, link: `/r/${comment.postedIn}/comments/${post}` })
-      })
+      if (comment.author !== currentUser.displayName) {
+        await updateDoc(doc(db, 'notifications', comment.author), {
+          notifications: arrayUnion({ message: 'Your comment has received an upvote', sender: `r/${comment.postedIn}`, timestamp: Timestamp.now().seconds, link: `/r/${comment.postedIn}/comments/${post}` })
+        })
+      }
     } catch (e) {
       console.log(e)
     }

@@ -101,9 +101,11 @@ export async function upvotePost (setLoading, post, id, currentUser) {
     await updateDoc(doc(db, 'users', currentUser.uid), {
       upvotedPosts: arrayUnion(post.id)
     })
-    await updateDoc(doc(db, 'notifications', post.author), {
-      notifications: arrayUnion({ message: 'Your post has received an upvote', sender: `r/${post.subredditId}`, timestamp: Timestamp.now().seconds, link: `/r/${post.subredditId}/comments/${post.id}` })
-    })
+    if (post.author !== currentUser.displayName) {
+      await updateDoc(doc(db, 'notifications', post.author), {
+        notifications: arrayUnion({ message: 'Your post has received an upvote', sender: `r/${post.subredditId}`, timestamp: Timestamp.now().seconds, link: `/r/${post.subredditId}/comments/${post.id}` })
+      })
+    }
   } catch (e) {
     console.log(e)
   } finally {

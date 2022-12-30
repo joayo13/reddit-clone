@@ -48,7 +48,7 @@ function Subreddit (props) {
                         <h2 className='text-md dark:text-white font-semibold'>About Community</h2>
                         <div className='flex gap-2 items-center'>
                           <div className='w-16 h-16 rounded-full overflow-hidden text-4xl flex items-center justify-center'>
-                            <img src={subredditMetaData.communityDisplayPictureURL}></img>
+                            <img src={ subredditMetaData.communityDisplayPictureURL}></img>
                           </div>
                           <div className='flex flex-col w-48'>
                           <h1 className='text-2xl'>r/{subredditMetaData.title}</h1>
@@ -65,7 +65,9 @@ function Subreddit (props) {
                         {subredditMetaData.subredditRules?.map((rule, index) => <li className='text-sm font-bold' key={index}>{index + 1}. {rule}</li>)}
                         </ol>
                     </li>
-                    {subredditMetaData.admin === currentUser.displayName ? <AdminTools/> : null}
+                    {subredditMetaData.admin === currentUser.displayName
+                      ? <AdminTools subredditMetaData={subredditMetaData}/>
+                      : null}
                 </ul>
             </div>
         </div>}

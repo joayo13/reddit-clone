@@ -142,8 +142,12 @@ function SubmitPost () {
                     </li>
                     <ul className='flex flex-col bg-white px-4 py-4 dark:bg-neutral-900 md:border border-neutral-300 dark:border-neutral-800 dark:text-neutral-300 gap-4 md:rounded-md overflow-hidden'>
                     <h2 className='text-xs dark:text-white font-semibold'>R/{subredditMetaData.title.toUpperCase()} RULES</h2>
-                        <div className='flex flex-col gap-4'>
-                        {subredditMetaData.subredditRules?.map((rule, index) => <li className='text-sm font-bold' key={index}>{index + 1}. {rule}</li>)}
+                        <div className='flex flex-col gap-2'>
+                        <div className='min-h-[1px] w-full bg-neutral-200 dark:bg-neutral-800'></div>
+                        {subredditMetaData.subredditRules?.map((rule, index) => <div className='flex flex-col gap-2' key={index}>
+                        <li className='text-sm font-bold'>{index + 1}. {rule}</li>
+                        <div className='min-h-[1px] w-full bg-neutral-200 dark:bg-neutral-800'></div>
+                        </div>)}
                         </div>
                     </ul>
                 </ul>

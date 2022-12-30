@@ -19,6 +19,8 @@ function Subreddit (props) {
   const [userHasJoined, setUserHasJoined] = useState(false)
   const { id } = useParams()
   const [buttonLoading, setButtonLoading] = useState(false)
+  const [imageURL, setImageURL] = useState('')
+  const [changesSaved, setChangesSaved] = useState(false)
   useEffect(() => {
     fetchSubredditData(setSubredditMetaData, setLoading, id)
     fetchSubredditPosts(setSubredditPostsData, setLoading, id)
@@ -48,7 +50,7 @@ function Subreddit (props) {
                         <h2 className='text-md dark:text-white font-semibold'>About Community</h2>
                         <div className='flex gap-2 items-center'>
                           <div className='w-16 h-16 rounded-full overflow-hidden text-4xl flex items-center justify-center'>
-                            <img src={ subredditMetaData.communityDisplayPictureURL}></img>
+                            <img src={ imageURL || subredditMetaData.communityDisplayPictureURL}></img>
                           </div>
                           <div className='flex flex-col w-48'>
                           <h1 className='text-2xl'>r/{subredditMetaData.title}</h1>
@@ -66,7 +68,7 @@ function Subreddit (props) {
                         </ol>
                     </li>
                     {subredditMetaData.admin === currentUser.displayName
-                      ? <AdminTools subredditMetaData={subredditMetaData}/>
+                      ? <AdminTools setChangesSaved={setChangesSaved} changesSaved={changesSaved} imageURL={imageURL} setImageURL={setImageURL} subredditMetaData={subredditMetaData}/>
                       : null}
                 </ul>
             </div>

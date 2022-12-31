@@ -24,6 +24,7 @@ function SubmitPost () {
   const [buttonLoading, setButtonLoading] = useState(false)
   const [userHasJoined, setUserHasJoined] = useState(false)
   const [searchCommunityFocused, setSearchCommunityFocused] = useState(false)
+  const [error, setError] = useState('')
   const [link, setLink] = useState({})
   const { id } = useParams()
 
@@ -76,6 +77,7 @@ function SubmitPost () {
                   </div>
                   </div>
                     <ul className='flex flex-col md:border lg:w-[40rem] md:w-[30rem] w-full px-4 py-4 bg-white dark:bg-neutral-900 md:dark:border-neutral-800 md:border-neutral-300 md:rounded-md'>
+                    {error && <div className='w-full bg-red-700 p-4 font-semibold rounded-md mt-4 text-white'>{error}</div>}
                         <li className='py-2'>
                             <input type='text' ref={postTitleRef} placeholder='Title' maxLength={100} className='w-full py-2 dark:bg-neutral-900 dark:text-white indent-2 rounded-md dark:border-neutral-700 border'></input>
                         </li>
@@ -118,7 +120,7 @@ function SubmitPost () {
                             <input type="file" accept="image/gif" className='w-8 bottom-0 left-20 absolute opacity-0' onChange={(file) => { setFileSelected(file.target.files[0]); uploadImage(file.target.files[0], setImageURL, setImageLoading) }}></input>
                             {/* add link container is positioned absolutely in parent div if button was clicked */}
                             {popUpLinkVisible ? <AddLinkPopUp setLink={setLink} setPopUpLinkVisible={setPopUpLinkVisible}/> : null}
-                            {subredditMetaData.title ? <button onClick={() => createPost(id, postTitleRef, userInfo, postTextRef, navigate, imageURL, link)} className='bg-blue-500 text-white w-20 py-1 rounded-full font-semibold absolute bottom-0 right-0'>Post</button> : null}
+                            {subredditMetaData.title ? <button onClick={() => createPost(id, postTitleRef, userInfo, postTextRef, navigate, imageURL, link, setError)} className='bg-blue-500 text-white w-20 py-1 rounded-full font-semibold absolute bottom-0 right-0'>Post</button> : null}
                             </div>
                         </li>
                     </ul>

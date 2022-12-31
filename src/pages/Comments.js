@@ -228,7 +228,7 @@ function Comments (props) {
                     </div>}
                     <h1 className='py-2 text-2xl break-words'>{postMetaData.postTitle}</h1>
                     {postMetaData.url?.link ? <li><a className='text-blue-500 underline' href={postMetaData.url.link}>{postMetaData.url.title || postMetaData.url.link}</a></li> : null}
-                    <img className='z-10' src={postMetaData.imageURL}></img>
+                    <img className='mx-auto z-10' src={postMetaData.imageURL}></img>
                     {!postMetaData.postTitle ? <p>[deleted]</p> : null}
                     {!editMode
                       ? <p className='py-2 text-sm break-words'>{postMetaData.text}</p>

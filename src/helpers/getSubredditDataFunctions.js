@@ -3,7 +3,11 @@ import { doc, getDoc, getDocs, setDoc, serverTimestamp, collection } from 'fireb
 import uniqid from 'uniqid'
 import { db } from '../firebase'
 
-export async function createPost (id, postTitleRef, userInfo, postTextRef, navigate, imageURL, url) {
+export async function createPost (id, postTitleRef, userInfo, postTextRef, navigate, imageURL, url, setError) {
+  if (!postTitleRef.current.value) {
+    setError('A post title is required to create a post.')
+    return
+  }
   const uniqueId = uniqid()
   try {
     await setDoc(doc(db, 'subreddits', id, 'posts', uniqueId), {

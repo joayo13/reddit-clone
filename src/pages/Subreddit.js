@@ -71,7 +71,7 @@ function Subreddit (props) {
                         </div>)}
                         </ol>
                     </li>
-                    {subredditMetaData.admin === currentUser.displayName
+                    {subredditMetaData.admin === currentUser?.displayName
                       ? <AdminTools setChangesSaved={setChangesSaved} changesSaved={changesSaved} imageURL={imageURL} setImageURL={setImageURL} subredditMetaData={subredditMetaData}/>
                       : null}
                 </ul>

@@ -4,7 +4,7 @@ import React from 'react'
 function AddLinkPopUp (props) {
   return (
     <div className='absolute z-20 -top-20 py-2 px-2 w-72 left-16 border bg-white dark:bg-neutral-800 rounded-md dark:border-neutral-700 shadow-md'>
-        <form onSubmit={(e) => { e.preventDefault(); props.setLink({ title: e.target.elements.title.value, link: e.target.elements.link.value }) }} className=''>
+        <form onSubmit={(e) => { e.preventDefault(); props.setLink({ title: e.target.elements.title.value, link: e.target.elements.link.value }); props.setPopUpLinkVisible(false) }} className=''>
             <div className='flex gap-2 items-center py-2'>
             <label className='text-xs'>Text:</label>
             <input placeholder={'Title of Link (optional)'} name='title' className='text-xs bg-inherit border border-opacity-50 w-full py-1 px-1 rounded-sm'></input>

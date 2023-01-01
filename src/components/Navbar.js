@@ -32,10 +32,10 @@ const Navbar = (props) => {
     <div className='font-poppins relative border-b border-neutral-200 dark:bg-neutral-900 dark:border-neutral-800'>
       <header className='flex items-center px-4 py-1'>
         {/* logo and name */}
-        <div className='flex items-center gap-2 md:w-[248px]' onClick={() => navigate('/')}>
+        <button className='flex items-center gap-2 md:w-[248px]' onClick={() => navigate('/')}>
         <img src={redditIcon} className='w-10'></img>
         <h1 className='hidden md:block text-1xl font-semibold text-neutral-700 dark:text-white'>!Reddit</h1>
-        </div>
+        </button>
         {/* search bar */}
         <div className='flex mx-auto gap-1 md:relative bg-neutral-100 dark:bg-neutral-800 px-2 py-2 outline-blue-500 hover:outline outline-1 rounded-full md:w-4/12 w-1/2 focus-within:outline'>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 dark:invert opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -48,7 +48,7 @@ const Navbar = (props) => {
           {searchResultsVisible
             ? <ul className='absolute top-12 bg bg-neutral-50 dark:bg-neutral-900 shadow-md dark:text-white w-full left-0 z-20'>
         {searchResults.map((result, index) => {
-          return <li key={index} onClick={() => { navigate(`/r/${result}`); setSearchResultsVisible(false) }} className='px-2 cursor-pointer py-4 hover:bg-neutral-200 dark:hover:bg-neutral-800'>r/{result}</li>
+          return <button key={index} tabIndex={0} onClick={() => { navigate(`/r/${result}`); setSearchResultsVisible(false) }} className='px-2 text-left cursor-pointer py-4 hover:bg-neutral-200 w-full block dark:hover:bg-neutral-800'>r/{result}</button>
         })}
         </ul>
             : null}

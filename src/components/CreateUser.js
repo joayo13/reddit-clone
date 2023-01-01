@@ -44,16 +44,18 @@ function CreateUser (props) {
         <h1 className='font-medium text-lg text-center md:text-start'>Create your profile</h1>
         <p className='text-xs mt-2 md:w-1/3 text-center md:text-start'>Select a profile picture:</p>
         <ul className='flex flex-wrap md:w-80 gap-3 mt-4 justify-center md:justify-start mx-auto md:mx-0'>
-            {images.map((image, index) => <li key={index}><img className={profilePicture !== image ? 'w-12 rounded-full' : 'w-12 rounded-full border-4 border-blue-500'} key={index} src={image} onClick={(e) => { setProfilePicture(e.target.src) }}></img></li>)}
+            {images.map((image, index) => <button onClick={(e) => { setProfilePicture(image) }} key={index}><img className={profilePicture !== image ? 'w-12 rounded-full' : 'w-12 rounded-full border-4 border-blue-500'} key={index} src={image}></img></button>)}
         </ul>
         {error && <div className='w-full bg-red-400 p-4 font-semibold rounded-md mt-4'>{error}</div>}
-        <form onSubmit={handleSubmit} className='mt-4 flex flex-col gap-6'>
+        <form onSubmit={(e) => { e.preventDefault(); handleSubmit(e) }} className='mt-4 flex flex-col gap-6'>
         <p className='text-xs mt-2 md:w-1/3 text-center md:text-start'>Create a Username</p>
         <div className='bg-neutral-100 dark:bg-neutral-800 w-full md:w-80 flex items-center justify-between px-4'>
         <input minLength={4} placeholder='USERNAME' type='text' ref={usernameRef} className='bg-neutral-100 dark:bg-neutral-800 py-4 focus:outline-none'></input>
-        <svg onClick={() => { usernameRef.current.value = randomUsername() }}xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="cursor-pointer w-8 h-8 opacity-50">
+        <button type='button' onClick={() => { usernameRef.current.value = randomUsername() }}>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="cursor-pointer w-8 h-8 opacity-50">
           <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
         </svg>
+        </button>
         </div>
           <button disabled={loading} type='submit' className=' bg-blue-500 py-2 rounded-full text-white w-full md:w-80 font-semibold mx-auto md:mx-0 hover:bg-blue-400'>Create Account</button>
         </form>

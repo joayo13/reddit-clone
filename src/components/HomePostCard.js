@@ -40,14 +40,14 @@ function HomePostCard (props) {
   return (
     <>
     <li key={index} className='flex flex-col gap-2 px-4 py-4 bg-white border border-neutral-300 rounded-md dark:bg-neutral-900 text-neutral-800 dark:text-neutral-300 dark:border-neutral-800'>
-        <div className='flex cursor-pointer flex-col gap-2'>
-        <span onClick={() => navigate(`/r/${post.subredditId}`)} className='flex text-xs gap-2'>
+        <button onClick={() => navigate(`/r/${post.subredditId}`)} className='flex cursor-pointer flex-col gap-2 text-left'>
+        <span className='flex text-xs gap-2'>
         <a className='font-bold'>r/{post.subredditId}</a>
         <p className='text-neutral-500'>Posted by u/{post.author} {getDatefromSeconds(post.timestamp?.seconds, Timestamp.now().seconds)}</p>
         </span>
         <h1 onClick={() => navigate(`/r/${post.subredditId}/comments/${post.id}`)} className='break-words'>{post.postTitle}</h1>
         <img onClick={() => navigate(`/r/${post.subredditId}/comments/${post.id}`)} src={post.imageURL}></img>
-        </div>
+        </button>
         <ul className='flex gap-2'>
             <li className='flex gap-2 font-semibold'>
                 <button disabled={loading} onClick={() => upvotePost(setLoading, post, post.subredditId, currentUser)}>

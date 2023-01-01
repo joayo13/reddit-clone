@@ -93,7 +93,7 @@ function Home (props) {
                           <img src={filteredSubreddit.communityDisplayPictureURL}></img>
                         </div>
                         <div className='flex md:flex-col gap-2 items-baseline'>
-                       <li className='font-medium cursor-pointer' onClick={() => navigate(`/r/${filteredSubreddit.title}`)}>r/{filteredSubreddit.title}</li>
+                       <button className='font-medium cursor-pointer' onClick={() => navigate(`/r/${filteredSubreddit.title}`)}>r/{filteredSubreddit.title}</button>
                        <p className='text-xs'>{filteredSubreddit.joined} Members</p>
                        </div>
                        </div>)}

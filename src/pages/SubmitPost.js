@@ -26,6 +26,8 @@ function SubmitPost () {
   const [searchCommunityFocused, setSearchCommunityFocused] = useState(false)
   const [error, setError] = useState('')
   const [link, setLink] = useState({})
+  const [gifInputSelected, setGifInputSelected] = useState(false)
+  const [photoInputSelected, setPhotoInputSelected] = useState(false)
   const { id } = useParams()
 
   const postTitleRef = useRef()
@@ -70,7 +72,7 @@ function SubmitPost () {
                   {searchResultsVisible
                     ? <ul className='absolute top-12 bg bg-neutral-50 dark:bg-neutral-800 shadow-md dark:text-white text-black w-full left-0 z-20'>
                       {searchResults.map((result, index) => {
-                        return <li key={index} onClick={() => { navigate(`/r/${result}/submit`); setSearchResultsVisible(false); communitySearchInputRef.current.value = '' }} className='px-2 cursor-pointer py-4 hover:bg-neutral-200 dark:hover:bg-neutral-800'>r/{result}</li>
+                        return <button key={index} onClick={() => { navigate(`/r/${result}/submit`); setSearchResultsVisible(false); communitySearchInputRef.current.value = '' }} className='px-2 block w-full text-left cursor-pointer py-4 hover:bg-neutral-200 dark:hover:bg-neutral-800'>r/{result}</button>
                       })}
                       </ul>
                     : null}
@@ -107,17 +109,19 @@ function SubmitPost () {
                             <textarea ref={postTextRef} placeholder='Text(optional)' className='w-full py-2 dark:bg-neutral-900 dark:text-white indent-2 rounded-md dark:border-neutral-700 border h-28'>
                             </textarea>
                             <div className='relative dark:text-white py-4 mt-4'>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="absolute opacity-50 left-0 w-8 h-8 bottom-0">
+                            <svg style={photoInputSelected ? { outlineWidth: '4px' } : { outlineWidth: '0px' }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="absolute opacity-50 outline-blue-500 outline left-0 w-8 h-8 bottom-0">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                             </svg>
-                            <input type="file" accept="image/png, image/jpeg" className='w-8 bottom-0 absolute opacity-0' onChange={(file) => { setFileSelected(file.target.files[0]); uploadImage(file.target.files[0], setImageURL, setImageLoading) }}></input>
-                            <svg onClick={() => setPopUpLinkVisible(true)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="absolute p-[0.15rem] opacity-50 left-10 w-8 h-8 bottom-0">
+                            <input type="file" onFocus={() => setPhotoInputSelected(true)} onBlur={() => setPhotoInputSelected(false)} accept="image/png, image/jpeg" className='w-8 bottom-0 absolute opacity-0' onChange={(file) => { setFileSelected(file.target.files[0]); uploadImage(file.target.files[0], setImageURL, setImageLoading) }}></input>
+                            <button className="absolute p-[0.15rem] opacity-50 left-10 w-8 h-8 bottom-0" onClick={() => setPopUpLinkVisible(true)}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
                             </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="absolute opacity-50 left-20 w-8 h-8 bottom-0">
+                            </button>
+                            <svg style={gifInputSelected ? { outlineWidth: '4px' } : { outlineWidth: '0px' }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="absolute opacity-50 outline-blue-500 outline left-20 w-8 h-8 bottom-0">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12.75 8.25v7.5m6-7.5h-3V12m0 0v3.75m0-3.75H18M9.75 9.348c-1.03-1.464-2.698-1.464-3.728 0-1.03 1.465-1.03 3.84 0 5.304 1.03 1.464 2.699 1.464 3.728 0V12h-1.5M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
                             </svg>
-                            <input type="file" accept="image/gif" className='w-8 bottom-0 left-20 absolute opacity-0' onChange={(file) => { setFileSelected(file.target.files[0]); uploadImage(file.target.files[0], setImageURL, setImageLoading) }}></input>
+                            <input type="file" onFocus={() => setGifInputSelected(true)} onBlur={() => setGifInputSelected(false)} accept="image/gif" className='w-8 bottom-0 left-20 absolute opacity-0' onChange={(file) => { setFileSelected(file.target.files[0]); uploadImage(file.target.files[0], setImageURL, setImageLoading) }}></input>
                             {/* add link container is positioned absolutely in parent div if button was clicked */}
                             {popUpLinkVisible ? <AddLinkPopUp setLink={setLink} setPopUpLinkVisible={setPopUpLinkVisible}/> : null}
                             {subredditMetaData.title ? <button onClick={() => createPost(id, postTitleRef, userInfo, postTextRef, navigate, imageURL, link, setError)} className='bg-blue-500 text-white w-20 py-1 rounded-full font-semibold absolute bottom-0 right-0'>Post</button> : null}

@@ -46,13 +46,14 @@ export async function fetchSubredditPosts (setSubredditPostsData, setLoading, id
   const data = []
   try {
     const querySnapshot = await getDocs(collection(db, 'subreddits', id, 'posts'))
-    querySnapshot.forEach(async (post) => {
-      data.push({ ...post.data() })
+    querySnapshot.forEach(async (post, index) => {
+      if (post.data().postTitle !== '') {
+        data.push({ ...post.data() })
+        console.log(post.data())
+      }
     })
-    if (data.length === querySnapshot.size) {
-      setSubredditPostsData(data)
-      setLoading(false)
-    }
+    setSubredditPostsData(data)
+    setLoading(false)
   } catch (e) {
     console.log(e)
   }
@@ -80,7 +81,9 @@ export async function getHomePagePosts (currentUser, setHomepagePostsData, setLo
       try {
         const querySnapshot = await getDocs(collection(db, 'subreddits', subreddit, 'posts'))
         querySnapshot.forEach((post) => {
-          popularPosts.push(post.data())
+          if (post.data().postTitle !== '') {
+            popularPosts.push(post.data())
+          }
         })
       } catch (e) {
         console.log(e)

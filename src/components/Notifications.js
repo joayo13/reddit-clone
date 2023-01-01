@@ -27,16 +27,18 @@ function Notifications (props) {
       : null }
     {props.notifications.sort((a, b) => b.timestamp - a.timestamp).map((notification, index) =>
     <li className='py-6 px-4 dark:hover:bg-neutral-700 hover:bg-blue-50 relative cursor-pointer' key={index}>
-       <svg onClick={() => deleteNotification(notification)} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 absolute right-2 top-2 opacity-50 dark:text-white" viewBox="0 0 20 20" fill="currentColor">
+      <button onClick={() => deleteNotification(notification)} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 absolute right-2 top-2 opacity-50 dark:text-white">
+       <svg viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
         </svg>
-      <div onClick={() => navigate(notification.link)} >
+        </button>
+      <button className='text-left' onClick={() => navigate(notification.link)} >
       <span className='flex gap-2 mb-2'>
       <h2 className='font-bold'>{notification.sender}</h2>
       <h2 className='opacity-50'>{getDatefromSeconds(notification.timestamp, Timestamp.now().seconds)}</h2>
       </span>
       <h3>{notification.message}</h3>
-      </div>
+      </button>
     </li>)}
     </ul>
   )

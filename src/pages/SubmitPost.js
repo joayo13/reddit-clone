@@ -72,7 +72,7 @@ function SubmitPost () {
                   {searchResultsVisible
                     ? <ul className='absolute top-12 bg bg-neutral-50 dark:bg-neutral-800 shadow-md dark:text-white text-black w-full left-0 z-20'>
                       {searchResults.map((result, index) => {
-                        return <button key={index} onClick={() => { navigate(`/r/${result}/submit`); setSearchResultsVisible(false); communitySearchInputRef.current.value = '' }} className='px-2 flex gap-2 w-full text-left cursor-pointer py-4 hover:bg-neutral-200 dark:hover:bg-neutral-700'>
+                        return <button key={index} onClick={() => { navigate(`/r/${result.title}/submit`); setSearchResultsVisible(false); communitySearchInputRef.current.value = '' }} className='px-2 flex gap-2 w-full text-left items-center cursor-pointer py-4 hover:bg-neutral-200 dark:hover:bg-neutral-700'>
                           <img className='w-5 h-5 rounded-full' src={result.communityDisplayPictureURL}></img>
                           r/{result.title}
                           <p className='text-xs font-bold opacity-50'>{result.joined} Members</p></button>

@@ -48,7 +48,10 @@ const Navbar = (props) => {
           {searchResultsVisible
             ? <ul className='absolute top-12 bg bg-neutral-50 dark:bg-neutral-900 shadow-md dark:text-white w-full left-0 z-20'>
         {searchResults.map((result, index) => {
-          return <button key={index} tabIndex={0} onClick={() => { navigate(`/r/${result}`); setSearchResultsVisible(false) }} className='px-2 text-left cursor-pointer py-4 hover:bg-neutral-200 w-full block dark:hover:bg-neutral-800'>r/{result}</button>
+          return <button key={index} tabIndex={0} onClick={() => { navigate(`/r/${result.title}`); setSearchResultsVisible(false) }} className='px-2 flex gap-2 text-left cursor-pointer py-4 hover:bg-neutral-200 w-full items-center dark:hover:bg-neutral-800'>
+            <img className='w-5 h-5 rounded-full' src={result.communityDisplayPictureURL}></img>r/{result.title}
+            <p className='text-xs font-bold opacity-50'>{result.joined} Members</p>
+            </button>
         })}
         </ul>
             : null}

@@ -11,7 +11,7 @@ export async function searchSubreddit (chars, setSearchResults, setSearchResults
     const querySnapshot = await getDocs(collection(db, 'subreddits'))
     querySnapshot.forEach((post) => {
       if (post.data().title.includes(chars)) {
-        matchedSubreddits.push(post.data().title)
+        matchedSubreddits.push(post.data())
       }
     })
   } catch (e) {

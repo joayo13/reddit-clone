@@ -58,7 +58,7 @@ export function AuthProvider ({ children }) {
     })
     await setDoc(doc(db, 'notifications', user.displayName), {
       userId: user.uid,
-      notifications: [{ message: 'Welcome to Fake Reddit! Click here to start joining some communities.', sender: '!Reddit', timestamp: Timestamp.now().seconds }]
+      notifications: [{ message: 'Welcome to !Reddit! Start by searching for a community to join.', sender: '!Reddit', timestamp: Timestamp.now().seconds }]
     })
     window.location.reload()
   }

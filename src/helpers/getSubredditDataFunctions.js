@@ -3,7 +3,7 @@ import { doc, getDoc, getDocs, setDoc, serverTimestamp, collection } from 'fireb
 import uniqid from 'uniqid'
 import { db } from '../firebase'
 
-export async function createPost (id, postTitleRef, userInfo, postTextRef, navigate, imageURL, url, setError) {
+export async function createPost (id, postTitleRef, userInfo, postTextRef, navigate, imageURL, url, setError, displayPhotoURL) {
   if (!postTitleRef.current.value) {
     setError('A post title is required to create a post.')
     return
@@ -18,7 +18,8 @@ export async function createPost (id, postTitleRef, userInfo, postTextRef, navig
       id: uniqueId,
       subredditId: id,
       imageURL,
-      url
+      url,
+      displayPhotoURL
     })
     await setDoc(doc(db, 'subreddits', id, 'posts', uniqueId, 'feelings', 'upvotes'), {
       upvotes: 0

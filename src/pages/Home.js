@@ -72,7 +72,7 @@ function Home (props) {
                         </svg>
                         </div>
                         <div className='ml-12 flex md:block items-baseline gap-2'>
-                          <p className='font-medium'>r/{subreddit.title}</p>
+                          <p className='font-medium'>{subreddit.title}</p>
                           <span className='text-xs'>{subreddit.joined} Members</span>
                         </div>
                       {currentUser && userJoinedSubreddits.includes(subreddit.title)
@@ -93,7 +93,7 @@ function Home (props) {
                           <img src={filteredSubreddit.communityDisplayPictureURL}></img>
                         </div>
                         <div className='flex md:flex-col gap-2 items-baseline'>
-                       <button className='font-medium cursor-pointer' onClick={() => navigate(`/r/${filteredSubreddit.title}`)}>r/{filteredSubreddit.title}</button>
+                       <button className='font-medium cursor-pointer' onClick={() => navigate(`/r/${filteredSubreddit.title}`)}>{filteredSubreddit.title}</button>
                        <p className='text-xs'>{filteredSubreddit.joined} Members</p>
                        </div>
                        </div>)}

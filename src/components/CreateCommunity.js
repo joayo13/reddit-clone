@@ -43,9 +43,11 @@ function CreateCommunity (props) {
       <div className='relative w-screen h-screen md:absolute md:w-[30rem] md:h-[40rem] bg-white rounded-md shadow-xl overflow-scroll dark:bg-neutral-900 dark:text-white px-4 py-4'>
         <h1 className='text-lg'>Create a Community</h1>
         <div className='dark:bg-neutral-700 bg-neutral-300 w-full h-px my-4'></div>
-        <svg onClick={() => props.setCreateCommunityPopUp(false)} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 absolute right-2 top-2 opacity-50 dark:text-white" viewBox="0 0 20 20" fill="currentColor">
+        <button className="h-6 w-6 absolute right-2 top-2 opacity-50 dark:text-white" onClick={() => props.setCreateCommunityPopUp(false)}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
         </svg>
+        </button>
         <h1>Name</h1>
         <p className='opacity-50 text-sm'>Community names including capitalization cannot be changed.</p>
         <div className='flex items-center h-10 w-full bg-neutral-100 dark:bg-neutral-800 my-4 rounded-md outline-blue-500 hover:outline outline-1 focus-within:outline dark:border-neutral-700 border border-neutral-200'>
@@ -96,9 +98,11 @@ function CreateCommunity (props) {
             {subredditRules.map((rule, index) =>
               <div key={index} className='flex gap-2'>
                 {deleteMode
-                  ? <svg onClick={() => setSubredditRules(prev => prev.filter((rules) => rules !== rule))} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="#fe3a3a">
+                  ? <button onClick={() => setSubredditRules(prev => prev.filter((rules) => rules !== rule))} className="h-6 w-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="#fe3a3a">
                     <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
+                  </button>
                   : null}
                 <li className='flex gap-2'><p className='font-bold'>{subredditRules.indexOf(rule) + 1}.</p>{rule}</li></div>)}
           </div>

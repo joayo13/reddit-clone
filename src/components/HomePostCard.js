@@ -40,14 +40,14 @@ function HomePostCard (props) {
   return (
     <>
     <li key={index} className='flex flex-col gap-2 px-4 py-4 bg-white border border-neutral-300 rounded-md dark:bg-neutral-900 text-neutral-800 dark:text-neutral-300 dark:border-neutral-800'>
-        <button onClick={() => navigate(`/r/${post.subredditId}`)} className='flex cursor-pointer flex-col gap-2 text-left'>
+        <button onClick={() => navigate(`/r/${post.subredditId}/comments/${post.id}`)} className='flex cursor-pointer flex-col gap-2 text-left'>
         <span className='flex text-xs gap-2'>
         <img src={post.displayPhotoURL} className='h-5 rounded-full overflow-hidden w-5'></img>
-        <a className='font-bold'>r/{post.subredditId}</a>
+        <a href={`/r/${post.subredditId}`} className='font-bold'>r/{post.subredditId}</a>
         <p className='text-neutral-500'>Posted by u/{post.author} {getDatefromSeconds(post.timestamp?.seconds, Timestamp.now().seconds)}</p>
         </span>
-        <h1 onClick={() => navigate(`/r/${post.subredditId}/comments/${post.id}`)} className='break-words'>{post.postTitle}</h1>
-        <img onClick={() => navigate(`/r/${post.subredditId}/comments/${post.id}`)} src={post.imageURL}></img>
+        <h1 className='break-words'>{post.postTitle}</h1>
+        <img src={post.imageURL}></img>
         </button>
         <ul className='flex gap-2'>
             <li className='flex gap-2 font-semibold'>

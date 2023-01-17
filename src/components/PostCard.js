@@ -43,7 +43,7 @@ function PostCard (props) {
     <>
     <li key={index} className='flex flex-col gap-2 px-4 py-4 bg-white border border-neutral-300 rounded-md dark:bg-neutral-900 dark:text-neutral-300 dark:border-neutral-800'>
         <button onClick={() => navigate(`/r/${id}/comments/${post.id}`)} className='flex flex-col text-left cursor-pointer gap-2'>
-        <p className='text-xs text-neutral-500'>Posted by u/{post.author} {getDatefromSeconds(post.timestamp?.seconds, Timestamp.now().seconds)}</p>
+        <p className='text-xs text-neutral-500'>u/{post.author} {getDatefromSeconds(post.timestamp?.seconds, Timestamp.now().seconds)}</p>
         <h1 className='break-words'>{post.postTitle}</h1>
         <img src={post.imageURL}></img>
         </button>

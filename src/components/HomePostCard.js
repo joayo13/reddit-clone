@@ -46,7 +46,7 @@ function HomePostCard (props) {
         <img src={post.displayPhotoURL} className='h-5 rounded-full overflow-hidden w-5'></img>
         </a>
         <a href={`/r/${post.subredditId}`} className='font-bold'>r/{post.subredditId}</a>
-        <a href={`/r/${post.subredditId}`} className='text-neutral-500'>Posted by u/{post.author} {getDatefromSeconds(post.timestamp?.seconds, Timestamp.now().seconds)}</a>
+        <a href={`/r/${post.subredditId}`} className='text-neutral-500'>u/{post.author} {getDatefromSeconds(post.timestamp?.seconds, Timestamp.now().seconds)}</a>
         </span>
         <h1 className='break-words'>{post.postTitle}</h1>
         <img src={post.imageURL}></img>

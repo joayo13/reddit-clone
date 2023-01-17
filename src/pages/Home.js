@@ -57,7 +57,7 @@ function Home (props) {
               </div>
               </ul>
               <ul className='flex flex-col -mt-4 md:mt-0 gap-4 md:gap-4 lg:w-[20rem] md:w-[15rem]'>
-                  <li className='flex flex-col bg-white dark:bg-neutral-900 md:border border-neutral-300 dark:border-neutral-800 dark:text-neutral-300 overflow-hidden md:rounded-md'>
+                  <li className='md:flex hidden flex-col bg-white dark:bg-neutral-900 md:border border-neutral-300 dark:border-neutral-800 dark:text-neutral-300 overflow-hidden md:rounded-md'>
                     <div className='relative md:h-20 h-12'>
                       <img className='object-cover h-full w-full' src={bannerImage}></img>
                       <div className='absolute shadow-[inset_0_-60px_50px_-20px_rgba(0,0,0,0.5)] bottom-0 right-0 top-0 left-0'></div>

@@ -33,6 +33,10 @@ function Comments (props) {
 
   async function postComment () {
     const uniqueId = uniqid()
+    if (!commentTextRef.current.value) {
+      setError('Comments must be at least 1 character long.')
+      return
+    }
     try {
       await setDoc(doc(db, 'subreddits', id, 'posts', post, 'comments', uniqueId), {
         author: userInfo.username,
@@ -66,6 +70,10 @@ function Comments (props) {
 
   async function postReply (parentCommentId) {
     const uniqueId = uniqid()
+    if (!commentTextRef.current.value) {
+      setError('Replies must be at least 1 character long.')
+      return
+    }
     try {
       await setDoc(doc(db, 'subreddits', id, 'posts', post, 'comments', uniqueId), {
         author: userInfo.username,

@@ -42,9 +42,11 @@ function HomePostCard (props) {
     <li key={index} className='flex flex-col gap-2 px-4 py-4 bg-white border border-neutral-300 rounded-md dark:bg-neutral-900 text-neutral-800 dark:text-neutral-300 dark:border-neutral-800'>
         <button onClick={() => navigate(`/r/${post.subredditId}/comments/${post.id}`)} className='flex cursor-pointer flex-col gap-2 text-left'>
         <span className='flex text-xs gap-2'>
+        <a href={`/r/${post.subredditId}`}>
         <img src={post.displayPhotoURL} className='h-5 rounded-full overflow-hidden w-5'></img>
+        </a>
         <a href={`/r/${post.subredditId}`} className='font-bold'>r/{post.subredditId}</a>
-        <p className='text-neutral-500'>Posted by u/{post.author} {getDatefromSeconds(post.timestamp?.seconds, Timestamp.now().seconds)}</p>
+        <a href={`/r/${post.subredditId}`} className='text-neutral-500'>Posted by u/{post.author} {getDatefromSeconds(post.timestamp?.seconds, Timestamp.now().seconds)}</a>
         </span>
         <h1 className='break-words'>{post.postTitle}</h1>
         <img src={post.imageURL}></img>
